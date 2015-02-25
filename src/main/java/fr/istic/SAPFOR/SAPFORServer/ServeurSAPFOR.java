@@ -3,6 +3,8 @@ package fr.istic.SAPFOR.SAPFORServer;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.ws.rs.Path;
+
 import outils.GestionCreationObjets;
 import builderPompier.Pompier;
 import builderStage.Stage;
