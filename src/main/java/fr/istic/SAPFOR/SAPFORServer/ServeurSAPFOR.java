@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import outils.GestionCreationObjets;
+import builderPompier.Pompier;
 import builderPompier.PompierConcret;
 import builderStage.Stage;
 import builderUV.UV;
@@ -18,10 +19,10 @@ import ecritureFichier.EcrireFichier;
 public class ServeurSAPFOR {
 
 	
-	private static HashMap<Integer,PompierConcret> numConnection=new HashMap<Integer,PompierConcret>();//map contenant l'objet pompier li� � son num�ro de session
+	private static HashMap<Integer,Pompier> numConnection=new HashMap<Integer,Pompier>();//map contenant l'objet pompier li� � son num�ro de session
 	
 	
-	private PompierConcret getPompier(int id) {
+	private Pompier getPompier(int id) {
 		return GestionCreationObjets.creerPompier(id);
 	}
 	
@@ -46,12 +47,12 @@ public class ServeurSAPFOR {
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	public Agent login(int idPompier, String mdp) {
+	public void login(int idPompier, String mdp) {
 		// r�cup�re le login et mdp de l'agent
 		//v�rifie le mdp par rapport � celui indiqu� dans le fichier de l'agent n� idPompier
 		//si num�ro concordent => cr�ation d'un num�ro de session al�atoire (apr�s v�rification de sa disponibilit�)
 		
-		PompierConcret entrant=getPompier(idPompier);//cr�ation du pompier � partir des donn�es stock�esd'apr�s son identifiannt 
+		Pompier entrant=getPompier(idPompier);//cr�ation du pompier � partir des donn�es stock�esd'apr�s son identifiannt 
 		
 		Random randomGenerator = new Random();//cr�ation d'un g�n�rateur de nombre al�atoirs
 		
@@ -65,9 +66,9 @@ public class ServeurSAPFOR {
 			
 			//trouver un moyen d'envoyer objet pompier au client 
 			
-			return randomInt;
+			//return randomInt;
 		}
-		else{return 999;}//valeur 999 si mdp faux ou login faux (idPompier n'existe pas)
+		else{}//return 999;}//valeur 999 si mdp faux ou login faux (idPompier n'existe pas)
 		
 	}
 

@@ -6,6 +6,7 @@ import builderPompier.PompierConcret;
 import builderPompier.PompierBuildFromFile;
 import builderPompier.PompierBuilder;
 import builderPompier.PompierDirector;
+import builderPompier.Pompier;
 import builderStage.Stage;
 import builderStage.StageBuildFromFile;
 import builderStage.StageBuilder;
@@ -19,7 +20,7 @@ import builderUV.UVbuilder;
 public class GestionCreationObjets {
 
 	
-	public static PompierConcret creerPompier(int idPompier){
+	public static Pompier creerPompier(int idPompier){
 		
 		PompierBuilder agent=new PompierBuildFromFile(idPompier);  
 		

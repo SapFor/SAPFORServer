@@ -1,10 +1,10 @@
 package ecritureFichier;
 
 import java.io.BufferedWriter;
-
 import java.io.FileWriter;
 import java.io.IOException;
 
+import builderPompier.Pompier;
 import builderPompier.PompierConcret;
 import builderStage.Stage;
 import builderUV.UV;
@@ -27,37 +27,37 @@ public class EcrireFichier {
 		else{}
 	}
 	
-	public static void ecrirePompier(PompierConcret objet){
+	public static void ecrirePompier(Pompier pompier){
 		
 		BufferedWriter output;
 		String dir;
 		
-		if(objet.getDirecteur()){dir="oui";}
+		if(pompier.getDirecteur()){dir="oui";}
 		else{dir="non";}
 		StringBuffer uvList=new StringBuffer();
-		for(String uv : objet.getUV()){uvList.append(uv+"\n");}
+		for(String uv : pompier.getUV()){uvList.append(uv+"\n");}
 		StringBuffer encoursList=new StringBuffer();
-		for(String encours : objet.getEnCours()){encoursList.append(encours+"\n");}
+		for(String encours : pompier.getEnCours()){encoursList.append(encours+"\n");}
 		StringBuffer accepteList=new StringBuffer();
-		for(String accepte : objet.getEnCours()){accepteList.append(accepte+"\n");}
+		for(String accepte : pompier.getEnCours()){accepteList.append(accepte+"\n");}
 		StringBuffer attenteList=new StringBuffer();
-		for(String attente : objet.getEnCours()){encoursList.append(attente+"\n");}
+		for(String attente : pompier.getEnCours()){encoursList.append(attente+"\n");}
 		StringBuffer refuseList=new StringBuffer();
-		for(String refuse : objet.getEnCours()){refuseList.append(refuse+"\n");}
+		for(String refuse : pompier.getEnCours()){refuseList.append(refuse+"\n");}
 		StringBuffer gestionList=new StringBuffer();
-		for(String gestion : objet.getEnCours()){encoursList.append(gestion+"\n");}
+		for(String gestion : pompier.getEnCours()){encoursList.append(gestion+"\n");}
 		
-		String fichier=""+objet.getId()+".pomp";//indiquer le "path" des fichiers entre ""
+		String fichier=""+pompier.getId()+".pomp";//indiquer le "path" des fichiers entre ""
 		try{
 			output=new BufferedWriter(new FileWriter (fichier,false));
 			
 			
 			output.write(
-					"id\n"+objet.getId()+"\n"
-					+"mdp\n"+objet.getMdp()+"\n"
+					"id\n"+pompier.getId()+"\n"
+					+"mdp\n"+pompier.getMdp()+"\n"
 					+"directeur\n"+dir+"\n"
-					+"nom\n"+objet.getNom()+"\n"
-					+"prenom\n"+objet.getPrenom()+"\n"
+					+"nom\n"+pompier.getNom()+"\n"
+					+"prenom\n"+pompier.getPrenom()+"\n"
 					+"\n"
 					+"uv\n"
 					+uvList.toString()

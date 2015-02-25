@@ -12,7 +12,7 @@ public class PompierDirector {
 		this.constructPompier=constructPompier;
 	}
 	
-	public PompierConcret getPompier(){
+	public Pompier getPompier(){
 		return this.constructPompier.getPompier();
 	}
 	
