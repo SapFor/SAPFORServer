@@ -5,15 +5,15 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import builderPompier.Pompier;
+import builderPompier.PompierConcret;
 import builderStage.Stage;
 import builderUV.UV;
 
 public class EcrireFichier {
 
 	public void ecriture(Object objet){
-		if(objet instanceof Pompier){
-			Pompier aEcrire=(Pompier)objet;
+		if(objet instanceof PompierConcret){
+			PompierConcret aEcrire=(PompierConcret)objet;
 			ecrirePompier(aEcrire);
 		}
 		else if(objet instanceof UV){
@@ -27,7 +27,7 @@ public class EcrireFichier {
 		else{}
 	}
 	
-	public static void ecrirePompier(Pompier objet){
+	public static void ecrirePompier(PompierConcret objet){
 		
 		BufferedWriter output;
 		String dir;

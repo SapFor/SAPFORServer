@@ -5,7 +5,7 @@ import java.util.List;
 
 //by Thomas Davin
 
-public interface StructurePompier {
+public interface Pompier {
 	
 	//interface de l'objet pompier
 	

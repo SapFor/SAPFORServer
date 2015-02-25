@@ -2,7 +2,7 @@ package outils;
 
 import java.io.IOException;
 
-import builderPompier.Pompier;
+import builderPompier.PompierConcret;
 import builderPompier.PompierBuildFromFile;
 import builderPompier.PompierBuilder;
 import builderPompier.PompierDirector;
@@ -19,7 +19,7 @@ import builderUV.UVbuilder;
 public class GestionCreationObjets {
 
 	
-	public static Pompier creerPompier(int idPompier){
+	public static PompierConcret creerPompier(int idPompier){
 		
 		PompierBuilder agent=new PompierBuildFromFile(idPompier);  
 		

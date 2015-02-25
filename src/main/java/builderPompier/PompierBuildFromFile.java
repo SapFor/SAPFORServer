@@ -15,7 +15,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	
 	public PompierBuildFromFile(int id){
 		
-		this.pompier=new Pompier();
+		this.pompier=new PompierConcret();
 		this.fichier=fichier+id+".pomp";
 		
 		try{

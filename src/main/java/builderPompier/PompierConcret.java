@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 //by Thomas Davin
 @XmlRootElement
-public class Pompier implements StructurePompier {
+public class PompierConcret implements Pompier {
 	
 	//impl�mentation de la structure Pompier
 	//permet la cr�ation d'un objet pompier  � partir d'un fichier avec le m�me numero d'agent
