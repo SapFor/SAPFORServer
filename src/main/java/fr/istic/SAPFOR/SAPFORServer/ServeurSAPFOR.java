@@ -43,17 +43,25 @@ public class ServeurSAPFOR {
 		/*int[] tab={6,12,8};
 		test=tab;
 		 for(int ge: tab)System.out.println(ge);*/
-		File folder = new File("donnees/UVs"); //creation chemin jusqu'au répretoire UV
+		
+		URL dossier=getClass().getResource("/donnees/UVs");
+		
+		
+		File folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UV
+		
+		
 		
 		String[] listOfUVs = folder.list();//new java.io.File("./Projet-CAOS/SAPFORServer/src/main/resources/donnees/UVs").list( );
 		
-		//System.out.println(listOfUVs.toString());
 		
-		/*for (int i=0; i<listOfUVs.length; i++)
+		
+		System.out.println(listOfUVs.toString());
+		
+		for (int i=0; i<listOfUVs.length; i++)
         {
             // Afficher le nom de chaque élément
             System.out.println(listOfUVs[i]);
-	    }*/
+	    }
 				
 				//folder.list();//recuperation des fichiers du repertoire UV
 		
@@ -67,10 +75,10 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces("text/plain")
 	public String getPrint() throws URISyntaxException{	
-		StringBuffer chain=new StringBuffer("");
-		for(int ge: test)chain.append(ge+" ");
+		//StringBuffer chain=new StringBuffer("");
+		//for(int ge: test)chain.append(ge+" ");
 		
-		return chain.toString();
+		return "bonjour";
 		
 	}
 		    
