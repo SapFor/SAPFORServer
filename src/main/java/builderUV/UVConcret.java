@@ -12,7 +12,7 @@ public class UVConcret implements UV {
 	
 	private String nom;
 	private String descr;
-	private List<String> session;
+	private List<String> stage;
 	
 	@Override
 	public void setNom(String nom) {
@@ -33,7 +33,7 @@ public class UVConcret implements UV {
 	public void setSessions(List<String> session) {
 		// TODO Auto-generated method stub
 		
-		this.session=session;
+		this.stage=session;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class UVConcret implements UV {
 	@Override
 	public List<String> getSessions() {
 		// TODO Auto-generated method stub
-		return session;
+		return stage;
 	}
 
 }

@@ -1,7 +1,11 @@
 package builderPompier;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import outils.RecupInfoFichier;
 
@@ -10,16 +14,21 @@ import outils.RecupInfoFichier;
 public class PompierBuildFromFile implements PompierBuilder{
 
 	private Pompier pompier;
-	private String fichier="";//insérer le chemin jusqu'aux fichiers des agents
+	
+	private URL fichier;
+			
 	private BufferedReader input;
 	
-	public PompierBuildFromFile(int id){
+	public PompierBuildFromFile(int id) throws URISyntaxException{
 		
+		fichier=getClass().getResource("/donnees/Pompiers/"+id+".pomp");
 		this.pompier=new PompierConcret();
-		this.fichier=fichier+id+".pomp";
+		//this.fichier=fichier+id+".pomp";
+		URI cheminFich=fichier.toURI();
+		System.out.println(cheminFich.toString());
 		
 		try{
-			 input = new BufferedReader(new FileReader(fichier));
+			 input = new BufferedReader(new FileReader(new File(cheminFich)));
 			 input.mark(2000);	
 			
 			}catch(Exception e){System.out.println("Aucun fichier "+fichier+" existant!");}

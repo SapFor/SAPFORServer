@@ -1,8 +1,12 @@
 package builderUV;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import outils.RecupInfoFichier;
 
@@ -11,16 +15,19 @@ import outils.RecupInfoFichier;
 public class UVBuildFromFile implements UVbuilder {
 
 	private UV uv;
-	private String fichier="";//insérer le chemin menant aux fichiers UV
+	private URL fichier;
 	private BufferedReader input;
 	
-	public UVBuildFromFile(String uv){
+	public UVBuildFromFile(String uv) throws URISyntaxException{
+		
+		fichier=getClass().getResource("/donnees/UVs/"+uv+".pomp");
+		URI cheminFich=fichier.toURI();
 		
 		this.uv=new UVConcret();
-		this.fichier=fichier+uv+".uv";
+		
 		
 		try{
-			input = new BufferedReader(new FileReader(fichier));
+			input = new BufferedReader(new FileReader(new File(cheminFich)));
 			 input.mark(2000);	
 			
 			}catch(Exception e){System.out.println("Aucun fichier "+fichier+" existant!");}

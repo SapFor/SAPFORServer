@@ -9,8 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class PompierConcret implements Pompier {
 	
-	//impl�mentation de la structure Pompier
-	//permet la cr�ation d'un objet pompier  � partir d'un fichier avec le m�me numero d'agent
+	//implémentation de la structure Pompier
+	//permet la création d'un objet pompier  � partir d'un fichier avec le m�me numero d'agent
+	
+	private int idSession;
 	
 	private int id;
 	
@@ -33,7 +35,18 @@ public class PompierConcret implements Pompier {
 	private List<String> refuse;
 	
 	private List<String> gestion;
-		
+	
+	
+	@Override
+	public void setIdSession(int idSession){
+		this.idSession=idSession;
+	}
+	
+	@Override
+	public int getIdSession(){
+		return idSession;
+	}
+	
 	@Override
 	public void setId(int id) {
 				
@@ -59,9 +72,7 @@ public class PompierConcret implements Pompier {
 		else{this.directeur=false;}
 		
 	}
-	
-	
-	
+		
 	@Override
 	public boolean getDirecteur(){return directeur;}
 	

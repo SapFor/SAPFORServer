@@ -1,8 +1,12 @@
 package builderStage;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import outils.RecupInfoFichier;
 
@@ -11,16 +15,20 @@ import outils.RecupInfoFichier;
 public class StageBuildFromFile implements StageBuilder {
 		
 	private Stage session;
-	private String fichier="";//insérer le chemin menant aux fichiers session
+	private URL fichier;
 	private BufferedReader input;
 	
-	public StageBuildFromFile(String label){
+	public StageBuildFromFile(String label) throws URISyntaxException{
+		
+		
+		fichier=getClass().getResource("/donnees/Stages/"+label+".sess");
+		URI cheminFich=fichier.toURI();
 		
 		this.session=new StageConcrete();
-		this.fichier=fichier+label+".sess";
+		
 		
 		try{
-			input = new BufferedReader(new FileReader(fichier));
+			input = new BufferedReader(new FileReader(new File(cheminFich)));
 			input.mark(2000);	
 			
 			}catch(IOException e){System.out.println("Aucun fichier "+fichier+" existant!");}

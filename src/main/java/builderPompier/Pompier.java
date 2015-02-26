@@ -15,6 +15,9 @@ public interface Pompier {
 	 * @param id
 	 */
 	
+	public void setIdSession(int idSession);
+	
+	public int getIdSession();
 	
 	public void setId(int id);
 	

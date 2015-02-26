@@ -1,6 +1,7 @@
 package outils;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import builderPompier.PompierConcret;
 import builderPompier.PompierBuildFromFile;
@@ -20,18 +21,27 @@ import builderUV.UVbuilder;
 public class GestionCreationObjets {
 
 	
-	public static Pompier creerPompier(int idPompier){
+	public static Pompier creerPompier(int idPompier)throws IOException, URISyntaxException{
 		
-		PompierBuilder agent=new PompierBuildFromFile(idPompier);  
+		PompierBuilder agent;
+		
+			agent = new PompierBuildFromFile(idPompier);
+		
+		 
 		
 		PompierDirector constPompier=new PompierDirector(agent);
 		
-		constPompier.makePompier();
+		try {
+			constPompier.makePompier();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 				
 		return constPompier.getPompier();
 	}
 	
-	public static UV creerUV(String uvNom){
+	public static UV creerUV(String uvNom) throws URISyntaxException{
 		
 		UVbuilder uv=new UVBuildFromFile(uvNom);  
 		
@@ -45,7 +55,7 @@ public class GestionCreationObjets {
 		return constUV.getUV();
 	}
 	
-	public static Stage creerStage(String nomStage){
+	public static Stage creerStage(String nomStage) throws URISyntaxException{
 		
 		StageBuilder stage=new StageBuildFromFile(nomStage);  
 		
@@ -57,6 +67,20 @@ public class GestionCreationObjets {
 		
 		
 		return constStage.getSession();
+	}
+	
+	public static void main(String args[]) throws URISyntaxException{
+		
+		try {
+			Pompier nouveau=creerPompier(1);
+			System.out.println(nouveau.getNom());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	

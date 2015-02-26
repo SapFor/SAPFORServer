@@ -16,7 +16,7 @@ public class PompierDirector {
 		return this.constructPompier.getPompier();
 	}
 	
-	public void makePompier(){
+	public void makePompier()throws IOException{
 		
 		try{
 			this.constructPompier.buildId();
