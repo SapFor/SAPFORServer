@@ -36,7 +36,6 @@ public class PompierConcret implements Pompier {
 	
 	private List<String> gestion;
 	
-	
 	@Override
 	public void setIdSession(int idSession){
 		this.idSession=idSession;

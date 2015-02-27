@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import javax.ws.rs.Consumes;
@@ -37,49 +39,39 @@ public class ServeurSAPFOR {
 	private HashMap<Integer,Pompier> numConnection=new HashMap<Integer,Pompier>();//map contenant l'objet pompier lie a son numero de session
 	private HashMap<String,Stage> nomStage=new HashMap<String,Stage>();
 	private HashMap<String,UV> nomUV=new HashMap<String,UV>();
-	private int[] test;
+	private String[] test;
 	
 	public ServeurSAPFOR() throws URISyntaxException{
-		/*int[] tab={6,12,8};
-		test=tab;
-		 for(int ge: tab)System.out.println(ge);*/
 		
 		URL dossier=getClass().getResource("/donnees/UVs");
-		
-		
-		File folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UV
-		
-		
-		
-		String[] listOfUVs = folder.list();//new java.io.File("./Projet-CAOS/SAPFORServer/src/main/resources/donnees/UVs").list( );
-		
-		
-		
-		System.out.println(listOfUVs.toString());
+		File folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UVs
+		String[] listOfUVs = folder.list();//recuperation du nom des fichiers du repertoire UV
+		test=listOfUVs;
 		
 		for (int i=0; i<listOfUVs.length; i++)
-        {
-            // Afficher le nom de chaque élément
-            System.out.println(listOfUVs[i]);
+        {	
+						
+            nomUV.put(listOfUVs[i],getUV(listOfUVs[i]));//remplissage HashMap avec {nomUV,UV}
+            
 	    }
-				
-				//folder.list();//recuperation des fichiers du repertoire UV
+						
+		dossier=getClass().getResource("/donnees/Stages");//creation chemin jusqu'au répretoire Stages
+		folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UVs
+		String[] listOfStages = folder.list();//recuperation du nom des fichiers du repertoire UV
 		
-		//System.out.println(folder.list());
-		
-		//for (int i =0; i < listOfUVs.length; i++) {//remplissage HashMap avec {nomUV,UV}
-		//	nomUV.put(listOfUVs[i].getName(),GestionCreationObjets.creerUV(listOfUVs[i].getName()));
-		//}
+		for (int i =0; i < listOfStages.length; i++) {
+			
+			nomStage.put(listOfStages[i],getStage(listOfStages[i]));
+		}
 	}
 	
 	@GET
-	@Produces("text/plain")
-	public String getPrint() throws URISyntaxException{	
-		//StringBuffer chain=new StringBuffer("");
-		//for(int ge: test)chain.append(ge+" ");
+	@Path("/print")
+	@Produces({MediaType.APPLICATION_JSON})
+	public String [] getPrint() throws URISyntaxException{	
 		
-		return "bonjour";
 		
+		return this.test;
 	}
 		    
 		/*File folder = new File("donnees/Stages"); //creation chemin jusqu'au répretoire UV
@@ -100,13 +92,13 @@ public class ServeurSAPFOR {
 	}
 		
 	private UV getUV(String UV) throws URISyntaxException {
-		//permet la recup�ration des infos de l'UV par le client
+		//permet la recuperation des infos de l'UV par le client
 		return GestionCreationObjets.creerUV(UV);
 	}
 	
 	
 	private Stage getStage(String stage) throws URISyntaxException {
-		//permet de r�cup�rer les infos de chaqsue session par le client
+		//permet de recuperer les infos de chaqsue session par le client
 		return GestionCreationObjets.creerStage(stage);
 	}
 	
@@ -134,10 +126,10 @@ public class ServeurSAPFOR {
 		if(entrant.getMdp().equals(mdp)){
 			int randomInt=0;
 			Random randomGenerator = new Random();//creation d'un generateur de nombre aleatoires
-			while(numConnection.containsKey(randomInt)){//v�rification si randomInt existe dans le hasmap si oui, g�n�ration d'un nouveau nombre al�atoire
+			while(numConnection.containsKey(randomInt)){//verification si randomInt existe dans le hasmap si oui, generation d'un nouveau nombre aleatoire
 				randomInt=randomGenerator.nextInt(998);
 			}
-			numConnection.put(randomInt,entrant);//stockage de la valeur de session + du pompier associ�
+			numConnection.put(randomInt,entrant);//stockage de la valeur de session + du pompier associe
 			
 			entrant.setIdSession(randomInt); 
 			
@@ -155,9 +147,9 @@ public class ServeurSAPFOR {
 		//met a jour le fichier d'infos du pompier
 		//detruit le numero de session et l'objet Pompier cree(apres avoir ete sauvegarde)
 		
-		EcrireFichier.ecrirePompier(numConnection.get(session));//�criture/�crasement du fichier avec les infos contenues dans l'objet pompier 
+		EcrireFichier.ecrirePompier(numConnection.get(session));//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
 		
-		numConnection.remove(session);//suppression de l'entr�e li� � ce num�ro de session
+		numConnection.remove(session);//suppression de l'entree lie a ce numero de session
 		
 		return "OK";
 		
@@ -170,14 +162,25 @@ public class ServeurSAPFOR {
 		//ajoute une entr�e "nomSession" dans la liste "encours" de l'objet pompier 
 		//r�f�renc� par le num�ro de session "session" 
 		
-		numConnection.get(session);
-		//nomStage
+		Pompier aModif=numConnection.get(session);
+		Stage actuel=this.nomStage.get(nomStage);
 		
-		return nomStage;
+		List<String> sessionEnCours=aModif.getEnCours();
+		sessionEnCours.add(nomStage);
+		aModif.setEnCours(sessionEnCours);
+		
+				
+		return null;
 			
 	}
 	
+	
+		
+	
+	
+	
 	public void cloturer(String date){
+		
 		
 	}
 	

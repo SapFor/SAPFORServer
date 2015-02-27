@@ -84,4 +84,10 @@ public class GestionCreationObjets {
 	}
 	
 	
+	public static void main(){
+		
+		
+		
+	}
+	
 }

@@ -20,7 +20,7 @@ public class UVBuildFromFile implements UVbuilder {
 	
 	public UVBuildFromFile(String uv) throws URISyntaxException{
 		
-		fichier=getClass().getResource("/donnees/UVs/"+uv+".pomp");
+		fichier=getClass().getResource("/donnees/UVs/"+uv);
 		URI cheminFich=fichier.toURI();
 		
 		this.uv=new UVConcret();

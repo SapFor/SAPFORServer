@@ -21,7 +21,7 @@ public class StageBuildFromFile implements StageBuilder {
 	public StageBuildFromFile(String label) throws URISyntaxException{
 		
 		
-		fichier=getClass().getResource("/donnees/Stages/"+label+".sess");
+		fichier=getClass().getResource("/donnees/Stages/"+label);
 		URI cheminFich=fichier.toURI();
 		
 		this.session=new StageConcrete();
@@ -39,6 +39,8 @@ public class StageBuildFromFile implements StageBuilder {
 	public void buildDate() throws IOException {
 		// TODO Auto-generated method stub
 		try{
+			 
+			 
 		 session.setDate(RecupInfoFichier.chercheDsFichier(input,"date"));
 		}catch(IOException e){e.printStackTrace();}
 	}
