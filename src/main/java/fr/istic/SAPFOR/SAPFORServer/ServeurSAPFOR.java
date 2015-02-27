@@ -68,10 +68,10 @@ public class ServeurSAPFOR {
 	@GET
 	@Path("/print")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String [] getPrint() throws URISyntaxException{	
+	public Stage getStage() throws URISyntaxException{	
 		
 		
-		return this.test;
+		return nomStage.get("stmalo12juin14.sess");
 	}
 		    
 		/*File folder = new File("donnees/Stages"); //creation chemin jusqu'au répretoire UV

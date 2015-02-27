@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import outils.RecupInfoFichier;
 
@@ -35,13 +38,20 @@ public class StageBuildFromFile implements StageBuilder {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void buildDate() throws IOException {
 		// TODO Auto-generated method stub
+		Date ajout;
 		try{
-			 
-			 
-		 session.setDate(RecupInfoFichier.chercheDsFichier(input,"date"));
+			int jour=Integer.parseInt(RecupInfoFichier.chercheDsFichier(input,"jour"));
+			int mois=Integer.parseInt(RecupInfoFichier.chercheDsFichier(input,"mois"));
+			int annee=Integer.parseInt(RecupInfoFichier.chercheDsFichier(input,"annee"));
+			
+			Calendar jourJ=Calendar.getInstance();
+			jourJ.set(annee,mois,jour);		
+			
+			session.setDate(jourJ);
 		}catch(IOException e){e.printStackTrace();}
 	}
 

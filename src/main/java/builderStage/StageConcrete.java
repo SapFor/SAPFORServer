@@ -1,5 +1,6 @@
 package builderStage;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class StageConcrete implements Stage {
 	
 	private String uv;
 	private int directeur;
-	private Date date;
+	private Calendar date;
 	private String lieu;
 	private String infos;
 	private List<String> candidats;
@@ -50,16 +51,21 @@ public class StageConcrete implements Stage {
 	}
 	
 	@Override
-	public void setDate(Date date) {
+	public void setDate(Calendar date) {
 		
 		this.date=date;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public Date getDate() {
+	public String getDate() {
 		// TODO Auto-generated method stub
-		return date;
+		String datum=date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.MONTH)+"/"+date.get(Calendar.YEAR);
+		
+		return datum;
 	}
+		
+	
 
 	@Override
 	public void setLieu(String lieu) {

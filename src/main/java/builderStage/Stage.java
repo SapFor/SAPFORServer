@@ -1,5 +1,6 @@
 package builderStage;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +19,9 @@ public interface Stage {
 	
 	public void setDirecteur(int idDirecteur);
 	
-	public void setDate(String date);
+	public void setDate(Calendar date);
 	
-	public Date getDate();
+	public String getDate();
 	
 	public void setLieu(String lieu);
 	
