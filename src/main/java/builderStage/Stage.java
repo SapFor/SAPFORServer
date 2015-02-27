@@ -1,5 +1,6 @@
 package builderStage;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -13,9 +14,13 @@ public interface Stage {
 	
 	public String getUV();
 	
+	public int getDirecteur();
+	
+	public void setDirecteur(int idDirecteur);
+	
 	public void setDate(String date);
 	
-	public String getDate();
+	public Date getDate();
 	
 	public void setLieu(String lieu);
 	

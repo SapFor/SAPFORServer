@@ -1,5 +1,6 @@
 package builderStage;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,7 +14,8 @@ public class StageConcrete implements Stage {
 	
 	
 	private String uv;
-	private String date;
+	private int directeur;
+	private Date date;
 	private String lieu;
 	private String infos;
 	private List<String> candidats;
@@ -23,13 +25,38 @@ public class StageConcrete implements Stage {
 	
 	
 	@Override
-	public void setDate(String date) {
+	public void setDirecteur(int idDirecteur) {
+		// TODO Auto-generated method stub
+		this.directeur=idDirecteur;
+	}
+
+	@Override
+	public int getDirecteur() {
+		// TODO Auto-generated method stub
+		return directeur;
+	}
+	
+	
+	@Override
+	public void setUV(String UV) {
+		// TODO Auto-generated method stub
+		this.uv=UV;
+	}
+
+	@Override
+	public String getUV() {
+		// TODO Auto-generated method stub
+		return uv;
+	}
+	
+	@Override
+	public void setDate(Date date) {
 		
 		this.date=date;
 	}
 
 	@Override
-	public String getDate() {
+	public Date getDate() {
 		// TODO Auto-generated method stub
 		return date;
 	}
@@ -109,16 +136,6 @@ public class StageConcrete implements Stage {
 		return refuse;
 	}
 
-	@Override
-	public void setUV(String UV) {
-		// TODO Auto-generated method stub
-		this.uv=UV;
-	}
-
-	@Override
-	public String getUV() {
-		// TODO Auto-generated method stub
-		return uv;
-	}
+	
 
 }
