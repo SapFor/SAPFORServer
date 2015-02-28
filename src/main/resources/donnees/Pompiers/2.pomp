@@ -1,18 +1,18 @@
 id
-1
+2
 mdp
 12345
 directeur
-oui
+non
 nom
-Plouzeau
+Lepelletier
 prenom
-Noel
+Frederic
 
 uv
-INC2
-FDF2
-FORM2
+INC1
+FDF1
+PS1
 PS2
 fuv
 
@@ -30,6 +30,3 @@ frefuse
 
 gestion
 fgestion
-
-
-

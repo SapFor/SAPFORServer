@@ -1,19 +1,18 @@
 id
-1
+5
 mdp
 12345
 directeur
-oui
+non
 nom
-Plouzeau
+Legeay
 prenom
-Noel
+Jean-Christophe
 
 uv
-INC2
-FDF2
-FORM2
-PS2
+INC1
+FDF1
+PS1
 fuv
 
 encours
@@ -30,6 +29,3 @@ frefuse
 
 gestion
 fgestion
-
-
-
