@@ -166,7 +166,7 @@ public class ServeurSAPFOR {
 		Stage actuel=this.nomStage.get(nomStage);
 		
 		List<String> sessionEnCours=aModif.getEnCours();
-		sessionEnCours.add(nomStage);
+		sessionEnCours.add(nomStage); // ne serait-ce pas :  sessionEnCours.add(actuel); ???
 		aModif.setEnCours(sessionEnCours);
 		
 				
