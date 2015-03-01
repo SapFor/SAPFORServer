@@ -21,7 +21,7 @@ import outils.GestionCreationObjets;
 import builderPompier.Pompier;
 import builderPompier.PompierConcret;
 import builderStage.Stage;
-import builderStage.StageConcrete;
+import builderStage.StageConcret;
 import builderUV.UV;
 import builderUV.UVConcret;
 
@@ -65,12 +65,12 @@ public class ServeurSAPFOR {
 			nomStage.put(listOfStages[i],createStage(listOfStages[i]));//remplissage de la  HashMap avec {nomStage,Stage}
 			
 		}
-	}
+	}//fin constructeur
 	
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/stage/{nomStage}")
+	@Path("stage/{nomStage}")
 	public Stage getStage(@PathParam("nomStage") String nomStage) throws URISyntaxException{	
 		
 		return  this.nomStage.get(nomStage);
@@ -134,13 +134,12 @@ public class ServeurSAPFOR {
 	}//fin login
 
 	
-	// Fourni les listes de UV accessible en candidature pour le pompier associe a la session 
-	// Filtre base uniquement sur les UV dÃ©jÃ  acquises
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidat/{session}")
 	public List <UVConcret> getUVdisponible(@PathParam("session") int session){ // cast en UVConcret necessaire au fonctionnement de JAXB
-			
+		// Fourni les listes de UV accessible en candidature pour le pompier associe a la session 
+		// Filtre base uniquement sur les UV dÃ©jÃ  acquises	
 		List <UVConcret> UVDisponible=new ArrayList<UVConcret>();
 			
 		for (int i=0; i<nomUV.size(); i++){
@@ -155,28 +154,29 @@ public class ServeurSAPFOR {
 		}
 			
 		return UVDisponible;
-	}
+				
+	}//fin getUVdisponible
 	
-	// Fourni les listes de Stage gérés par le pompier associe a la session 
-	// liste basé sur le contenu du fichier pompier champ Gestion
+	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}")
-	public List <StageConcrete> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
-			
-		List <StageConcrete> StageAGerer=new ArrayList<StageConcrete>();
+	public List <StageConcret> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
+		// Fourni les listes de Stage gérés par le pompier associe a la session 
+		// liste basé sur le contenu du fichier pompier champ Gestion	
+		List <StageConcret> StageAGerer=new ArrayList<StageConcret>();
 		
 		Pompier agent=numConnection.get(session);
 		List<String> GestionStage=agent.getGestion();
 		
 		for (int i=0; i<GestionStage.size(); i++){
-		StageAGerer.add((StageConcrete)nomStage.get(GestionStage.get(i)+".sess"));
+		StageAGerer.add((StageConcret)nomStage.get(GestionStage.get(i)+".sess"));
 
 			
 		}
 								
 		return StageAGerer;
-	}
+	}//fin getSTageAGerer
 		
 	
 	
@@ -204,7 +204,7 @@ public class ServeurSAPFOR {
 	
 	@PUT
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("/candidater/{session}/{nomStage}")
+	@Path("candidater/{session}/{nomStage}")
 	public String candidater(int session, String nomStage) {
 		//ajoute un stage ("nomStage") a la liste des stages "en cours" de l'objet pompier 
 		//obtenu par son numero de session actuelle ("session")  
@@ -230,9 +230,10 @@ public class ServeurSAPFOR {
 	
 		
 	
-	
-	
-	public void cloturer(String date){
+	@PUT
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("directeur/{session}/{date}")//date entrée sous la forme JJ/MM/AAAA
+		public void cloturer(String date){
 		
 		
 		
