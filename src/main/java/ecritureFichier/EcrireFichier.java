@@ -1,14 +1,15 @@
 package ecritureFichier;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 
 import builderPompier.Pompier;
 import builderPompier.PompierConcret;
 import builderStage.Stage;
-import builderUV.UV;
 
 public class EcrireFichier {
 	
@@ -29,7 +30,8 @@ public class EcrireFichier {
 		
 		BufferedWriter output;
 		String dir;
-		URL fichier;
+		URL chemin;
+		File fichier;
 		
 		if(pompier.getDirecteur()){dir="oui";}
 		else{dir="non";}
@@ -46,13 +48,14 @@ public class EcrireFichier {
 		StringBuffer gestionList=new StringBuffer();
 		for(String gestion : pompier.getGestion()){gestionList.append(gestion+"\n");}
 		
-		//fichier=EcrireFichier.class.getResource("/donnees/Pompiers");
-			//	+pompier.getId()+".pomp";//indiquer le "path" des fichiers entre ""
-		//try{
-		//	output=new BufferedWriter(new FileWriter (fichier,false));
+		chemin=EcrireFichier.class.getResource("/donnees/Pompiers/"+pompier.getId()+".pomp");
+			
+		fichier=new File(chemin.toString()+pompier.getId()+".pomp");
+		try{
+			output=new BufferedWriter(new FileWriter (fichier));
 			
 			
-		/*	output.write(
+			output.write(
 					"id\n"+pompier.getId()+"\n"
 					+"mdp\n"+pompier.getMdp()+"\n"
 					+"directeur\n"+dir+"\n"
@@ -87,9 +90,7 @@ public class EcrireFichier {
 			output.close();		
 								
 		}catch(IOException e){e.printStackTrace();}
-		
-		*/
-		
+						
 	}
 	
 	
@@ -97,7 +98,41 @@ public class EcrireFichier {
 	private void ecrireStage(Stage stage){
 		
 		BufferedWriter output;
+		URL chemin;
+		File fichier;		
+		String nomFichier;
+		
+		int jourD=stage.getDate().get(Calendar.DAY_OF_MONTH);
+		int moisD=stage.getDate().get(Calendar.MONTH);
+		int anneeD=stage.getDate().get(Calendar.YEAR);
+		
+		String moisS="";
+		int anneeS=anneeD%100;
 				
+		switch(moisD){
+		case 1: moisS="janv";break;
+		case 2: moisS="fev";break;
+		case 3: moisS="mars";break;
+		case 4: moisS="avr";break;
+		case 5: moisS="mai";break;
+		case 6: moisS="juin";break;
+		case 7: moisS="juil";break;
+		case 8: moisS="aout";break;
+		case 9: moisS="sept";break;
+		case 10: moisS="oct";break;
+		case 11: moisS="nov";break;
+		case 12: moisS="dec";break;
+		default: moisS="Pbm";break;
+		}
+		
+		nomFichier=stage.getUV()+stage.getLieu()+jourD+moisS+anneeS+".sess";
+				
+		String jourF=String.valueOf(stage.getFinCandidature().get(Calendar.DAY_OF_MONTH));
+		String moisF=String.valueOf(stage.getFinCandidature().get(Calendar.MONTH));;
+		String anneeF=String.valueOf(stage.getFinCandidature().get(Calendar.YEAR));;
+		
+		
+		
 		StringBuffer candyList=new StringBuffer();
 		for(String candy : stage.getCandidats()){candyList.append(candy+"\n");}
 		StringBuffer accepteList=new StringBuffer();
@@ -108,25 +143,25 @@ public class EcrireFichier {
 		for(String refuse : stage.getRefuse()){refuseList.append(refuse+"\n");}
 		
 		
-		//String fichier=""+pompier.getId()+".pomp";//indiquer le "path" des fichiers entre ""
-		/*try{
-			output=new BufferedWriter(new FileWriter (fichier,false));
+		chemin=EcrireFichier.class.getResource("/donnees/Stages/");
+		
+		fichier=new File(chemin.toString()+nomFichier);
+		
+		try{
+			output=new BufferedWriter(new FileWriter (fichier));
 			
 			
 			output.write(
 					"uv\n"+stage.getUV()+"\n"
-					+"mdp\n"+pompier.getMdp()+"\n"
-					+"directeur\n"+dir+"\n"
-					+"nom\n"+pompier.getNom()+"\n"
-					+"prenom\n"+pompier.getPrenom()+"\n"
+					+"date\n"+jourD+"\n"+moisD+"\n"+anneeD+"\n"
+					+"finCandidature\n"+jourF+"\n"+moisF+"\n"+anneeF+"\n"
+					+"lieu\n"+stage.getLieu()+"\n"
 					+"\n"
-					+"uv\n"
-					+uvList.toString()
-					+"fuv\n"
+					+"infos\n"+stage.getInfos()+"\n"+"finfos\n"
 					+"\n"
-					+"encours\n"
-					+encoursList.toString()
-					+"fencours\n"
+					+"candidats\n"
+					+candyList.toString()
+					+"fcandidats\n"
 					+"\n"
 					+"accepte\n"
 					+accepteList.toString()
@@ -139,15 +174,12 @@ public class EcrireFichier {
 					+"refuse\n"
 					+refuseList.toString()
 					+"frefuse\n"
-					+"\n"
-					+"gestion\n"
-					+gestionList.toString()
-					+"fgestion\n"
+					
 			);
 			
 			output.close();		
 								
-		}catch(IOException e){e.printStackTrace();}*/
+		}catch(IOException e){e.printStackTrace();}
 		
 		
 	}

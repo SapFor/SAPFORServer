@@ -14,7 +14,7 @@ public class StageConcret implements Stage {
 	
 	
 	private String uv;
-	private int directeur;
+	//private int directeur;
 	private Calendar date;
 	private Calendar finCandidature;
 	private String lieu;
@@ -25,7 +25,7 @@ public class StageConcret implements Stage {
 	private List<String> attente;
 	
 	
-	@Override
+	/*@Override
 	public void setDirecteur(int idDirecteur) {
 		// TODO Auto-generated method stub
 		this.directeur=idDirecteur;
@@ -35,7 +35,7 @@ public class StageConcret implements Stage {
 	public int getDirecteur() {
 		// TODO Auto-generated method stub
 		return directeur;
-	}
+	}*/
 	
 	
 	@Override
@@ -58,11 +58,10 @@ public class StageConcret implements Stage {
 
 	
 	@Override
-	public String getDate() {
+	public Calendar getDate() {
 		// TODO Auto-generated method stub
-		String datum=date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.MONTH)+"/"+date.get(Calendar.YEAR);
-		
-		return datum;
+				
+		return this.date;
 	}
 		
 	@Override

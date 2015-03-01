@@ -57,7 +57,7 @@ public class ServeurSAPFOR {
 		    listeDesUVs.add(createUV(listOfUVs[i]));
          }
 						
-		dossier=getClass().getResource("/donnees/Stages");////recherche du chemin menants aux fichiers des stages
+		dossier=getClass().getResource("/donnees/Stages");//recherche du chemin menants aux fichiers des stages
 		folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire Stage
 		String[] listOfStages = folder.list();//recuperation du nom des fichiers du repertoire Stage
 		
@@ -180,7 +180,7 @@ public class ServeurSAPFOR {
 		}
 								
 		return StageAGerer;
-	}//fin getSTageAGerer
+	}//fin getStageAGerer
 		
 	
 	

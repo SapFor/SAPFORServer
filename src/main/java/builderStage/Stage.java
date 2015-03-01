@@ -14,13 +14,13 @@ public interface Stage {
 	
 	public String getUV();
 	
-	public int getDirecteur();
+	/*public int getDirecteur();
 	
-	public void setDirecteur(int idDirecteur);
+	public void setDirecteur(int idDirecteur);*/
 	
 	public void setDate(Calendar date);
 	
-	public String getDate();
+	public Calendar getDate();
 	
 	public Calendar getFinCandidature();
 	
