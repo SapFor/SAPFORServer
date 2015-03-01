@@ -1,28 +1,23 @@
 uv
 INC1
 jour
-6
-mois
 12
+mois
+6
 annee
 2015
 lieu
-st malo
+geveze
 
 infos
 3eme a droite au premier passage du pont, suivre centre de secours ...
 finfos
 
 candidats
-1
-2
-3
 fcandidats
 
 
 accepte
-2
-3
 faccepte
 
 
@@ -30,5 +25,4 @@ attente
 fattente
 
 refuse
-1
 frefuse

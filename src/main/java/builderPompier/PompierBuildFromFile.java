@@ -25,7 +25,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 		this.pompier=new PompierConcret();
 		//this.fichier=fichier+id+".pomp";
 		URI cheminFich=fichier.toURI();
-		System.out.println(cheminFich.toString());
+		
 		
 		try{
 			 input = new BufferedReader(new FileReader(new File(cheminFich)));
