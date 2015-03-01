@@ -22,6 +22,10 @@ public interface Stage {
 	
 	public String getDate();
 	
+	public Calendar getFinCandidature();
+	
+	public void setFinCandidature(Calendar date);
+	
 	public void setLieu(String lieu);
 	
 	public String getLieu();

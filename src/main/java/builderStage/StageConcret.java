@@ -16,6 +16,7 @@ public class StageConcret implements Stage {
 	private String uv;
 	private int directeur;
 	private Calendar date;
+	private Calendar finCandidature;
 	private String lieu;
 	private String infos;
 	private List<String> candidats;
@@ -64,8 +65,19 @@ public class StageConcret implements Stage {
 		return datum;
 	}
 		
+	@Override
+	public Calendar getFinCandidature(){
+		
+		return finCandidature;
+		
+	}
 	
-
+	@Override
+	public void setFinCandidature(Calendar date){
+		
+		this.finCandidature=date;
+	}
+	
 	@Override
 	public void setLieu(String lieu) {
 		
