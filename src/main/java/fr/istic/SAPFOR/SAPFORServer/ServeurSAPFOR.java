@@ -162,8 +162,12 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}")
 	public List <StageConcret> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
+<<<<<<< HEAD
 		// Fourni les listes de Stage gérés par le pompier associe a la session 
 		// liste basé sur le contenu du fichier pompier champ Gestion	
+=======
+			
+>>>>>>> origin/master
 		List <StageConcret> StageAGerer=new ArrayList<StageConcret>();
 		
 		Pompier agent=numConnection.get(session);
@@ -234,8 +238,6 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}/{date}")//date entrée sous la forme JJ/MM/AAAA
 		public void cloturer(String date){
-		
-		
 		
 		
 	}
