@@ -1,0 +1,10 @@
+diff a/src/main/java/fr/istic/SAPFOR/SAPFORServer/ServeurSAPFOR.java b/src/main/java/fr/istic/SAPFOR/SAPFORServer/ServeurSAPFOR.java	(rejected hunks)
+@@ -235,6 +235,8 @@
+ 	public void cloturer(String date){
+ 		
+ 		
++		
++		
+ 	}
+ 	
+ 	

@@ -21,7 +21,7 @@ import outils.GestionCreationObjets;
 import builderPompier.Pompier;
 import builderPompier.PompierConcret;
 import builderStage.Stage;
-import builderStage.StageConcrete;
+import builderStage.StageConcret;
 import builderUV.UV;
 import builderUV.UVConcret;
 
@@ -162,15 +162,15 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}")
-	public List <StageConcrete> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
+	public List <StageConcret> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
 			
-		List <StageConcrete> StageAGerer=new ArrayList<StageConcrete>();
+		List <StageConcret> StageAGerer=new ArrayList<StageConcret>();
 		
 		Pompier agent=numConnection.get(session);
 		List<String> GestionStage=agent.getGestion();
 		
 		for (int i=0; i<GestionStage.size(); i++){
-		StageAGerer.add((StageConcrete)nomStage.get(GestionStage.get(i)+".sess"));
+		StageAGerer.add((StageConcret)nomStage.get(GestionStage.get(i)+".sess"));
 
 			
 		}
@@ -233,8 +233,6 @@ public class ServeurSAPFOR {
 	
 	
 	public void cloturer(String date){
-		
-		
 		
 		
 	}
