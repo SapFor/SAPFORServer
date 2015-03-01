@@ -1,7 +1,6 @@
 package builderStage;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -56,7 +55,7 @@ public class StageConcrete implements Stage {
 		this.date=date;
 	}
 
-	@SuppressWarnings("deprecation")
+	
 	@Override
 	public String getDate() {
 		// TODO Auto-generated method stub

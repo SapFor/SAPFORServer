@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -136,11 +135,15 @@ public class ServeurSAPFOR {
 		//met a jour le fichier d'infos du pompier
 		//detruit le numero de session et l'objet Pompier cree(apres avoir ete sauvegarde)
 		
-		EcrireFichier.ecrirePompier(numConnection.get(session));//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
+		Pompier aDeco=numConnection.get(session);
+		
+		//String nom=aDeco.getNom();
+		//String prenom=aDeco.getPrenom();
+		EcrireFichier.ecrirePompier(aDeco);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
 		
 		numConnection.remove(session);//suppression de l'entree lie a ce numero de session
-		
-		return "OK";
+		//prenom+" "+nom+
+		return "Vous etes maintenant deconnecte!";
 		
 	}//fin deconnexion
 	
