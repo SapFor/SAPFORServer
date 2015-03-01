@@ -63,7 +63,7 @@ public class ServeurSAPFOR {
 		
 		for (int i =0; i < listOfStages.length; i++) {
 			nomStage.put(listOfStages[i],createStage(listOfStages[i]));//remplissage de la  HashMap avec {nomStage,Stage}
-			System.out.println(listOfStages[i]);
+			
 		}
 	}
 	
@@ -171,14 +171,16 @@ public class ServeurSAPFOR {
 		
 		for (int i=0; i<GestionStage.size(); i++){
 		StageAGerer.add((StageConcrete)nomStage.get(GestionStage.get(i)+".sess"));
-		System.out.println(GestionStage.get(i)+".sess");
+
 			
 		}
 								
 		return StageAGerer;
 	}
 		
-		
+	
+	
+	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{session}")
@@ -231,6 +233,8 @@ public class ServeurSAPFOR {
 	
 	
 	public void cloturer(String date){
+		
+		
 		
 		
 	}
