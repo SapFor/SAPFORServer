@@ -8,6 +8,8 @@ public interface StageBuilder {
 
 	public void buildDate() throws IOException;
 	
+	public void buildFinCandidature() throws IOException;
+	
 	public void buildLieu() throws IOException;
 	
 	public void buildInfos() throws IOException;

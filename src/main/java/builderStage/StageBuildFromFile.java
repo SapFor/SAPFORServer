@@ -42,19 +42,29 @@ public class StageBuildFromFile implements StageBuilder {
 	public void buildDate() throws IOException {
 		// TODO Auto-generated method stub
 		
+		Calendar jourJ;
+		
 		try{
 			
-			int jour=Integer.parseInt(RecupInfoFichier.chercheDsFichier(input,"jour"));
-			int mois=Integer.parseInt(RecupInfoFichier.chercheDsFichier(input,"mois"));
-			int annee=Integer.parseInt(RecupInfoFichier.chercheDsFichier(input,"annee"));
-						
-			Calendar jourJ=Calendar.getInstance();
-			jourJ.set(annee,mois,jour);		
+			jourJ=RecupInfoFichier.chercheDateDsFichier(input,"date");
 			
 			session.setDate(jourJ);
 		}catch(IOException e){e.printStackTrace();}
 	}
-
+	
+	@Override
+	public void buildFinCandidature() throws IOException{
+		
+		Calendar finCandidature;
+		try{
+			
+			finCandidature=RecupInfoFichier.chercheDateDsFichier(input,"finCandidature");
+							
+			
+			session.setFinCandidature(finCandidature);
+		}catch(IOException e){e.printStackTrace();}
+	}
+	
 	@Override
 	public void buildLieu() throws IOException {
 		// TODO Auto-generated method stub

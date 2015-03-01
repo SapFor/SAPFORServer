@@ -3,6 +3,7 @@ package outils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -11,7 +12,7 @@ import java.util.List;
 public class RecupInfoFichier {
 
 	public static String chercheDsFichier(BufferedReader input, String motCle) throws IOException{
-		// r�cup�re la chaine de caract�re en dessous du mot cl� donn� dans le fichier
+		// r�cup�re la chaine de caractere en dessous du mot cl� donn� dans le fichier
 		
 		String res="";
 		
@@ -32,7 +33,34 @@ public class RecupInfoFichier {
 		
 	} //fin chercheDsFichier
 	
-	
+	public static Calendar chercheDateDsFichier(BufferedReader input, String motCle) throws IOException{
+		
+		Calendar res=Calendar.getInstance(); 
+		
+		String chercheur="";
+		String jour="",mois="",annee="";
+		
+		try{
+			
+			input.reset();//s'assure que la recherche s'effectue depuis le d�but du buffer content le fichier
+			
+			while((chercheur=input.readLine())!=null && !chercheur.equals(motCle) ){
+				//cherche le mot cle
+				
+			}
+			
+			jour=input.readLine();//met la String sous le mot cle dans jour
+			mois=input.readLine();//met la String suivante dans mois
+			annee=input.readLine();//met la String suivante dans annee
+			
+			
+		}catch(IOException e){e.printStackTrace();}
+		
+		res.set(Integer.parseInt(jour),Integer.parseInt(mois),Integer.parseInt(annee));
+		
+		return res;
+		
+	}
 	
 	public static List<String> recupListDsFichier(BufferedReader input, String motCle)throws IOException{
 		//r�cup�re une liste de string comprise ente le mot cl� et f+"mot cl�"
@@ -63,17 +91,17 @@ public class RecupInfoFichier {
 	
 	
 public static String recupStringDsFichier(BufferedReader input, String motCle) throws IOException{
-		//r�cup�re une chaine de caract�re longue (sur plusieurs ligne) comprise entre mot cl� et f+"mot cl�"
+		//recupere une chaine de caractere longue (sur plusieurs ligne) comprise entre mot cle et f+"mot cle"
 	
 		StringBuffer res=new StringBuffer();
 		
 		String cle="";
 		
 		try{
-			input.reset();//s'assure que la recherche s'effectue depuis le d�but du buffer content le fichier
+			input.reset();//s'assure que la recherche s'effectue depuis le debut du buffer contenant le fichier
 			
 			while((cle=input.readLine())!=null && !cle.equals(motCle)){
-				//cherche mot cl�
+				//cherche mot cle
 			}
 			
 			while((cle=input.readLine())!=null && !cle.equals("f"+motCle) /*&& cle.length()==0*/){
