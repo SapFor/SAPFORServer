@@ -39,66 +39,54 @@ public class ServeurSAPFOR {
 	private HashMap<Integer,Pompier> numConnection=new HashMap<Integer,Pompier>();//map contenant l'objet pompier lie a son numero de session
 	private HashMap<String,Stage> nomStage=new HashMap<String,Stage>();
 	private HashMap<String,UV> nomUV=new HashMap<String,UV>();
-	private String[] test;
-	
-	public ServeurSAPFOR() throws URISyntaxException{
 		
-		URL dossier=getClass().getResource("/donnees/UVs");
+	public ServeurSAPFOR() throws URISyntaxException{
+		//constructeur du serveur
+		//remplissage de deux liste (hashmaps) : 1 contenant toutes les UV disponibles l'autre toutes les sessions disponibles
+		
+		URL dossier=getClass().getResource("/donnees/UVs"); //recherche du chemin menants aux fichiers d'UVS
 		File folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UVs
 		String[] listOfUVs = folder.list();//recuperation du nom des fichiers du repertoire UV
-		test=listOfUVs;
 		
-		for (int i=0; i<listOfUVs.length; i++)
-        {	
+		
+		for (int i=0; i<listOfUVs.length; i++){	
+			nomUV.put(listOfUVs[i],createUV(listOfUVs[i]));//remplissage de la HashMap avec {nomUV,UV}
+         }
 						
-            nomUV.put(listOfUVs[i],getUV(listOfUVs[i]));//remplissage HashMap avec {nomUV,UV}
-            
-	    }
-						
-		dossier=getClass().getResource("/donnees/Stages");//creation chemin jusqu'au répretoire Stages
-		folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UVs
-		String[] listOfStages = folder.list();//recuperation du nom des fichiers du repertoire UV
+		dossier=getClass().getResource("/donnees/Stages");////recherche du chemin menants aux fichiers des stages
+		folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire Stage
+		String[] listOfStages = folder.list();//recuperation du nom des fichiers du repertoire Stage
 		
 		for (int i =0; i < listOfStages.length; i++) {
-			
-			nomStage.put(listOfStages[i],getStage(listOfStages[i]));
+			nomStage.put(listOfStages[i],createStage(listOfStages[i]));//remplissage de la  HashMap avec {nomStage,Stage}
 		}
 	}
 	
+	
 	@GET
-	@Path("/print")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Stage getStage() throws URISyntaxException{	
+	@Path("/stage/{nomStage}")
+	public Stage getStage(@PathParam("nomStage") String nomStage) throws URISyntaxException{	
 		
+		return  this.nomStage.get(nomStage);
 		
-		return nomStage.get("stmalo12juin14.sess");
-	}
-		    
-		/*File folder = new File("donnees/Stages"); //creation chemin jusqu'au répretoire UV
-		File[] listOfStages = folder.listFiles();//recuperation des fichiers du repertoire UV
-		
-		for (int i = 0; i < listOfStages.length; i++) {//remplissage HashMap avec {nomUV,UV}
-			nomUV.put(listOfStages[i].getName(),GestionCreationObjets.creerUV(listOfStages[i].getName()));
-		} 
-		
-		return listOfStages.toString();
-		
-	}*/
+	}//fin getStage
 	
 	
-	private Pompier getPompier(int id)throws IOException, URISyntaxException {
-		
+	
+	private Pompier createPompier(int id)throws IOException, URISyntaxException {
+		//met le createur d'objets pompier a disposition du serveur
 		return GestionCreationObjets.creerPompier(id);
 	}
 		
-	private UV getUV(String UV) throws URISyntaxException {
-		//permet la recuperation des infos de l'UV par le client
+	private UV createUV(String UV) throws URISyntaxException {
+		//met le createur d'objets UV a disposition du serveur 
 		return GestionCreationObjets.creerUV(UV);
 	}
 	
 	
-	private Stage getStage(String stage) throws URISyntaxException {
-		//permet de recuperer les infos de chaqsue session par le client
+	private Stage createStage(String stage) throws URISyntaxException {
+		//met le createur d'objets stage a disposition du serveur
 		return GestionCreationObjets.creerStage(stage);
 	}
 	
@@ -117,7 +105,7 @@ public class ServeurSAPFOR {
 		
 		Pompier entrant;
 		try {
-			entrant = getPompier(idPompier);
+			entrant = createPompier(idPompier);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			return invalide;
@@ -135,9 +123,10 @@ public class ServeurSAPFOR {
 			
 			return entrant;
 		}
-		else{return invalide;}//return 999;}//valeur 999 si mdp faux ou login faux (idPompier n'existe pas)
 		
-	}
+		else{return invalide;}//objet pompier contenant seulement l'idSession : 999 = mdp faux ou login faux (idPompier n'existe pas)
+		
+	}//fin login
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -153,26 +142,33 @@ public class ServeurSAPFOR {
 		
 		return "OK";
 		
-	}
+	}//fin deconnexion
+	
 	
 	@PUT
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("{session}/{nomStage}")
+	@Path("/candidater/{session}/{nomStage}")
 	public String candidater(int session, String nomStage) {
-		//ajoute une entr�e "nomSession" dans la liste "encours" de l'objet pompier 
-		//r�f�renc� par le num�ro de session "session" 
-		
+		//ajoute un stage ("nomStage") a la liste des stages "en cours" de l'objet pompier 
+		//obtenu par son numero de session actuelle ("session")  
+		 		
 		Pompier aModif=numConnection.get(session);
 		Stage actuel=this.nomStage.get(nomStage);
 		
-		List<String> sessionEnCours=aModif.getEnCours();
-		sessionEnCours.add(nomStage); // ne serait-ce pas :  sessionEnCours.add(actuel); ???
-		aModif.setEnCours(sessionEnCours);
+		List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
+		pompierListeEnCours.add(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
+		aModif.setEnCours(pompierListeEnCours);//remet liste des stages (a jour) dans l'objet pompier 
+						
+		List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
+		stageListeCandidats.add(Integer.toString(aModif.getId()));
+		actuel.setCandidats(stageListeCandidats);
 		
-				
+		
+		
+		
 		return null;
 			
-	}
+	}//fin candidater
 	
 	
 		
