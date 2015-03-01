@@ -166,10 +166,10 @@ public class ServeurSAPFOR {
 		stageListeCandidats.add(Integer.toString(aModif.getId()));
 		actuel.setCandidats(stageListeCandidats);
 		
+		//on remet à jour le fichier du stage mainte
 		
 		
-		
-		return null;
+		return "OK";
 			
 	}//fin candidater
 	

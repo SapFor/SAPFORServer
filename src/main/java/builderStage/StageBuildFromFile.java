@@ -26,7 +26,7 @@ public class StageBuildFromFile implements StageBuilder {
 		fichier=getClass().getResource("/donnees/Stages/"+label);
 		URI cheminFich=fichier.toURI();
 		
-		this.session=new StageConcrete();
+		this.session=new StageConcret();
 		
 		
 		try{

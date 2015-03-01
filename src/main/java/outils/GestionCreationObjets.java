@@ -25,10 +25,8 @@ public class GestionCreationObjets {
 		
 		PompierBuilder agent;
 		
-			agent = new PompierBuildFromFile(idPompier);
-		
-		 
-		
+		agent = new PompierBuildFromFile(idPompier);
+				
 		PompierDirector constPompier=new PompierDirector(agent);
 		
 		try {

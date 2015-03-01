@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 //by Thomas Davin
 
 @XmlRootElement
-public class StageConcrete implements Stage {
+public class StageConcret implements Stage {
 	
 	
 	private String uv;
