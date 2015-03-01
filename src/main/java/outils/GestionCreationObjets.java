@@ -69,25 +69,5 @@ public class GestionCreationObjets {
 		return constStage.getSession();
 	}
 	
-	public static void main(String args[]) throws URISyntaxException{
-		
-		try {
-			Pompier nouveau=creerPompier(1);
-			System.out.println(nouveau.getNom());
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-	}
-	
-	
-	public static void main(){
-		
-		
-		
-	}
 	
 }

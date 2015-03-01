@@ -14,8 +14,8 @@ public interface UV {
 	
 	public String getDescr();
 	
-	public void setSessions(List<String> session);	
+	public void setStages(List<String> session);	
 	
-	public List<String> getSessions();
+	public List<String> getStages();
 	
 	}

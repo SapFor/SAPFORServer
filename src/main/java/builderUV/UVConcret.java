@@ -30,7 +30,7 @@ public class UVConcret implements UV {
 	}
 
 	@Override
-	public void setSessions(List<String> session) {
+	public void setStages(List<String> session) {
 		// TODO Auto-generated method stub
 		
 		this.stage=session;
@@ -49,7 +49,7 @@ public class UVConcret implements UV {
 	}
 
 	@Override
-	public List<String> getSessions() {
+	public List<String> getStages() {
 		// TODO Auto-generated method stub
 		return stage;
 	}

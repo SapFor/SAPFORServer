@@ -20,7 +20,7 @@ public class UVDirector {
 			try{
 				this.constructUV.buildNom();
 				this.constructUV.buildDescr();
-				this.constructUV.buildSessions();
+				this.constructUV.buildStages();
 			}catch(IOException e){}
 		}
 	

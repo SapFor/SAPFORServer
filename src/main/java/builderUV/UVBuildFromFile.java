@@ -50,10 +50,10 @@ public class UVBuildFromFile implements UVbuilder {
 	}
 
 	@Override
-	public void buildSessions() throws IOException{
+	public void buildStages() throws IOException{
 		
 		try{
-			uv.setSessions(RecupInfoFichier.recupListDsFichier(input,"sessions"));
+			uv.setStages(RecupInfoFichier.recupListDsFichier(input,"sessions"));
 			
 			input.close();
 						
