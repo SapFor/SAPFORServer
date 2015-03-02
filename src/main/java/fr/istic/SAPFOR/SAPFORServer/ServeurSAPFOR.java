@@ -96,7 +96,6 @@ public class ServeurSAPFOR {
 		return GestionCreationObjets.creerStage(stage);
 	}
 	
-	
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -182,9 +181,6 @@ public class ServeurSAPFOR {
 								
 		return StageAGerer;
 	}//fin getStageAGerer
-		
-	
-	
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
