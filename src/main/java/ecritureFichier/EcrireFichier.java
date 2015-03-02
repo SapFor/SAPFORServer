@@ -95,7 +95,7 @@ public class EcrireFichier {
 	
 	
 	
-	private void ecrireStage(Stage stage){
+	public static void ecrireStage(Stage stage){
 		
 		BufferedWriter output;
 		URL chemin;

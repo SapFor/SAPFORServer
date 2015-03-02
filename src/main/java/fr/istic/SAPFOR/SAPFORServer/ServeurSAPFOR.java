@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -215,20 +216,25 @@ public class ServeurSAPFOR {
 		 		
 		Pompier aModif=numConnection.get(session);
 		Stage actuel=this.nomStage.get(nomStage);
+		Calendar today=Calendar.getInstance();
 		
-		List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
-		pompierListeEnCours.add(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
-		aModif.setEnCours(pompierListeEnCours);//remet liste des stages (a jour) dans l'objet pompier 
+		
+		if(actuel.getFinCandidature().after(today)){
+		
+			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
+			pompierListeEnCours.add(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
+			aModif.setEnCours(pompierListeEnCours);//remet liste des stages (a jour) dans l'objet pompier 
 						
-		List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
-		stageListeCandidats.add(Integer.toString(aModif.getId()));
-		actuel.setCandidats(stageListeCandidats);
+			List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
+			stageListeCandidats.add(Integer.toString(aModif.getId()));
+			actuel.setCandidats(stageListeCandidats);
 		
-		//on remet à jour le fichier du stage mainte
+			EcrireFichier.ecrireStage(actuel);
+				
+			return "OK";
+		}
 		
-		
-		return "OK";
-			
+		else{return "KO";}
 	}//fin candidater
 	
 	
@@ -236,10 +242,36 @@ public class ServeurSAPFOR {
 	
 	@PUT
 	@Produces({MediaType.APPLICATION_JSON})
-	@Path("directeur/{session}/{date}")//date entrée sous la forme JJ/MM/AAAA
-		public void cloturer(String date){
+	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
+	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage){
+
+		String str[]=date.split(".");
+		String jourS=str[0];
+		String moisS=str[1];
+		String anneeS=str[2];
+				
+		int jour=Integer.parseInt(jourS);
+		int mois=Integer.parseInt(moisS);
+		int annee=Integer.parseInt(anneeS);
 		
+		Calendar dateModif=Calendar.getInstance();
 		
+		dateModif.set(annee,mois-1,jour);
+		
+		Stage aModif=nomStage.get(stage);
+		
+		if(dateModif.before(aModif.getDate())){
+		
+			aModif.setFinCandidature(dateModif);
+		
+			EcrireFichier.ecrireStage(aModif);
+		
+			//comment gérer la clotrue des stages en live
+		
+			return "OK";
+		}
+		else{return "KO";}
+				
 	}
 	
 	
