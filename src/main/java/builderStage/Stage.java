@@ -3,12 +3,14 @@ package builderStage;
 import java.util.Calendar;
 import java.util.List;
 
+import observerCandidats.Sujet;
+
 
 
 //by Thomas Davin
 
 
-public interface Stage {
+public interface Stage extends Sujet {
 
 	public void setUV(String UV);
 	

@@ -1,5 +1,6 @@
 package builderStage;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class StageConcret implements Stage, Sujet {
 	private List<String> accepte;
 	private List<String> refuse;
 	private List<String> attente;
+	private ArrayList<Sujet> ListPompierCandidat;
 	
 	
 	/*@Override

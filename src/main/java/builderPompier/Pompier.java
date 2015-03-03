@@ -2,10 +2,12 @@ package builderPompier;
 
 import java.util.List;
 
+import observerCandidats.Observateur;
+
 
 //by Thomas Davin
 
-public interface Pompier {
+public interface Pompier extends Observateur {
 	
 	//interface de l'objet pompier
 	
