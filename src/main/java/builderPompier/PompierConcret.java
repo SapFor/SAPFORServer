@@ -4,10 +4,13 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import observerCandidats.Observateur;
+import observerCandidats.Sujet;
+
 
 //by Thomas Davin
 @XmlRootElement
-public class PompierConcret implements Pompier {
+public class PompierConcret implements Pompier, Observateur {
 	
 	//implémentation de la structure Pompier
 	//permet la création d'un objet pompier  � partir d'un fichier avec le m�me numero d'agent
@@ -157,6 +160,15 @@ public class PompierConcret implements Pompier {
 	
 	@Override
 	public List<String> getGestion(){return gestion;}
+
+	@Override
+	public void actualiser(Sujet s) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 
 	
 }

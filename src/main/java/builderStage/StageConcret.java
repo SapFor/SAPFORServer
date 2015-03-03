@@ -5,12 +5,17 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import observerCandidats.Observateur;
+import observerCandidats.Sujet;
+
+
+
 
 
 //by Thomas Davin
 
 @XmlRootElement
-public class StageConcret implements Stage {
+public class StageConcret implements Stage, Sujet {
 	
 	
 	private String uv;
@@ -151,6 +156,26 @@ public class StageConcret implements Stage {
 		// TODO Auto-generated method stub
 		return refuse;
 	}
+
+	@Override
+	public void inscription(Observateur o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void desincription(Observateur o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifier() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 	
 
