@@ -29,7 +29,7 @@ public class StageConcret implements Stage, Sujet {
 	private List<String> accepte;
 	private List<String> refuse;
 	private List<String> attente;
-	private ArrayList<Sujet> ListPompierCandidat;
+	private ArrayList<Observateur> ListPompierCandidat;
 	
 	
 	/*@Override
@@ -161,19 +161,22 @@ public class StageConcret implements Stage, Sujet {
 
 	@Override
 	public void inscription(Observateur o) {
-		// TODO Auto-generated method stub
+		
+		ListPompierCandidat.add(o);
 		
 	}
 
 	@Override
 	public void desincription(Observateur o) {
-		// TODO Auto-generated method stub
+		
+		ListPompierCandidat.remove(o);
 		
 	}
 
 	@Override
 	public void notifier() {
 		// TODO Auto-generated method stub
+		
 		
 	}
 
