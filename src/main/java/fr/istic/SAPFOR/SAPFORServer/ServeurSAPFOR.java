@@ -228,6 +228,7 @@ public class ServeurSAPFOR {
 			stageListeCandidats.add(Integer.toString(aModif.getId()));
 			actuel.setCandidats(stageListeCandidats);
 			
+			//actuel.inscription(aModif);
 			
 			EcrireFichier.ecrireStage(actuel);
 				
