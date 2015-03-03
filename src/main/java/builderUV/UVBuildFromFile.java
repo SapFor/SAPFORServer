@@ -20,11 +20,13 @@ public class UVBuildFromFile implements UVbuilder {
 	
 	public UVBuildFromFile(String uv) throws URISyntaxException{
 		
-		fichier=getClass().getResource("/donnees/UVs/"+uv);
+		String fich=uv+".uv";
+		
+		fichier=getClass().getResource("/donnees/UVs/"+fich);//+".uv");
 		URI cheminFich=fichier.toURI();
 		
 		this.uv=new UVConcret();
-		
+		System.out.println(cheminFich.toString());
 		
 		try{
 			input = new BufferedReader(new FileReader(new File(cheminFich)));
