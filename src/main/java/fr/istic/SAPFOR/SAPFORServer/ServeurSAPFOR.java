@@ -103,7 +103,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{idPompier}/{mdp}")
-	public Pompier login(@PathParam("idPompier") int idPompier,@PathParam("mdp") String mdp) throws URISyntaxException {
+	public synchronized Pompier login(@PathParam("idPompier") int idPompier,@PathParam("mdp") String mdp) throws URISyntaxException {
 		// recupere le login et mdp de l'agent
 		//verifie le mdp par rapport a celui indique dans le fichier de l'agent ne idPompier
 		//si numero concordent => creation d'un numero de session aleatoire (apres verification de sa disponibilite)
@@ -140,7 +140,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidat/{session}")
-	public List <UVConcret> getUVdisponible(@PathParam("session") int session){ // cast en UVConcret necessaire au fonctionnement de JAXB
+	public synchronized List <UVConcret> getUVdisponible(@PathParam("session") int session){ // cast en UVConcret necessaire au fonctionnement de JAXB
 		// Fourni les listes de UV accessible en candidature pour le pompier associe a la session 
 		// Filtre base uniquement sur les UV dÃ©jÃ  acquises	
 		List <UVConcret> UVDisponible=new ArrayList<UVConcret>();
@@ -164,7 +164,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}")
-	public List <StageConcret> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
+	public synchronized List <StageConcret> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
 //<<<<<<< HEAD
 		// Fourni les listes de Stage gérés par le pompier associe a la session 
 		// liste basé sur le contenu du fichier pompier champ Gestion	
@@ -188,7 +188,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{session}")
-	public String deconnexion(@PathParam("session") int session){
+	public synchronized String deconnexion(@PathParam("session") int session){
 		//effectue la deconnexion de l'agent 
 		//met a jour le fichier d'infos du pompier
 		//detruit le numero de session et l'objet Pompier cree(apres avoir ete sauvegarde)
@@ -209,7 +209,7 @@ public class ServeurSAPFOR {
 	@PUT
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidater/{session}/{nomStage}")
-	public String candidater(int session, String nomStage) {
+	public synchronized String candidater(int session, String nomStage) {
 		//ajoute un stage ("nomStage") a la liste des stages "en cours" de l'objet pompier 
 		//obtenu par son numero de session actuelle ("session")  
 		 		
@@ -228,7 +228,7 @@ public class ServeurSAPFOR {
 			stageListeCandidats.add(Integer.toString(aModif.getId()));
 			actuel.setCandidats(stageListeCandidats);
 			
-			//actuel.inscription(aModif);
+			actuel.inscription(aModif);
 			
 			EcrireFichier.ecrireStage(actuel);
 				
