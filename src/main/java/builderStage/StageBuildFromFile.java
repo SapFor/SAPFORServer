@@ -38,7 +38,48 @@ public class StageBuildFromFile implements StageBuilder {
 		
 	}
 	
-
+	@Override
+	public void buildNomStage() throws IOException {
+		// TODO Auto-generated method stub
+		
+		Calendar jourJ;
+		
+		try{
+			
+			String uv=RecupInfoFichier.chercheDsFichier(input,"uv");
+			String lieu=RecupInfoFichier.chercheDsFichier(input,"lieu");
+			jourJ=RecupInfoFichier.chercheDateDsFichier(input,"date");
+			
+			
+			int jour=jourJ.get(Calendar.DAY_OF_MONTH);
+			int mois=jourJ.get(Calendar.MONTH);
+			int annee=jourJ.get(Calendar.YEAR);
+			
+			String moisS;
+			
+			switch(mois){
+			case 0: moisS="janv";break;
+			case 1: moisS="fev";break;
+			case 2: moisS="mars";break;
+			case 3: moisS="avr";break;
+			case 4: moisS="mai";break;
+			case 5: moisS="juin";break;
+			case 6: moisS="juil";break;
+			case 7: moisS="aout";break;
+			case 8: moisS="sept";break;
+			case 9: moisS="oct";break;
+			case 10: moisS="nov";break;
+			case 11: moisS="dec";break;
+			default: moisS="Pbm";break;
+			}
+			
+			String nom=uv+lieu+jour+moisS+annee;
+						
+			session.setNomStage(nom);
+		}catch(IOException e){e.printStackTrace();}
+	}
+	
+	
 	@Override
 	public void buildDate() throws IOException {
 		// TODO Auto-generated method stub

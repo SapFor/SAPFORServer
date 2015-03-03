@@ -11,7 +11,11 @@ import observerCandidats.Sujet;
 
 
 public interface Stage extends Sujet {
-
+	
+	public String getNomStage();
+	
+	public void setNomStage(String nom);
+	
 	public void setUV(String UV);
 	
 	public String getUV();

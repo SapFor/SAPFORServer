@@ -5,7 +5,9 @@ import java.io.IOException;
 //by Thomas Davin
 
 public interface StageBuilder {
-
+	
+	public void buildNomStage() throws IOException;
+	
 	public void buildDate() throws IOException;
 	
 	public void buildFinCandidature() throws IOException;

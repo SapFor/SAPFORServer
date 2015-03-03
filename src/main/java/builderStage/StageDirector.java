@@ -20,6 +20,7 @@ private StageBuilder constructSession;
 		
 		try{
 			this.constructSession.buildDate();
+			this.constructSession.buildNomStage();
 			this.constructSession.buildLieu();
 			this.constructSession.buildInfos();
 			this.constructSession.buildCandidats();

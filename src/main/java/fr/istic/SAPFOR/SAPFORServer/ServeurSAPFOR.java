@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -83,8 +82,11 @@ public class ServeurSAPFOR {
 		for (int i =0; i < listOfStages.length; i++) {
 			coupeExtension=listOfStages[i].split("\\.");
 			nomStage.put(coupeExtension[0],createStage(coupeExtension[0]));//remplissage de la  HashMap avec {nomStage,Stage}
-			
+						
 		}
+		
+		
+		
 	}//fin constructeur
 	
 	

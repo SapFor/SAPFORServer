@@ -110,18 +110,18 @@ public class EcrireFichier {
 		int anneeS=anneeD%100;
 				
 		switch(moisD){
-		case 1: moisS="janv";break;
-		case 2: moisS="fev";break;
-		case 3: moisS="mars";break;
-		case 4: moisS="avr";break;
-		case 5: moisS="mai";break;
-		case 6: moisS="juin";break;
-		case 7: moisS="juil";break;
-		case 8: moisS="aout";break;
-		case 9: moisS="sept";break;
-		case 10: moisS="oct";break;
-		case 11: moisS="nov";break;
-		case 12: moisS="dec";break;
+		case 0: moisS="janv";break;
+		case 1: moisS="fev";break;
+		case 2: moisS="mars";break;
+		case 3: moisS="avr";break;
+		case 4: moisS="mai";break;
+		case 5: moisS="juin";break;
+		case 6: moisS="juil";break;
+		case 7: moisS="aout";break;
+		case 8: moisS="sept";break;
+		case 9: moisS="oct";break;
+		case 10: moisS="nov";break;
+		case 11: moisS="dec";break;
 		default: moisS="Pbm";break;
 		}
 		

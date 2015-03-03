@@ -21,6 +21,7 @@ public class StageConcret implements Stage, Sujet {
 	
 	private String uv;
 	//private int directeur;
+	private String nomStage;
 	private Calendar date;
 	private Calendar finCandidature;
 	private String lieu;
@@ -44,6 +45,17 @@ public class StageConcret implements Stage, Sujet {
 		return directeur;
 	}*/
 	
+	@Override
+	public void setNomStage(String nom){
+		this.nomStage=nom;
+		
+	}
+	
+	@Override
+	public String getNomStage(){
+		return nomStage;
+		
+	}
 	
 	@Override
 	public void setUV(String UV) {
