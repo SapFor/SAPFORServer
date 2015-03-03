@@ -167,18 +167,35 @@ public class PompierConcret implements Pompier, Observateur {
 		
 		List <String> CandidatAccepte;
 		List <String> CandidatRefuse;
-		List <String> CandidatEnAttente;
+		//List <String> CandidatEnAttente;
 		
 		CandidatAccepte=s.getAccepte();
 		CandidatRefuse=s.getRefuse();
-		CandidatEnAttente=s.getAttente();
+		//CandidatEnAttente=s.getAttente();
+		
+		if (this.estDansListe(CandidatAccepte)){
+			accepte.add(null);
+		}
+		else if (this.estDansListe(CandidatRefuse)){
+			refuse.add(null);
+		}
+		else {attente.add(null);}
+		
+		enCours.remove(null);
 		
 		
+	}
+	
+	private boolean estDansListe (List<String> l){
 		
+		boolean trouve=false;
+		int i=0;
+		while (trouve==false && i<l.size()){
+			if (this.id !=Integer.parseInt(l.get(i))){i++;}
+			else {trouve=true;}
+		}
 		
-		
-		
-		
+		return trouve;		
 	}
 
 
