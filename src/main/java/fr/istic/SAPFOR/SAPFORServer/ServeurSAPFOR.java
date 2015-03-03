@@ -176,8 +176,10 @@ public class ServeurSAPFOR {
 		Pompier agent=numConnection.get(session);
 		List<String> GestionStage=agent.getGestion();
 		
+		System.out.println(GestionStage.get(0));
+		
 		for (int i=0; i<GestionStage.size(); i++){
-		StageAGerer.add((StageConcret)nomStage.get(GestionStage.get(i)+".sess"));
+		StageAGerer.add((StageConcret)nomStage.get(GestionStage.get(i)));
 
 			
 		}

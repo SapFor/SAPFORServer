@@ -1,6 +1,8 @@
 package observerCandidats;
 
+import builderStage.Stage;
+
 public interface Observateur {
 	
-	public void actualiser(Sujet s);
+	public void actualiser(Stage s);
 }

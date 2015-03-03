@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import builderStage.Stage;
 import observerCandidats.Observateur;
 import observerCandidats.Sujet;
 
@@ -162,7 +163,16 @@ public class PompierConcret implements Pompier, Observateur {
 	public List<String> getGestion(){return gestion;}
 
 	@Override
-	public void actualiser(Sujet s) {
+	public void actualiser(Stage s) {
+		
+		List <String> CandidatAccepte;
+		List <String> CandidatRefuse;
+		List <String> CandidatEnAttente;
+		
+		CandidatAccepte=s.getAccepte();
+		CandidatRefuse=s.getRefuse();
+		CandidatEnAttente=s.getAttente();
+		
 		
 		
 		
