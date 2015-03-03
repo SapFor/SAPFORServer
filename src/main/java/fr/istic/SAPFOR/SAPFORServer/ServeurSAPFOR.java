@@ -72,14 +72,7 @@ public class ServeurSAPFOR {
 	}//fin constructeur
 	
 	
-	@GET
-	@Produces({MediaType.APPLICATION_JSON})
-	@Path("stage/{nomStage}")
-	public Stage getStage(@PathParam("nomStage") String nomStage) throws URISyntaxException{	
-		
-		return  this.nomStage.get(nomStage);
-		
-	}//fin getStage
+	
 	
 	
 	
@@ -99,7 +92,17 @@ public class ServeurSAPFOR {
 		return GestionCreationObjets.creerStage(stage);
 	}
 	
-
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("stage/{nomStage}")
+	public synchronized Stage getStage(@PathParam("nomStage") String nomStage) throws URISyntaxException{	
+		
+		return  this.nomStage.get(nomStage);
+		
+	}//fin getStage
+	
+	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{idPompier}/{mdp}")
@@ -187,6 +190,7 @@ public class ServeurSAPFOR {
 		return StageAGerer;
 	}//fin getStageAGerer
 	
+	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{session}")
@@ -239,16 +243,14 @@ public class ServeurSAPFOR {
 		
 		else{return "KO";}
 	}//fin candidater
-	
-	
-		
+				
 	
 	@PUT
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
 	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage){
 
-		String str[]=date.split(".");
+		String str[]=date.split("\\.");
 		String jourS=str[0];
 		String moisS=str[1];
 		String anneeS=str[2];
@@ -259,22 +261,26 @@ public class ServeurSAPFOR {
 		
 		Calendar dateModif=Calendar.getInstance();
 		
+				
 		dateModif.set(annee,mois-1,jour);
 		
-		Stage aModif=nomStage.get(stage);
+		if(dateModif.after(Calendar.getInstance().getTime())){
 		
-		if(dateModif.before(aModif.getDate())){
+			Stage aModif=nomStage.get(stage);
 		
-			aModif.setFinCandidature(dateModif);
+			if(dateModif.before(aModif.getDate())){
 		
-			EcrireFichier.ecrireStage(aModif);
+				aModif.setFinCandidature(dateModif);
 		
-			//comment gérer la clotrue des stages en live
+				EcrireFichier.ecrireStage(aModif);
 		
-			return "OK";
+				
+		
+				return "OK";
+			}
+			else{return "KO";}
 		}
 		else{return "KO";}
-				
 	}
 	
 	
