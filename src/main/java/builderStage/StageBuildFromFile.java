@@ -22,8 +22,9 @@ public class StageBuildFromFile implements StageBuilder {
 	
 	public StageBuildFromFile(String label) throws URISyntaxException{
 		
+		String fich=label+".sess";
 		
-		fichier=getClass().getResource("/donnees/Stages/"+label);
+		fichier=getClass().getResource("/donnees/Stages/"+fich);
 		URI cheminFich=fichier.toURI();
 		
 		this.session=new StageConcret();

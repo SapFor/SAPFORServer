@@ -51,11 +51,13 @@ public class ServeurSAPFOR {
 		URL dossier=getClass().getResource("/donnees/UVs"); //recherche du chemin menants aux fichiers d'UVS
 		File folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UVs
 		String[] listOfUVs = folder.list();//recuperation du nom des fichiers du repertoire UV
+	
+		String[] coupeExtension;
 		
-		
-		for (int i=0; i<listOfUVs.length; i++){	
-			nomUV.put(listOfUVs[i],createUV(listOfUVs[i]));//remplissage de la HashMap avec {nomUV,UV}
-		    listeDesUVs.add(createUV(listOfUVs[i]));
+		for (int i=0; i<listOfUVs.length; i++){
+			coupeExtension=listOfUVs[i].split("\\.");
+			nomUV.put(coupeExtension[0],createUV(coupeExtension[0]));//remplissage de la HashMap avec {nomUV,UV}
+			listeDesUVs.add(createUV(coupeExtension[0]));
          }
 						
 		dossier=getClass().getResource("/donnees/Stages");//recherche du chemin menants aux fichiers des stages
@@ -63,7 +65,8 @@ public class ServeurSAPFOR {
 		String[] listOfStages = folder.list();//recuperation du nom des fichiers du repertoire Stage
 		
 		for (int i =0; i < listOfStages.length; i++) {
-			nomStage.put(listOfStages[i],createStage(listOfStages[i]));//remplissage de la  HashMap avec {nomStage,Stage}
+			coupeExtension=listOfStages[i].split("\\.");
+			nomStage.put(coupeExtension[0],createStage(coupeExtension[0]));//remplissage de la  HashMap avec {nomStage,Stage}
 			
 		}
 	}//fin constructeur
@@ -224,7 +227,8 @@ public class ServeurSAPFOR {
 			List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
 			stageListeCandidats.add(Integer.toString(aModif.getId()));
 			actuel.setCandidats(stageListeCandidats);
-		
+			
+			
 			EcrireFichier.ecrireStage(actuel);
 				
 			return "OK";
