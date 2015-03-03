@@ -175,7 +175,14 @@ public class StageConcret implements Stage, Sujet {
 
 	@Override
 	public void notifier() {
-		// TODO Auto-generated method stub
+		
+	     {
+             for(int i=0;i<ListPompierCandidat.size();i++)
+             {
+                     Observateur o = ListPompierCandidat.get(i);
+                     o.actualiser(this);
+             }
+     }
 		
 		
 	}

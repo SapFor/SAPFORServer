@@ -163,7 +163,11 @@ public class PompierConcret implements Pompier, Observateur {
 
 	@Override
 	public void actualiser(Sujet s) {
-		// TODO Auto-generated method stub
+		
+		
+		
+		
+		
 		
 	}
 
