@@ -246,7 +246,7 @@ public class ServeurSAPFOR {
 	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
 	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage){
 
-		String str[]=date.split(".");
+		String str[]=date.split("\\.");
 		String jourS=str[0];
 		String moisS=str[1];
 		String anneeS=str[2];
