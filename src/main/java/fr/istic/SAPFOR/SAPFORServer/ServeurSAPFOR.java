@@ -108,9 +108,18 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("stage/{nomStage}")
-	public synchronized Stage getStage(@PathParam("nomStage") String nomStage) throws URISyntaxException{	
+	public synchronized Stage getStage(@PathParam("nomStage") String nomStage){	
 		
 		return  this.nomStage.get(nomStage);
+		
+	}//fin getStage
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("pompier/{idPompier}")
+	public synchronized Pompier getStage(@PathParam("idPompier") int idPompier) throws IOException, URISyntaxException{	
+		
+		return createPompier(idPompier);
 		
 	}//fin getStage
 	
