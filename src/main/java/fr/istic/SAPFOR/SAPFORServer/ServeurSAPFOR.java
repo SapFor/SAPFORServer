@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -43,6 +44,7 @@ public class ServeurSAPFOR {
 	private HashMap<String,Stage> nomStage=new HashMap<String,Stage>();
 	private HashMap<String,UV> nomUV=new HashMap<String,UV>();
 	private List<UV> listeDesUVs=new ArrayList<UV>();
+	private List<Integer> listIdPompier=new ArrayList<Integer>();
 		
 	public ServeurSAPFOR() throws URISyntaxException{
 		//constructeur du serveur
@@ -59,6 +61,20 @@ public class ServeurSAPFOR {
 			nomUV.put(coupeExtension[0],createUV(coupeExtension[0]));//remplissage de la HashMap avec {nomUV,UV}
 			listeDesUVs.add(createUV(coupeExtension[0]));
          }
+		
+		
+		dossier=getClass().getResource("/donnees/Pompiers"); //recherche du chemin menants aux fichiers d'UVS
+		folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UVs
+		String[] listOfIds = folder.list();//recuperation du nom des fichiers du repertoire UV
+		
+		
+		for (int i=0; i<listOfIds.length; i++){
+			coupeExtension=listOfIds[i].split("\\.");
+			listIdPompier.add(Integer.parseInt(coupeExtension[0]));
+		}
+		
+				
+		
 						
 		dossier=getClass().getResource("/donnees/Stages");//recherche du chemin menants aux fichiers des stages
 		folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire Stage
@@ -70,10 +86,6 @@ public class ServeurSAPFOR {
 			
 		}
 	}//fin constructeur
-	
-	
-	
-	
 	
 	
 	private Pompier createPompier(int id)throws IOException, URISyntaxException {
@@ -115,28 +127,39 @@ public class ServeurSAPFOR {
 		invalide.setIdSession(999);
 		
 		Pompier entrant;
-		try {
-			entrant = createPompier(idPompier);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			return invalide;
-		}//creation du pompier a partir des donnees stockees d'apres son identifiannt 
-				
-		if(entrant.getMdp().equals(mdp)){
-			int randomInt=0;
-			Random randomGenerator = new Random();//creation d'un generateur de nombre aleatoires
-			while(numConnection.containsKey(randomInt)){//verification si randomInt existe dans le hasmap si oui, generation d'un nouveau nombre aleatoire
-				randomInt=randomGenerator.nextInt(998);
-			}
-			numConnection.put(randomInt,entrant);//stockage de la valeur de session + du pompier associe
-			
-			entrant.setIdSession(randomInt); 
-			
-			return entrant;
+		
+		int i=0;
+		
+		while(i<listIdPompier.size() && listIdPompier.get(i)!=idPompier){
+			i++;
 		}
 		
-		else{return invalide;}//objet pompier contenant seulement l'idSession : 999 = mdp faux ou login faux (idPompier n'existe pas)
+		if(i<listIdPompier.size()){
 		
+		
+			try {
+				entrant = createPompier(idPompier);
+			} catch (IOException e) {
+			
+			return invalide;
+			}//creation du pompier a partir des donnees stockees d'apres son identifiannt 
+				
+			if(entrant.getMdp().equals(mdp)){
+				int randomInt=0;
+				Random randomGenerator = new Random();//creation d'un generateur de nombre aleatoires
+				while(numConnection.containsKey(randomInt)){//verification si randomInt existe dans le hasmap si oui, generation d'un nouveau nombre aleatoire
+					randomInt=randomGenerator.nextInt(998);
+				}
+				numConnection.put(randomInt,entrant);//stockage de la valeur de session + du pompier associe
+			
+				entrant.setIdSession(randomInt); 
+			
+				return entrant;
+			}
+		
+			else{return invalide;}//objet pompier contenant seulement l'idSession : 999 = mdp faux ou login faux (idPompier n'existe pas)
+		}
+		return invalide; 
 	}//fin login
 
 	
@@ -249,7 +272,7 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
 	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage){
-
+		//
 		String str[]=date.split("\\.");
 		String jourS=str[0];
 		String moisS=str[1];
@@ -282,6 +305,8 @@ public class ServeurSAPFOR {
 		}
 		else{return "KO";}
 	}
+	
+	
 	
 	
 	

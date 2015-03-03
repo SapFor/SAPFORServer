@@ -26,7 +26,7 @@ public class UVBuildFromFile implements UVbuilder {
 		URI cheminFich=fichier.toURI();
 		
 		this.uv=new UVConcret();
-		System.out.println(cheminFich.toString());
+		
 		
 		try{
 			input = new BufferedReader(new FileReader(new File(cheminFich)));
