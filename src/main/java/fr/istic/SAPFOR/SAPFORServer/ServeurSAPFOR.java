@@ -7,7 +7,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.ws.rs.Consumes;
@@ -146,31 +148,47 @@ public class ServeurSAPFOR {
 		}
 		
 		if(i<listIdPompier.size()){
-		
-		
+					
 			try {
 				entrant = createPompier(idPompier);
-			} catch (IOException e) {
+			} catch (IOException e) {return invalide;}//creation du pompier a partir des donnees stockees d'apres son identifiannt 
 			
-			return invalide;
-			}//creation du pompier a partir des donnees stockees d'apres son identifiannt 
-				
-			if(entrant.getMdp().equals(mdp)){
-				int randomInt=0;
-				Random randomGenerator = new Random();//creation d'un generateur de nombre aleatoires
-				while(numConnection.containsKey(randomInt)){//verification si randomInt existe dans le hasmap si oui, generation d'un nouveau nombre aleatoire
-					randomInt=randomGenerator.nextInt(998);
-				}
-				numConnection.put(randomInt,entrant);//stockage de la valeur de session + du pompier associe
+			List<Integer> idExist=new ArrayList<Integer>();
 			
-				entrant.setIdSession(randomInt); 
-			
-				return entrant;
+			Iterator it = numConnection.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pair = (Map.Entry)it.next();
+				System.out.println(((Pompier) pair.getValue()).getId());
+				idExist.add(((Pompier) pair.getValue()).getId());
 			}
+			
+			int j=0;
+			while(j<idExist.size() && idExist.get(j)!=idPompier){j++;}
+			
+			if(j>=idExist.size()){
+			
+			
+				if(entrant.getMdp().equals(mdp)){
+					int randomInt=0;
+					Random randomGenerator = new Random();//creation d'un generateur de nombre aleatoires
+					while(numConnection.containsKey(randomInt)){//verification si randomInt existe dans le hasmap si oui, generation d'un nouveau nombre aleatoire
+						randomInt=randomGenerator.nextInt(998);
+					}
+					numConnection.put(randomInt,entrant);//stockage de la valeur de session + du pompier associe
+			
+					entrant.setIdSession(randomInt); 
+			
+					return entrant;
+				}
 		
-			else{return invalide;}//objet pompier contenant seulement l'idSession : 999 = mdp faux ou login faux (idPompier n'existe pas)
+				else{return invalide;}//objet pompier contenant seulement l'idSession : 999 = mdp faux ou login faux (idPompier n'existe pas)
+			}
+			else{return invalide;}
+			
 		}
-		return invalide; 
+			
+		return invalide;
+			
 	}//fin login
 
 	
@@ -201,7 +219,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}")
-	public synchronized List <StageConcret> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
+	public synchronized List<StageConcret> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
 //<<<<<<< HEAD
 		// Fourni les listes de Stage gérés par le pompier associe a la session 
 		// liste basé sur le contenu du fichier pompier champ Gestion	
