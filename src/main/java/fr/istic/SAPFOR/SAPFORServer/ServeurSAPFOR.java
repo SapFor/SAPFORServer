@@ -14,6 +14,7 @@ import java.util.Random;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -47,6 +48,7 @@ public class ServeurSAPFOR {
 	private List<UV> listeDesUVs=new ArrayList<UV>();
 	private List<Integer> listIdPompier=new ArrayList<Integer>();
 		
+	
 	public ServeurSAPFOR() throws URISyntaxException{
 		//constructeur du serveur
 		//remplissage de deux liste (hashmaps) : 1 contenant toutes les UV disponibles l'autre toutes les sessions disponibles
@@ -262,7 +264,7 @@ public class ServeurSAPFOR {
 	}//fin deconnexion
 	
 	
-	@PUT
+	@POST
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidater/{session}/{nomStage}")
 	public synchronized String candidater(int session, String nomStage) {
