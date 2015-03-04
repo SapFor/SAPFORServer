@@ -226,7 +226,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{session}")
-	public synchronized String deconnexion(@PathParam("session") int session){
+	public synchronized String deconnexion(@PathParam("session") int session) throws URISyntaxException{
 		//effectue la deconnexion de l'agent 
 		//met a jour le fichier d'infos du pompier
 		//detruit le numero de session et l'objet Pompier cree(apres avoir ete sauvegarde)
