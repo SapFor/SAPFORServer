@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import builderPompier.PompierConcret;
 import observerCandidats.Observateur;
 import observerCandidats.Sujet;
 
@@ -30,7 +31,7 @@ public class StageConcret implements Stage, Sujet {
 	public List<String> accepte;
 	public List<String> refuse;
 	public List<String> attente;
-	public ArrayList<Observateur> ListPompierCandidat;
+	public ArrayList<PompierConcret> ListPompierCandidat;
 	
 	
 	/*@Override
@@ -124,9 +125,9 @@ public class StageConcret implements Stage, Sujet {
 	}
 
 	@Override
-	public void setCandidats(List<String> candidats) {
+	public void setCandidats(List<String> candidat) {
 		// TODO Auto-generated method stub
-		this.candidats=candidats;
+		this.candidats=candidat;
 	}
 
 	@Override
@@ -136,21 +137,21 @@ public class StageConcret implements Stage, Sujet {
 	}
 
 	@Override
-	public void setAccepte(List<String> accepte) {
+	public void setAccepte(List<String> acceptes) {
 		// TODO Auto-generated method stub
-		this.accepte=accepte;
+		this.accepte=acceptes;
 	}
-
+/*
 	@Override
 	public List<String> getAccepte() {
 		// TODO Auto-generated method stub
 		return accepte;
-	}
+	}*/
 
 	@Override
-	public void setAttente(List<String> attente) {
+	public void setAttente(List<String> attentes) {
 		// TODO Auto-generated method stub
-		this.attente=attente;
+		this.attente=attentes;
 	}
 
 	@Override
@@ -160,9 +161,9 @@ public class StageConcret implements Stage, Sujet {
 	}
 
 	@Override
-	public void setRefuse(List<String> refuse) {
+	public void setRefuse(List<String> refuses) {
 		// TODO Auto-generated method stub
-		this.refuse=refuse;
+		this.refuse=refuses;
 	}
 
 	@Override
@@ -172,14 +173,14 @@ public class StageConcret implements Stage, Sujet {
 	}
 
 	@Override
-	public void inscription(Observateur o) {
+	public void inscription(PompierConcret o) {
 		
 		ListPompierCandidat.add(o);
 		
 	}
 
 	@Override
-	public void desincription(Observateur o) {
+	public void desincription(PompierConcret o) {
 		
 		ListPompierCandidat.remove(o);
 		

@@ -165,21 +165,21 @@ public class PompierConcret implements Pompier, Observateur {
 	@Override
 	public void actualiser(Stage s) {
 		
-		List <String> CandidatAccepte;
+		//List <String> CandidatAccepte;
 		List <String> CandidatRefuse;
-		//List <String> CandidatEnAttente;
+		List <String> CandidatEnAttente;
 		
-		CandidatAccepte=s.getAccepte();
+		CandidatEnAttente=s.getAttente();
 		CandidatRefuse=s.getRefuse();
 		//CandidatEnAttente=s.getAttente();
 		
-		if (this.estDansListe(CandidatAccepte)){
-			accepte.add(s.getNomStage());
+		if (this.estDansListe(CandidatEnAttente)){
+			attente.add(s.getNomStage());
 		}
 		else if (this.estDansListe(CandidatRefuse)){
 			refuse.add(s.getNomStage());
 		}
-		else {attente.add(null);}
+		else {accepte.add(null);}
 		
 		enCours.remove(s.getNomStage());
 		

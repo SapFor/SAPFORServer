@@ -139,8 +139,8 @@ public class EcrireFichier {
 		
 		StringBuffer candyList=new StringBuffer();
 		for(String candy : stage.getCandidats()){candyList.append(candy+"\n");}
-		StringBuffer accepteList=new StringBuffer();
-		for(String accepte : stage.getAccepte()){accepteList.append(accepte+"\n");}
+		/*StringBuffer accepteList=new StringBuffer();
+		for(String accepte : stage.getAccepte()){accepteList.append(accepte+"\n");}*/
 		StringBuffer attenteList=new StringBuffer();
 		for(String attente : stage.getAttente()){attenteList.append(attente+"\n");}
 		StringBuffer refuseList=new StringBuffer();
@@ -168,7 +168,7 @@ public class EcrireFichier {
 					+"fcandidats\n"
 					+"\n"
 					+"accepte\n"
-					+accepteList.toString()
+					//+accepteList.toString()
 					+"faccepte\n"
 					+"\n"
 					+"attente\n"

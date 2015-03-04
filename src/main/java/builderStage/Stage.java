@@ -46,7 +46,7 @@ public interface Stage extends Sujet {
 	
 	public void setAccepte(List<String> accepte);
 	
-	public List<String> getAccepte();
+	// public List<String> getAccepte();
 	
 	public void setAttente(List<String> attente);
 	
