@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
 
@@ -13,7 +15,7 @@ import builderStage.Stage;
 
 public class EcrireFichier {
 	
-	public void ecriture(Object objet){
+	public void ecriture(Object objet) throws URISyntaxException{
 		if(objet instanceof PompierConcret){
 			PompierConcret aEcrire=(PompierConcret)objet;
 			ecrirePompier(aEcrire);
@@ -26,7 +28,7 @@ public class EcrireFichier {
 		else{}
 	}
 	
-	public static void ecrirePompier(Pompier pompier){
+	public static void ecrirePompier(Pompier pompier) throws URISyntaxException{
 		
 		BufferedWriter output;
 		String dir;
@@ -49,8 +51,10 @@ public class EcrireFichier {
 		for(String gestion : pompier.getGestion()){gestionList.append(gestion+"\n");}
 		
 		chemin=EcrireFichier.class.getResource("/donnees/Pompiers/"+pompier.getId()+".pomp");
-			
-		fichier=new File(chemin.toString()+pompier.getId()+".pomp");
+		
+		URI fich=chemin.toURI();
+		
+		fichier=new File(fich);
 		try{
 			output=new BufferedWriter(new FileWriter (fichier));
 			
