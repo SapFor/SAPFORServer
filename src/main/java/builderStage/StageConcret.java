@@ -19,18 +19,18 @@ import observerCandidats.Sujet;
 public class StageConcret implements Stage, Sujet {
 	
 	
-	public String uv;
+	private String uv;
 	//private int directeur;
-	public String nomStage;
-	public Calendar date;
-	public Calendar finCandidature;
-	public String lieu;
-	public String infos;
-	public List<String> candidats;
-	public List<String> accepte;
-	public List<String> refuse;
-	public List<String> attente;
-	public ArrayList<Observateur> ListPompierCandidat;
+	private String nomStage;
+	private Calendar date;
+	private Calendar finCandidature;
+	private String lieu;
+	private String infos;
+	private List<String> candidats;
+	private List<String> accepte;
+	private List<String> refuse;
+	private List<String> attente;
+	private ArrayList<Observateur> ListPompierCandidat;
 	
 	
 	/*@Override
