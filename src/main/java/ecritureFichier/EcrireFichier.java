@@ -129,7 +129,7 @@ public class EcrireFichier {
 		default: moisS="Pbm";break;
 		}
 		
-		nomFichier=stage.getUV()+stage.getLieu()+jourD+moisS+anneeS+".sess";
+		nomFichier=stage.getNomStage()+".sess";
 				
 		String jourF=String.valueOf(stage.getFinCandidature().get(Calendar.DAY_OF_MONTH));
 		String moisF=String.valueOf(stage.getFinCandidature().get(Calendar.MONTH));;
