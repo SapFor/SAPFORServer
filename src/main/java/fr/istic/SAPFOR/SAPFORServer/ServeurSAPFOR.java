@@ -272,13 +272,14 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidater/{session}/{nomStage}")
-	public synchronized String candidater(int session, String nomStage) {
+	public synchronized String candidater(@PathParam("session") int session, @PathParam("nomStage") String nomStage) {
 		//ajoute un stage ("nomStage") a la liste des stages "en cours" de l'objet pompier 
 		//obtenu par son numero de session actuelle ("session")  
 		 		
 		Pompier aModif=numConnection.get(session);
-		Stage actuel=this.nomStage.get(nomStage);
+		StageConcret actuel=(StageConcret)this.nomStage.get(nomStage);
 		Calendar today=Calendar.getInstance();
+		
 		
 		
 		if(actuel.getFinCandidature().after(today)){
@@ -286,14 +287,20 @@ public class ServeurSAPFOR {
 			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
 			pompierListeEnCours.add(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
 			aModif.setEnCours(pompierListeEnCours);//remet liste des stages (a jour) dans l'objet pompier 
-						
+			
+			System.out.println(pompierListeEnCours.toString());
+			
 			List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
 			stageListeCandidats.add(Integer.toString(aModif.getId()));
 			actuel.setCandidats(stageListeCandidats);
 			
+			System.out.println(stageListeCandidats.toString());
+			
 			actuel.inscription(aModif);
 			
-			EcrireFichier.ecrireStage(actuel);
+			System.out.println(actuel.getListPompierCandidat().toString());
+			
+			//EcrireFichier.ecrireStage(actuel);
 				
 			return "OK";
 		}
@@ -340,18 +347,36 @@ public class ServeurSAPFOR {
 		else{return "KO";}
 	}
 	
-	@POST
+	@PUT
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/selection")
-	public String UpdateStage(StageConcret s){
+	public String UpdateStage(StageConcret s){ // en cours de mise en point
 		
 		StageConcret StageAUpdate=(StageConcret)nomStage.get(s.getNomStage());
+		StageConcret StageRecu=s;
+		
+		System.out.println(StageAUpdate.getCandidats().toString());
+		System.out.println(StageAUpdate.getAccepte().toString());
+		System.out.println(StageAUpdate.getAttente().toString());
+		//System.out.println(StageAUpdate.getRefuse().toString());
+		
+		System.out.println(s.getCandidats().toString());
+		System.out.println(s.getAccepte().toString());
+		System.out.println(s.getAttente().toString());
+		System.out.println(s.getRefuse().toString());
+		/*
 		StageAUpdate.setCandidats(s.getCandidats());
 		StageAUpdate.setAccepte(s.getAccepte());
 		StageAUpdate.setAttente(s.getAttente());
 		StageAUpdate.setRefuse(s.getRefuse());
-		StageAUpdate.notifier();
+		
+		System.out.println(StageAUpdate.getCandidats().toString());
+		System.out.println(StageAUpdate.getAccepte().toString());
+		System.out.println(StageAUpdate.getAttente().toString());
+		System.out.println(StageAUpdate.getRefuse().toString());
+		*/
+		//StageAUpdate.notifier();
 		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
 		
 		String reponse="Le stage "+StageAUpdate.getNomStage()+" a ete mis a jour";

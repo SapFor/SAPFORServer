@@ -30,6 +30,10 @@ private StageBuilder constructSession;
 			this.constructSession.buildAttente();
 			this.constructSession.buildRefuse();
 		}catch(IOException e){}
+		
+		try {
+			this.constructSession.buildListePompierCandidat();
+			} catch (Exception e) {};
 	}
 
 	

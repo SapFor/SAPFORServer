@@ -56,4 +56,6 @@ public interface Stage extends Sujet {
 	
 	public List<String> getRefuse();
 	
+	public void initListePompierCandidat();
+	
 }

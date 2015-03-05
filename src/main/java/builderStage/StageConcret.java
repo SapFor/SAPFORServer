@@ -171,12 +171,18 @@ public class StageConcret implements Stage, Sujet {
 		return refuse;
 	}
 	
+	public void initListePompierCandidat(){
+		this.ListPompierCandidat=new ArrayList<Observateur>();
+	};
+	
 
 	@Override
 	public List<Observateur> getListPompierCandidat() {
 		// TODO Auto-generated method stub
 		return ListPompierCandidat;
 	}
+	
+
 	
 	@Override
 	public void inscription(Observateur o) {
@@ -196,9 +202,9 @@ public class StageConcret implements Stage, Sujet {
 	public void notifier() {
 		
 	     {
-             for(int i=0;i<ListPompierCandidat.size();i++)
+             for(int i=0;i<this.ListPompierCandidat.size();i++)
              {
-                     Observateur o = ListPompierCandidat.get(i);
+                     Observateur o = this.ListPompierCandidat.get(i);
                      o.actualiser(this);
              }
      }

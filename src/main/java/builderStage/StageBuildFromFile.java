@@ -155,7 +155,13 @@ public class StageBuildFromFile implements StageBuilder {
 		} catch (IOException e) {e.printStackTrace();}
 	}
 
-	
+	@Override
+	public void buildListePompierCandidat() throws Exception {
+		// TODO Auto-generated method stub
+		try{session.initListePompierCandidat();
+		}
+		catch(Exception e){e.printStackTrace();}
+	}
 	
 	@Override
 	public Stage getSession() {
@@ -170,5 +176,7 @@ public class StageBuildFromFile implements StageBuilder {
 			session.setUV(RecupInfoFichier.chercheDsFichier(input,"uv"));
 		}catch(IOException e){e.printStackTrace();}
 	}
+
+
 
 }

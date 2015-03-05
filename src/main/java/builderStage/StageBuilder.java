@@ -26,6 +26,8 @@ public interface StageBuilder {
 	
 	public void buildRefuse() throws IOException;
 	
+	public void buildListePompierCandidat() throws Exception;
+	
 	
 	public Stage getSession();
 	
