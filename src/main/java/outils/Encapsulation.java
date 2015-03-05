@@ -2,6 +2,9 @@ package outils;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Encapsulation {
 	
 	public List<String> liste;  

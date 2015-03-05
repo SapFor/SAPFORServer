@@ -2,23 +2,15 @@ package builderStage;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import outils.Encapsulation;
 import observerCandidats.Observateur;
-import observerCandidats.Sujet;
-
-
-
-
-
-//by Thomas Davin
 
 @XmlRootElement
-public class StageConcret implements Stage, Sujet {
-	
-	
+public class StageEnvoi {
+		
 	private String uv;
 	//private int directeur;
 	private String nomStage;
@@ -26,10 +18,10 @@ public class StageConcret implements Stage, Sujet {
 	private Calendar finCandidature;
 	private String lieu;
 	private String infos;
-	private List<String> candidats;
-	private List<String> accepte;
-	private List<String> refuse;
-	private List<String> attente;
+	private Encapsulation candidats;
+	private Encapsulation accepte;
+	private Encapsulation refuse;
+	private Encapsulation attente;
 	private ArrayList<Observateur> ListPompierCandidat;
 	
 	
@@ -45,71 +37,86 @@ public class StageConcret implements Stage, Sujet {
 		return directeur;
 	}*/
 	
-	@Override
+	public StageEnvoi(){};
+	
+	public StageEnvoi(StageConcret stage){
+		this.uv=stage.getUV();
+		this.nomStage=stage.getNomStage();
+		this.date=stage.getDate();
+		this.finCandidature=stage.getFinCandidature();
+		this.lieu=stage.getLieu();
+		this.infos=stage.getInfos();
+		this.candidats=new Encapsulation(stage.getCandidats());
+		this.accepte=new Encapsulation(stage.getAccepte());
+		this.refuse=new Encapsulation(stage.getRefuse());
+		this.attente=new Encapsulation(stage.getAttente());
+		this.ListPompierCandidat=(ArrayList<Observateur>) stage.getListPompierCandidat();
+	};
+	
 	public void setNomStage(String nom){
 		this.nomStage=nom;
 		
 	}
 	
-	@Override
+	
 	public String getNomStage(){
 		return nomStage;
 		
 	}
 	
-	@Override
+	
 	public void setUV(String UV) {
 		// TODO Auto-generated method stub
 		this.uv=UV;
 	}
 
-	@Override
+	
 	public String getUV() {
 		// TODO Auto-generated method stub
 		return uv;
 	}
 	
-	@Override
+	
 	public void setDate(Calendar date) {
 		
 		this.date=date;
 	}
 
 	
-	@Override
+	
 	public Calendar getDate() {
 		// TODO Auto-generated method stub
 				
 		return this.date;
 	}
 		
-	@Override
+	
 	public Calendar getFinCandidature(){
 		
 		return finCandidature;
 		
 	}
 	
-	@Override
+	
 	public void setFinCandidature(Calendar date){
 		
 		this.finCandidature=date;
 	}
 	
-	@Override
+	
 	public void setLieu(String lieu) {
 		
 		this.lieu=lieu;
 		
 	}
 
-	@Override
+	
 	public String getLieu() {
 		// TODO Auto-generated method stub
 		return lieu;
 	}
 
-	@Override
+	
 	public void setInfos(String infos) {
 		
 		
@@ -117,82 +124,75 @@ public class StageConcret implements Stage, Sujet {
 		
 	}
 
-	@Override
+	
 	public String getInfos() {
 		// TODO Auto-generated method stub
 		return infos;
 	}
 
-	@Override
-	public void setCandidats(List<String> candidats) {
+	
+	public void setCandidats(Encapsulation candidats) {
 		// TODO Auto-generated method stub
 		this.candidats=candidats;
 	}
 
-	@Override
-	public List<String> getCandidats() {
+	
+	public Encapsulation getCandidats() {
 		// TODO Auto-generated method stub
 		return candidats;
 	}
 
-	@Override
-	public void setAccepte(List<String> accepte) {
+	
+	public void setAccepte(Encapsulation accepte) {
 		// TODO Auto-generated method stub
 		this.accepte=accepte;
 	}
 
-	@Override
-	public List<String> getAccepte() {
+	
+	public Encapsulation getAccepte() {
 		// TODO Auto-generated method stub
 		return accepte;
 	}
 
-	@Override
-	public void setAttente(List<String> attente) {
+	
+	public void setAttente(Encapsulation attente) {
 		// TODO Auto-generated method stub
 		this.attente=attente;
 	}
 
-	@Override
-	public List<String> getAttente() {
+	
+	public Encapsulation getAttente() {
 		// TODO Auto-generated method stub
 		return attente;
 	}
 
-	@Override
-	public void setRefuse(List<String> refuse) {
+	
+	public void setRefuse(Encapsulation refuse) {
 		// TODO Auto-generated method stub
 		this.refuse=refuse;
 	}
 
-	@Override
-	public List<String> getRefuse() {
+	
+	public Encapsulation getRefuse() {
 		// TODO Auto-generated method stub
 		return refuse;
 	}
-	
 
-	@Override
-	public List<Observateur> getListPompierCandidat() {
-		// TODO Auto-generated method stub
-		return ListPompierCandidat;
-	}
 	
-	@Override
-	public void inscription(Observateur o) {
+	/*public void inscription(Observateur o) {
 		
 		ListPompierCandidat.add(o);
 		
 	}
 
-	@Override
+	
 	public void desincription(Observateur o) {
 		
 		ListPompierCandidat.remove(o);
 		
 	}
 
-	@Override
+	
 	public void notifier() {
 		
 	     {
@@ -204,10 +204,11 @@ public class StageConcret implements Stage, Sujet {
      }
 		
 		
-	}
+	}*/
 
 
 
 	
+
 
 }

@@ -1,5 +1,7 @@
 package observerCandidats;
 
+import java.util.List;
+
 public interface Sujet {
 	
 	public void inscription(Observateur o);
@@ -7,5 +9,7 @@ public interface Sujet {
 	public void desincription(Observateur o);
 	
 	public void notifier();
+
+	List<Observateur> getListPompierCandidat();
 
 }
