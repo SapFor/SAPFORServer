@@ -340,8 +340,22 @@ public class ServeurSAPFOR {
 		else{return "KO";}
 	}
 	
-	
-	
-	
+	@POST
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("directeur/selection")
+	public String UpdateStage(StageConcret s){
+		
+		StageConcret StageAUpdate=(StageConcret)nomStage.get(s.getNomStage());
+		StageAUpdate.setCandidats(s.getCandidats());
+		StageAUpdate.setAccepte(s.getAccepte());
+		StageAUpdate.setAttente(s.getAttente());
+		StageAUpdate.setRefuse(s.getRefuse());
+		StageAUpdate.notifier();
+		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
+		
+		String reponse="Le stage "+StageAUpdate.getNomStage()+" a ete mis a jour";
+		
+		return reponse;}
 	
 }
