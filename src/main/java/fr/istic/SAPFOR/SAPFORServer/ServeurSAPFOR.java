@@ -276,7 +276,7 @@ public class ServeurSAPFOR {
 		//obtenu par son numero de session actuelle ("session")  
 		 		
 		Pompier aModif=numConnection.get(session);
-		StageConcret actuel=(StageConcret)this.nomStage.get(nomStage);
+		Stage actuel=this.nomStage.get(nomStage);
 		Calendar today=Calendar.getInstance();
 		
 		
@@ -350,33 +350,41 @@ public class ServeurSAPFOR {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/selection")
-	public String UpdateStage(StageConcret s){ // en cours de mise en point
+	public String UpdateStage(StageConcret s){ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
 		
 		StageConcret StageAUpdate=(StageConcret)nomStage.get(s.getNomStage());
-		StageConcret StageRecu=s;
 		
+		System.out.println("Stage avant mise à jour");
 		System.out.println(StageAUpdate.getCandidats().toString());
-		System.out.println(StageAUpdate.getAccepte().toString());
-		System.out.println(StageAUpdate.getAttente().toString());
+		System.out.println(StageAUpdate.getAccepte().toString()); //pourquoi vu comme non vide ??
+		System.out.println(StageAUpdate.getAttente().toString()); //pourquoi vu comme non vide ??
 		//System.out.println(StageAUpdate.getRefuse().toString());
 		
-		System.out.println(s.getCandidats().toString());
+		System.out.println("Donnees reçues pour mettre a jour");
+		//System.out.println(s.getCandidats().toString());
 		System.out.println(s.getAccepte().toString());
 		System.out.println(s.getAttente().toString());
 		System.out.println(s.getRefuse().toString());
-		/*
+		
 		StageAUpdate.setCandidats(s.getCandidats());
 		StageAUpdate.setAccepte(s.getAccepte());
 		StageAUpdate.setAttente(s.getAttente());
 		StageAUpdate.setRefuse(s.getRefuse());
 		
-		System.out.println(StageAUpdate.getCandidats().toString());
+		System.out.println("Stage apres mise a jour");
+		//System.out.println(StageAUpdate.getCandidats().toString());
 		System.out.println(StageAUpdate.getAccepte().toString());
 		System.out.println(StageAUpdate.getAttente().toString());
 		System.out.println(StageAUpdate.getRefuse().toString());
-		*/
-		//StageAUpdate.notifier();
+		
+		StageAUpdate.notifier();
 		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
+		
+		PompierConcret a=(PompierConcret)StageAUpdate.getListPompierCandidat().get(1);
+		System.out.println(a.getEnCours());
+		System.out.println(a.getAccepte());
+		System.out.println(a.getAttente());
+		System.out.println(a.getRefuse());
 		
 		String reponse="Le stage "+StageAUpdate.getNomStage()+" a ete mis a jour";
 		

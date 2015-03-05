@@ -9,7 +9,7 @@ public interface Sujet {
 	public void desincription(Observateur o);
 	
 	public void notifier();
-
-	List<Observateur> getListPompierCandidat();
+	
+	public List<Observateur> getListPompierCandidat();
 
 }
