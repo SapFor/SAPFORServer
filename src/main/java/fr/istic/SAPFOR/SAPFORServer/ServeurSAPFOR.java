@@ -21,12 +21,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+
+
+import outils.EncapsulationStage;
+import outils.EncapsulationUV;
 import outils.GestionCreationObjets;
 import builderPompier.Pompier;
 import builderPompier.PompierConcret;
 import builderStage.Stage;
 import builderStage.StageConcret;
-import builderStage.StageEnvoi;
 import builderUV.UV;
 import builderUV.UVConcret;
 
@@ -203,7 +206,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidat/{session}")
-	public synchronized List <UVConcret> getUVdisponible(@PathParam("session") int session){ // cast en UVConcret necessaire au fonctionnement de JAXB
+	public synchronized EncapsulationUV getUVdisponible(@PathParam("session") int session){ // cast en UVConcret necessaire au fonctionnement de JAXB
 		// Fourni les listes de UV accessible en candidature pour le pompier associe a la session 
 		// Filtre base uniquement sur les UV dÃ©jÃ  acquises	
 		List <UVConcret> UVDisponible=new ArrayList<UVConcret>();
@@ -218,8 +221,9 @@ public class ServeurSAPFOR {
 		for (int i=0; i<UVAcquises.size(); i++){
 			UVDisponible.remove((UVConcret)nomUV.get(UVAcquises.get(i)));
 		}
-			
-		return UVDisponible;
+		
+		EncapsulationUV UVdispoAenvoyer =new EncapsulationUV (UVDisponible);
+		return UVdispoAenvoyer;
 				
 	}//fin getUVdisponible
 	
@@ -227,20 +231,20 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}")
-	public synchronized List<StageEnvoi> getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
+	public synchronized EncapsulationStage getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
 
-		List <StageEnvoi> StageAGerer=new ArrayList<StageEnvoi>();
+		List <StageConcret> StageAGerer=new ArrayList<StageConcret>();
 		
 		Pompier agent=numConnection.get(session);
 		List<String> GestionStage=agent.getGestion();
 		
 		for (int i=0; i<GestionStage.size(); i++){
-		StageAGerer.add(new StageEnvoi((StageConcret)nomStage.get(GestionStage.get(i))));
-
-			
+		StageAGerer.add((StageConcret)nomStage.get(GestionStage.get(i)));	
 		}
-								
-		return StageAGerer;
+		
+		EncapsulationStage  StageAenvoyer=new EncapsulationStage (StageAGerer);
+		
+		return StageAenvoyer;
 	}//fin getStageAGerer
 	
 	
@@ -265,7 +269,7 @@ public class ServeurSAPFOR {
 	}//fin deconnexion
 	
 	
-	@POST
+	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidater/{session}/{nomStage}")
 	public synchronized String candidater(int session, String nomStage) {
@@ -298,7 +302,7 @@ public class ServeurSAPFOR {
 	}//fin candidater
 				
 	
-	@PUT
+	@GET	
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
 	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage){

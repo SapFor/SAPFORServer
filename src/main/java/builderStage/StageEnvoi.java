@@ -1,7 +1,8 @@
-package builderStage;
+/*package builderStage;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,11 +19,11 @@ public class StageEnvoi {
 	private Calendar finCandidature;
 	private String lieu;
 	private String infos;
-	private Encapsulation candidats;
-	private Encapsulation accepte;
-	private Encapsulation refuse;
-	private Encapsulation attente;
-	private ArrayList<Observateur> ListPompierCandidat;
+	private List<Encapsulation> candidats;
+	private List<Encapsulation> accepte;
+	private List<Encapsulation> refuse;
+	private List<Encapsulation> attente;
+	//private ArrayList<Observateur> ListPompierCandidat;
 	
 	
 	/*@Override
@@ -35,7 +36,7 @@ public class StageEnvoi {
 	public int getDirecteur() {
 		// TODO Auto-generated method stub
 		return directeur;
-	}*/
+	}
 	
 	public StageEnvoi(){};
 	
@@ -46,11 +47,32 @@ public class StageEnvoi {
 		this.finCandidature=stage.getFinCandidature();
 		this.lieu=stage.getLieu();
 		this.infos=stage.getInfos();
-		this.candidats=new Encapsulation(stage.getCandidats());
-		this.accepte=new Encapsulation(stage.getAccepte());
-		this.refuse=new Encapsulation(stage.getRefuse());
-		this.attente=new Encapsulation(stage.getAttente());
-		this.ListPompierCandidat=(ArrayList<Observateur>) stage.getListPompierCandidat();
+		
+		this.candidats=new ArrayList <Encapsulation>();
+		
+		for (int i=0; i<stage.getCandidats().size(); i++){
+			candidats.add(new Encapsulation(stage.getCandidats().get(i)));
+		};
+		
+		this.accepte=new ArrayList <Encapsulation>();
+		
+		for (int i=0; i<stage.getAccepte().size(); i++){
+			accepte.add(new Encapsulation(stage.getAccepte().get(i)));
+		};
+		
+		this.refuse=new ArrayList <Encapsulation>();
+		
+		for (int i=0; i<stage.getRefuse().size(); i++){
+			refuse.add(new Encapsulation(stage.getRefuse().get(i)));
+		};
+		
+		this.attente=new ArrayList <Encapsulation>();
+		
+		for (int i=0; i<stage.getAttente().size(); i++){
+			attente.add(new Encapsulation(stage.getAttente().get(i)));
+		};
+
+		//this.ListPompierCandidat=(ArrayList<Observateur>) stage.getListPompierCandidat();
 	};
 	
 	public void setNomStage(String nom){
@@ -131,55 +153,55 @@ public class StageEnvoi {
 	}
 
 	
-	public void setCandidats(Encapsulation candidats) {
+	public void setCandidats(List<Encapsulation> candidats) {
 		// TODO Auto-generated method stub
 		this.candidats=candidats;
 	}
 
 	
-	public Encapsulation getCandidats() {
+	public List<Encapsulation> getCandidats() {
 		// TODO Auto-generated method stub
 		return candidats;
 	}
 
 	
-	public void setAccepte(Encapsulation accepte) {
+	public void setAccepte(List<Encapsulation> accepte) {
 		// TODO Auto-generated method stub
 		this.accepte=accepte;
 	}
 
 	
-	public Encapsulation getAccepte() {
+	public List<Encapsulation> getAccepte() {
 		// TODO Auto-generated method stub
 		return accepte;
 	}
 
 	
-	public void setAttente(Encapsulation attente) {
+	public void setAttente(List<Encapsulation> attente) {
 		// TODO Auto-generated method stub
 		this.attente=attente;
 	}
 
 	
-	public Encapsulation getAttente() {
+	public List<Encapsulation> getAttente() {
 		// TODO Auto-generated method stub
 		return attente;
 	}
 
 	
-	public void setRefuse(Encapsulation refuse) {
+	public void setRefuse(List<Encapsulation> refuse) {
 		// TODO Auto-generated method stub
 		this.refuse=refuse;
 	}
 
 	
-	public Encapsulation getRefuse() {
+	public List<Encapsulation> getRefuse() {
 		// TODO Auto-generated method stub
 		return refuse;
 	}
 
 	
-	/*public void inscription(Observateur o) {
+	public void inscription(Observateur o) {
 		
 		ListPompierCandidat.add(o);
 		
@@ -204,7 +226,7 @@ public class StageEnvoi {
      }
 		
 		
-	}*/
+	}
 
 
 
@@ -212,3 +234,4 @@ public class StageEnvoi {
 
 
 }
+*/
