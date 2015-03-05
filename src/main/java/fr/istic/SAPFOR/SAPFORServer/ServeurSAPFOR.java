@@ -34,8 +34,13 @@ import com.sun.jersey.spi.resource.Singleton;
 
 import ecritureFichier.EcrireFichier;
 
-//by Lepelletier Frederic && Thomas Davin
-
+/**
+ * 
+ *@author : Thomas Davin
+ *@author : Lepelletier Frederic 
+ *
+ */
+ 
 @Singleton
 @Path("/serveur")
 @Produces({MediaType.APPLICATION_JSON})
