@@ -22,7 +22,7 @@ public class StageEnvoi {
 	private Encapsulation accepte;
 	private Encapsulation refuse;
 	private Encapsulation attente;
-	private ArrayList<Observateur> ListPompierCandidat;
+	//private ArrayList<Observateur> ListPompierCandidat;
 	
 	
 	/*@Override
@@ -50,7 +50,7 @@ public class StageEnvoi {
 		this.accepte=new Encapsulation(stage.getAccepte());
 		this.refuse=new Encapsulation(stage.getRefuse());
 		this.attente=new Encapsulation(stage.getAttente());
-		this.ListPompierCandidat=(ArrayList<Observateur>) stage.getListPompierCandidat();
+		//this.ListPompierCandidat=(ArrayList<Observateur>) stage.getListPompierCandidat();
 	};
 	
 	public void setNomStage(String nom){
