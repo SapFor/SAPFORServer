@@ -169,7 +169,6 @@ public class ServeurSAPFOR {
 			Iterator it = numConnection.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry)it.next();
-				System.out.println(((Pompier) pair.getValue()).getId());
 				idExist.add(((Pompier) pair.getValue()).getId());
 			}
 			
