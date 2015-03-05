@@ -6,6 +6,8 @@ import java.io.IOException;
 
 public interface StageBuilder {
 	
+	public void buildUV() throws IOException;
+	
 	public void buildNomStage() throws IOException;
 	
 	public void buildDate() throws IOException;

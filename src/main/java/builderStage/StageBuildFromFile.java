@@ -53,7 +53,7 @@ public class StageBuildFromFile implements StageBuilder {
 			
 			int jour=jourJ.get(Calendar.DAY_OF_MONTH);
 			int mois=jourJ.get(Calendar.MONTH);
-			int annee=jourJ.get(Calendar.YEAR);
+			int annee=jourJ.get(Calendar.YEAR)%100;
 			
 			String moisS;
 			
@@ -161,6 +161,14 @@ public class StageBuildFromFile implements StageBuilder {
 	public Stage getSession() {
 		// TODO Auto-generated method stub
 		return this.session;
+	}
+
+	@Override
+	public void buildUV() throws IOException {
+		// TODO Auto-generated method stub
+		try{
+			session.setUV(RecupInfoFichier.chercheDsFichier(input,"uv"));
+		}catch(IOException e){e.printStackTrace();}
 	}
 
 }
