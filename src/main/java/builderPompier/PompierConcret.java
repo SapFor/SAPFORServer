@@ -179,9 +179,9 @@ public class PompierConcret implements Pompier, Observateur {
 		else if (this.estDansListe(CandidatRefuse)){
 			refuse.add(s.getNomStage());
 		}
-		else {attente.add(null);}
+		else {attente.add(s.getNomStage());}
 		
-		enCours.remove(s.getNomStage());
+		this.getEnCours().remove(s.getNomStage());
 		
 		
 	}

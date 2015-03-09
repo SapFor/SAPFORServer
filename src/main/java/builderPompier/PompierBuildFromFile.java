@@ -130,7 +130,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	
 		try{
 			
-			pompier.setRefuse(RecupInfoFichier.recupListDsFichier(input,"accepte"));
+			pompier.setRefuse(RecupInfoFichier.recupListDsFichier(input,"refuse"));
 						
 		}catch(IOException e){e.printStackTrace();}
 	}
@@ -139,7 +139,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	public void buildGestion() throws IOException {
 		try {
 			
-			pompier.setGestion(RecupInfoFichier.recupListDsFichier(input,"accepte"));
+			pompier.setGestion(RecupInfoFichier.recupListDsFichier(input,"gestion"));
 		 
 			input.close();
 		} catch (IOException e) {e.printStackTrace();}
