@@ -357,8 +357,10 @@ public class ServeurSAPFOR {
 		System.out.println("Stage avant mise à jour");
 		System.out.println(StageAUpdate.getCandidats().toString());
 		System.out.println(StageAUpdate.getAccepte().toString()); //pourquoi vu comme non vide ??
+		System.out.println(StageAUpdate.getAccepte());
 		System.out.println(StageAUpdate.getAttente().toString()); //pourquoi vu comme non vide ??
 		//System.out.println(StageAUpdate.getRefuse().toString());
+		System.out.println(StageAUpdate.getRefuse());
 		
 		System.out.println("Donnees reçues pour mettre a jour");
 		//System.out.println(s.getCandidats().toString());
@@ -381,6 +383,7 @@ public class ServeurSAPFOR {
 		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
 		
 		PompierConcret a=(PompierConcret)StageAUpdate.getListPompierCandidat().get(1);
+		System.out.println(a.getNom()+" "+a.getPrenom());
 		System.out.println(a.getEnCours());
 		System.out.println(a.getAccepte());
 		System.out.println(a.getAttente());
