@@ -284,12 +284,15 @@ public class ServeurSAPFOR {
 		if(actuel.getFinCandidature().after(today)){
 		
 			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
+			
+			if (pompierListeEnCours.get(0)==" "){pompierListeEnCours.remove(0);}
 			pompierListeEnCours.add(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
 			aModif.setEnCours(pompierListeEnCours);//remet liste des stages (a jour) dans l'objet pompier 
 			
 			System.out.println(pompierListeEnCours.toString());
 			
 			List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
+			if (stageListeCandidats.get(0)==" "){stageListeCandidats.remove(0);}
 			stageListeCandidats.add(Integer.toString(aModif.getId()));
 			actuel.setCandidats(stageListeCandidats);
 			
@@ -357,10 +360,8 @@ public class ServeurSAPFOR {
 		System.out.println("Stage avant mise à jour");
 		System.out.println(StageAUpdate.getCandidats().toString());
 		System.out.println(StageAUpdate.getAccepte().toString()); //pourquoi vu comme non vide ??
-		System.out.println(StageAUpdate.getAccepte());
 		System.out.println(StageAUpdate.getAttente().toString()); //pourquoi vu comme non vide ??
-		//System.out.println(StageAUpdate.getRefuse().toString());
-		System.out.println(StageAUpdate.getRefuse());
+		System.out.println(StageAUpdate.getRefuse().toString());
 		
 		System.out.println("Donnees reçues pour mettre a jour");
 		//System.out.println(s.getCandidats().toString());
