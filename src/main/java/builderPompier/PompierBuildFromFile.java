@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import outils.RecupInfoFichier;
 
@@ -25,6 +27,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 		this.pompier=new PompierConcret();
 		//this.fichier=fichier+id+".pomp";
 		URI cheminFich=fichier.toURI();
+		List<String> temp;
 		
 		
 		try{
@@ -100,6 +103,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 		
 		try{
 			pompier.setAccepte(RecupInfoFichier.recupListDsFichier(input,"accepte"));
+						
 		}catch(IOException e){e.printStackTrace();}
 	}
 
@@ -107,6 +111,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	public void buildEnCours() throws IOException {
 		
 		try{
+			
 			pompier.setEnCours(RecupInfoFichier.recupListDsFichier(input,"encours"));
 		}catch(IOException e){e.printStackTrace();}
 	}
@@ -115,6 +120,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	public void buildAttente() throws IOException {
 		// TODO Auto-generated method stub
 		try{
+			
 			pompier.setAttente(RecupInfoFichier.recupListDsFichier(input,"attente"));
 		}catch(IOException e){e.printStackTrace();}
 	}
@@ -123,14 +129,17 @@ public class PompierBuildFromFile implements PompierBuilder{
 	public void buildRefuse() throws IOException {
 	
 		try{
-			pompier.setRefuse(RecupInfoFichier.recupListDsFichier(input,"refuse"));
+			
+			pompier.setRefuse(RecupInfoFichier.recupListDsFichier(input,"accepte"));
+						
 		}catch(IOException e){e.printStackTrace();}
 	}
 	
 	@Override
 	public void buildGestion() throws IOException {
 		try {
-			pompier.setGestion(RecupInfoFichier.recupListDsFichier(input,"gestion"));
+			
+			pompier.setGestion(RecupInfoFichier.recupListDsFichier(input,"accepte"));
 		 
 			input.close();
 		} catch (IOException e) {e.printStackTrace();}

@@ -28,8 +28,8 @@ public class StageConcret implements Stage, Sujet {
 	private String infos;
 	private List<String> candidats;
 	private List<String> accepte;
-	private List<String> refuse;
 	private List<String> attente;
+	private List<String> refuse;
 	private ArrayList<Observateur> ListPompierCandidat;
 	
 	
