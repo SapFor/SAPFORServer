@@ -149,7 +149,7 @@ public class StageBuildFromFile implements StageBuilder {
 	public void buildRefuse() throws IOException {
 		// TODO Auto-generated method stub
 		try {
-		session.setAttente(RecupInfoFichier.recupListDsFichier(input,"refuse"));
+		session.setRefuse(RecupInfoFichier.recupListDsFichier(input,"refuse"));
 		
 			input.close();
 		} catch (IOException e) {e.printStackTrace();}
