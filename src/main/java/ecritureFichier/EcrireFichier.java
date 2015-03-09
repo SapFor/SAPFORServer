@@ -15,7 +15,7 @@ import builderStage.Stage;
 
 public class EcrireFichier {
 	
-	public void ecriture(Object objet) throws URISyntaxException{
+	public void ecriture(Object objet) throws URISyntaxException, IOException{
 		if(objet instanceof PompierConcret){
 			PompierConcret aEcrire=(PompierConcret)objet;
 			ecrirePompier(aEcrire);
@@ -99,9 +99,9 @@ public class EcrireFichier {
 	
 	
 	
-	public static void ecrireStage(Stage stage){
+	public static void ecrireStage(Stage stage) throws IOException{
 		
-		BufferedWriter output;
+		BufferedWriter output = null;
 		URL chemin;
 		File fichier;		
 		String nomFichier;
@@ -138,6 +138,7 @@ public class EcrireFichier {
 		
 		
 		StringBuffer candyList=new StringBuffer();
+		
 		for(String candy : stage.getCandidats()){candyList.append(candy+"\n");}
 		StringBuffer accepteList=new StringBuffer();
 		for(String accepte : stage.getAccepte()){accepteList.append(accepte+"\n");}
@@ -153,8 +154,7 @@ public class EcrireFichier {
 		
 		try{
 			output=new BufferedWriter(new FileWriter (fichier));
-			
-			
+						
 			output.write(
 					"uv\n"+stage.getUV()+"\n"
 					+"date\n"+jourD+"\n"+moisD+"\n"+anneeD+"\n"
@@ -180,12 +180,12 @@ public class EcrireFichier {
 					+"frefuse\n"
 					
 			);
-			
-			output.close();		
+			//output.close();
+					
 								
 		}catch(IOException e){e.printStackTrace();}
 		
-		
+		finally{output.close();}
 	}
 	
 }

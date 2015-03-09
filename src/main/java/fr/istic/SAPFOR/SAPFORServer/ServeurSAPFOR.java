@@ -314,7 +314,7 @@ public class ServeurSAPFOR {
 	@GET	
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
-	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage){
+	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage) throws IOException{
 		//
 		String str[]=date.split("\\.");
 		String jourS=str[0];
