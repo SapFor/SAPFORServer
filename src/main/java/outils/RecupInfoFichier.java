@@ -84,7 +84,8 @@ public class RecupInfoFichier {
 			
 		}catch(IOException e){e.printStackTrace();}
 		
-		if(res.isEmpty()){res.add("");}
+		if(res.isEmpty()){res.add(" ");}
+		
 				
 		return res;
 				
@@ -113,7 +114,7 @@ public static String recupStringDsFichier(BufferedReader input, String motCle) t
 			
 		}catch(IOException e){e.printStackTrace();}
 		
-				
+						
 		return res.toString();
 		
 		
