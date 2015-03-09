@@ -84,7 +84,7 @@ public class RecupInfoFichier {
 			
 		}catch(IOException e){e.printStackTrace();}
 		
-		if(res.isEmpty()){res.add(" ");}
+		//if(res.isEmpty()){res.add(" ");}
 		
 				
 		return res;
