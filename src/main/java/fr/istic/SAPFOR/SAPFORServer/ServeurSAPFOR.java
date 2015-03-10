@@ -226,6 +226,106 @@ public class ServeurSAPFOR {
 				
 	}//fin getUVdisponible
 	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("UVcandidat/{session}")
+	public synchronized EncapsulationUV getUVdispoCandidat(@PathParam("session") int session){
+		
+		List <UVConcret> UVCandidatable=new ArrayList<UVConcret>();
+			
+		Pompier agent=numConnection.get(session);
+				
+		for (int i=0; i<listeDesUVs.size();i++){
+			
+			if (peutCandidater(agent,listeDesUVs.get(i))){
+				UVCandidatable.add((UVConcret)listeDesUVs.get(i));
+			}
+		}
+		
+		EncapsulationUV UVsCandidatablesAenvoyer =new EncapsulationUV (UVCandidatable);
+		return UVsCandidatablesAenvoyer;
+		
+	}
+	
+	private boolean peutCandidater(Pompier pomp, UV uv){ 
+		//retourne vrai si le pompier peut être candidat à l'UV
+		// Condition pour candidater :ne pas l'avoir valider et avoir acquis les niveaux inferieurs. ex: pour FDF2 il faut avoir validé FDF1
+		boolean reponse;
+		
+		String nomUv=uv.getNom();
+		List<String> UVAcquises=pomp.getUV();
+		String ConditionUV=nomUv.substring(0, nomUv.length()-1)+ (Integer.parseInt((nomUv.substring(nomUv.length()-1)))-1);
+		
+		System.out.println(nomUv);
+		System.out.println(ConditionUV);
+		
+		if (!UVAcquises.contains(nomUv)){
+			if (Integer.parseInt((ConditionUV.substring(ConditionUV.length()-1)))==0){
+				reponse=true;			
+			}
+			else if (UVAcquises.contains(ConditionUV)){reponse=true;}
+			
+			else{reponse=false;}
+				
+			}
+		else {reponse=false;}
+		
+		System.out.println(reponse+"\n");
+		
+	return reponse;
+	}
+	//fin de peutCandidater
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("UVformateur/{session}")
+	public synchronized EncapsulationUV getUVdispoFormateur(@PathParam("session") int session){
+		
+		List <UVConcret> UVCandidatable=new ArrayList<UVConcret>();
+		
+		Pompier agent=numConnection.get(session);
+				
+		for (int i=0; i<listeDesUVs.size();i++){
+			
+			if (peutFormer(agent,listeDesUVs.get(i))){
+				UVCandidatable.add((UVConcret)listeDesUVs.get(i));
+			}
+		}
+		
+		EncapsulationUV UVsCandidatablesAenvoyer =new EncapsulationUV (UVCandidatable);
+		return UVsCandidatablesAenvoyer;	
+	}
+	// fin de getUVdispoFormateur
+	
+	private boolean peutFormer(Pompier pomp, UV uv){
+		//retourne vrai si le pompier peut être dispenser la formation de l'UV
+		//Condition pour dispenser la formation : avoir l'UV FORM avec le bon niveau et avoir acquis l'UV ciblé. ex: pour dispenser l'UV FDF2 il faut avoir validé FORM2 et FDF2
+		boolean reponse;
+				
+		String nomUv=uv.getNom();
+		List<String> UVAcquises=pomp.getUV();
+		
+		String conditionFORM="FORM"+(Integer.parseInt((nomUv.substring(nomUv.length()-1))));
+		
+		if (UVAcquises.contains(conditionFORM)){
+			if (nomUv.compareTo(conditionFORM)==0){
+			reponse=UVAcquises.contains("FORM"+(1+Integer.parseInt((nomUv.substring(nomUv.length()-1)))));
+			}
+			
+			else if (UVAcquises.contains(nomUv)){
+			reponse=true;			
+			}
+			
+			else{reponse=false;}
+		}
+		
+		else {reponse=false;}
+			
+		System.out.println(reponse+"\n");
+				
+		return reponse;
+	}
+	// fin de peutFormer
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
