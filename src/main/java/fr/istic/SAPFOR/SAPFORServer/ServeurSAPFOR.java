@@ -63,25 +63,16 @@ public class ServeurSAPFOR {
 	public ServeurSAPFOR() throws URISyntaxException, MalformedURLException{
 		//constructeur du serveur
 		
-<<<<<<< HEAD
-		//chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/"; //mode linux
-
-		chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path a verifier 
-		
-		pathPomp=chemData+"Pompiers/";
-		pathUVs=chemData+"UVs/";
-		pathStag=chemData+"Stages/";
-		System.out.println(pathPomp);
-		System.out.println(pathUVs);
-		System.out.println(pathStag);
-		//URL dossier=getClass().getResource("/donnees/UVs"); //recherche du chemin menants aux fichiers d'UVS
-=======
 		
 		//***************
 		//creation du chemin menant aux donnees
 		//***************
+
+
+		//chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
 		
-		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";
+						
+		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
 		pathPomp=chemData+"Pompiers/";
 		pathUVs=chemData+"UVs/";
 		pathStag=chemData+"Stages/";
@@ -91,7 +82,7 @@ public class ServeurSAPFOR {
 		//remplissage de deux liste (hashmaps) : 1 contenant toutes les UV disponibles l'autre toutes les stages disponibles
 		//***************
 		
->>>>>>> origin/master
+
 		File folder = new File(pathUVs);//dossier.toURI()); //creation chemin jusqu'au répretoire UVs
 		String[] listOfUVs = folder.list();//recuperation du nom des fichiers du repertoire UV
 		
