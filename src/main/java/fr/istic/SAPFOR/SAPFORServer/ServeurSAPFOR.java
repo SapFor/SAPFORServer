@@ -253,9 +253,6 @@ public class ServeurSAPFOR {
 		List<String> UVAcquises=pomp.getUV();
 		String ConditionUV=nomUv.substring(0, nomUv.length()-1)+ (Integer.parseInt((nomUv.substring(nomUv.length()-1)))-1);
 		
-		System.out.println(nomUv);
-		System.out.println(ConditionUV);
-		
 		if (!UVAcquises.contains(nomUv)){
 			if (Integer.parseInt((ConditionUV.substring(ConditionUV.length()-1)))==0){
 				reponse=true;			
@@ -266,8 +263,6 @@ public class ServeurSAPFOR {
 				
 			}
 		else {reponse=false;}
-		
-		System.out.println(reponse+"\n");
 		
 	return reponse;
 	}
@@ -339,8 +334,7 @@ public class ServeurSAPFOR {
 		}
 		
 		EncapsulationStage  StageAenvoyer=new EncapsulationStage (StageDeUV);
-		//System.out.println(StageAenvoyer.capsule.get(0).getNomStage());
-		
+				
 		return StageAenvoyer;
 	}//fin getStageDeUV
 	
@@ -403,24 +397,18 @@ public class ServeurSAPFOR {
 			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
 			pompierListeEnCours.add(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
 			aModif.setEnCours(pompierListeEnCours);//remet liste des stages (a jour) dans l'objet pompier 
-			
-			//System.out.println(pompierListeEnCours.toString());
-			
+						
 			List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
 			stageListeCandidats.add(Integer.toString(aModif.getId()));
 			actuel.setCandidats(stageListeCandidats);
-			
-			//System.out.println(stageListeCandidats.toString());
-			
-						
+									
 			actuel.inscription(aModif);
 			
 			String nomFich=actuel.getNomStage()+".sess";
 			
 			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
 			URI chemin=chemPath.toURI();
-			//System.out.println(actuel.getListPompierCandidat().toString());
-			
+						
 			EcrireFichier.ecrireStage(actuel,chemin);
 				
 			return "OK";
@@ -429,6 +417,41 @@ public class ServeurSAPFOR {
 		else{return "KO";}
 	}//fin candidater
 				
+	
+	@GET
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("desincription/{session}/{nomStage}")
+	public synchronized String desincrire(@PathParam("session") int session, @PathParam("nomStage") String nomStage) throws URISyntaxException, IOException{
+		
+		Pompier aModif=numConnection.get(session);
+		Stage actuel=this.nomStage.get(nomStage);
+		
+		
+if(actuel.getCandidats().contains(aModif.getId())){
+			
+			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
+			pompierListeEnCours.remove(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
+			aModif.setEnCours(pompierListeEnCours);//remet liste des stages (a jour) dans l'objet pompier 
+			
+			List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
+			stageListeCandidats.remove(Integer.toString(aModif.getId()));
+			actuel.setCandidats(stageListeCandidats);
+			
+			actuel.desincription(aModif);
+			
+			String nomFich=actuel.getNomStage()+".sess";
+			
+			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
+			URI chemin=chemPath.toURI();
+						
+			EcrireFichier.ecrireStage(actuel,chemin);
+				
+			return "OK";
+		}
+		
+		else{return "KO";}
+		
+	}//fin de desinscrire
 	
 	@GET	
 	@Produces({MediaType.APPLICATION_JSON})
@@ -481,77 +504,24 @@ public class ServeurSAPFOR {
 	public synchronized String UpdateStage(StageConcret s){ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
 		
 		StageConcret StageAUpdate=(StageConcret)nomStage.get(s.getNomStage());
-		/*
-		System.out.println("Stage avant mise à jour");
-		System.out.println(StageAUpdate.getCandidats().toString());
-		System.out.println(StageAUpdate.getAccepte().toString()); //pourquoi vu comme non vide ??
-		System.out.println(StageAUpdate.getAttente().toString()); //pourquoi vu comme non vide ??
-		System.out.println(StageAUpdate.getRefuse().toString());
 		
-		System.out.println("Donnees reçues pour mettre a jour");
-		*/
 		if (s.getCandidats()==null) {s.setCandidats(new ArrayList<String>());}
-		//System.out.println(s.getCandidats().toString());
+		
 		if (s.getAccepte()==null) {s.setAccepte(new ArrayList<String>());}
-		//System.out.println(s.getAccepte().toString());
+		
 		if (s.getAttente()==null) {s.setAttente(new ArrayList<String>());}
-		//System.out.println(s.getAttente().toString());
+		
 		if (s.getRefuse()==null) {s.setRefuse(new ArrayList<String>());}
-		//System.out.println(s.getRefuse().toString());
+		
 		
 		StageAUpdate.setCandidats(s.getCandidats());
 		StageAUpdate.setAccepte(s.getAccepte());
 		StageAUpdate.setAttente(s.getAttente());
 		StageAUpdate.setRefuse(s.getRefuse());
 		
-		/*System.out.println("Stage apres mise a jour");
-		System.out.println(StageAUpdate.getCandidats().toString());
-		System.out.println(StageAUpdate.getAccepte().toString());
-		System.out.println(StageAUpdate.getAttente().toString());
-		System.out.println(StageAUpdate.getRefuse().toString());
-		
-		PompierConcret a=(PompierConcret)StageAUpdate.getListPompierCandidat().get(0);
-		System.out.println(a.getNom()+" "+a.getPrenom());
-		System.out.println(a.getEnCours());
-		System.out.println(a.getAccepte());
-		System.out.println(a.getAttente());
-		System.out.println(a.getRefuse());
-		
-		PompierConcret b=(PompierConcret)StageAUpdate.getListPompierCandidat().get(1);
-		System.out.println(b.getNom()+" "+b.getPrenom());
-		System.out.println(b.getEnCours());
-		System.out.println(b.getAccepte());
-		System.out.println(b.getAttente());
-		System.out.println(b.getRefuse());
-		
-		PompierConcret c=(PompierConcret)StageAUpdate.getListPompierCandidat().get(3);
-		System.out.println(c.getNom()+" "+c.getPrenom());
-		System.out.println(c.getEnCours());
-		System.out.println(c.getAccepte());
-		System.out.println(c.getAttente());
-		System.out.println(c.getRefuse());
-		*/
 		
 		StageAUpdate.notifier();
 		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
-		
-		/*System.out.println(a.getNom()+" "+a.getPrenom());
-		System.out.println(a.getEnCours());
-		System.out.println(a.getAccepte());
-		System.out.println(a.getAttente());
-		System.out.println(a.getRefuse());
-		
-		System.out.println(b.getNom()+" "+b.getPrenom());
-		System.out.println(b.getEnCours());
-		System.out.println(b.getAccepte());
-		System.out.println(b.getAttente());
-		System.out.println(b.getRefuse());
-		
-		System.out.println(c.getNom()+" "+c.getPrenom());
-		System.out.println(c.getEnCours());
-		System.out.println(c.getAccepte());
-		System.out.println(c.getAttente());
-		System.out.println(c.getRefuse());*/
 		
 		String reponse="Le stage "+StageAUpdate.getNomStage()+" a ete mis a jour";
 		
