@@ -125,13 +125,15 @@ public class ServeurSAPFOR {
 		
 	}//fin constructeur
 	
+	
 	/**
 	 * 
 	 * @param id
-	 * @return Objet Pompier
+	 * @return
 	 * @throws IOException
 	 * @throws URISyntaxException
 	 */
+	
 	private Pompier createPompier(int id)throws IOException, URISyntaxException {
 		//met le createur d'objets pompier a disposition du serveur
 		return GestionCreationObjets.creerPompier(id,pathPomp);
@@ -200,15 +202,27 @@ public class ServeurSAPFOR {
 	 * @throws URISyntaxException
 	 */
 	
+	/**
+	 * 
+	 * @param idPompier
+	 * @param mdp
+	 * @return
+	 * @throws URISyntaxException
+	 */
+		
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{idPompier}/{mdp}")
 	public synchronized Pompier login(@PathParam("idPompier") int idPompier,@PathParam("mdp") String mdp) throws URISyntaxException {
+		
+		//****
 		// recupere le login et mdp de l'agent
 		//verifie le mdp par rapport a celui indique dans le fichier de l'agent ne idPompier
 		//si numero concordent => creation d'un numero de session aleatoire (apres verification de sa disponibilite)
+		//****
 		
-		Pompier invalide=new PompierConcret();//création classe Pompier vide contenant juste l'idSession indiquant une erreur de connection
+		Pompier invalide=new PompierConcret();
+		//création classe Pompier vide contenant juste l'idSession indiquant une erreur de connection
 		invalide.setIdSession(999);
 		
 		Pompier entrant;
@@ -558,9 +572,7 @@ if(actuel.getCandidats().contains(aModif.getId())){
 				URI chemin=chemPath.toURI();
 				
 				EcrireFichier.ecrireStage(aModif,pathStag);
-		
-				
-		
+			
 				return "OK";
 			}
 			else{return "KO";}
