@@ -27,10 +27,6 @@ public class PompierBuildFromFile implements PompierBuilder{
 		cheminFich=pathPomp+fich;
 				
 		this.pompier=new PompierConcret();
-		
-		
-		
-		
 	}
 	
 	
