@@ -17,25 +17,24 @@ import outils.RecupInfoFichier;
 public class StageBuildFromFile implements StageBuilder {
 		
 	private Stage session;
-	private URL fichier;
-	private BufferedReader input;
+	private URI cheminFich;
+	//private BufferedReader input;
 	
 	public StageBuildFromFile(String label) throws URISyntaxException{
 		
 		String fich=label+".sess";
-		
-		fichier=getClass().getResource("/donnees/Stages/"+fich);
-		URI cheminFich=fichier.toURI();
+		URL fichier=getClass().getResource("/donnees/Stages/"+fich);
+		cheminFich=fichier.toURI();
 		
 		this.session=new StageConcret();
 		
 		
-		try{
+		/*try{
 			input = new BufferedReader(new FileReader(new File(cheminFich)));
 			input.mark(2000);	
 			
 			}catch(IOException e){System.out.println("Aucun fichier "+fichier+" existant!");}
-		
+	*/	
 	}
 	
 	@Override
@@ -46,9 +45,9 @@ public class StageBuildFromFile implements StageBuilder {
 		
 		try{
 			
-			String uv=RecupInfoFichier.chercheDsFichier(input,"uv");
-			String lieu=RecupInfoFichier.chercheDsFichier(input,"lieu");
-			jourJ=RecupInfoFichier.chercheDateDsFichier(input,"date");
+			String uv=RecupInfoFichier.chercheDsFichier(cheminFich,"uv");
+			String lieu=RecupInfoFichier.chercheDsFichier(cheminFich,"lieu");
+			jourJ=RecupInfoFichier.chercheDateDsFichier(cheminFich,"date");
 			
 			
 			int jour=jourJ.get(Calendar.DAY_OF_MONTH);
@@ -77,6 +76,7 @@ public class StageBuildFromFile implements StageBuilder {
 						
 			session.setNomStage(nom);
 		}catch(IOException e){e.printStackTrace();}
+		
 	}
 	
 	
@@ -87,8 +87,7 @@ public class StageBuildFromFile implements StageBuilder {
 		Calendar jourJ;
 		
 		try{
-			
-			jourJ=RecupInfoFichier.chercheDateDsFichier(input,"date");
+			jourJ=RecupInfoFichier.chercheDateDsFichier(cheminFich,"date");
 			
 			session.setDate(jourJ);
 		}catch(IOException e){e.printStackTrace();}
@@ -100,7 +99,7 @@ public class StageBuildFromFile implements StageBuilder {
 		Calendar finCandidature;
 		try{
 			
-			finCandidature=RecupInfoFichier.chercheDateDsFichier(input,"finCandidature");
+			finCandidature=RecupInfoFichier.chercheDateDsFichier(cheminFich,"finCandidature");
 							
 			
 			session.setFinCandidature(finCandidature);
@@ -111,7 +110,7 @@ public class StageBuildFromFile implements StageBuilder {
 	public void buildLieu() throws IOException {
 		// TODO Auto-generated method stub
 		try{
-			session.setLieu(RecupInfoFichier.chercheDsFichier(input,"lieu"));
+			session.setLieu(RecupInfoFichier.chercheDsFichier(cheminFich,"lieu"));
 		}catch(IOException e){e.printStackTrace();}
 	}
 
@@ -119,21 +118,21 @@ public class StageBuildFromFile implements StageBuilder {
 	public void buildInfos() throws IOException {
 		// TODO Auto-generated method stub
 		try{
-			session.setInfos(RecupInfoFichier.recupStringDsFichier(input,"infos"));
+			session.setInfos(RecupInfoFichier.recupStringDsFichier(cheminFich,"infos"));
 		}catch(IOException e){e.printStackTrace();}	
 	}
 
 	@Override
 	public void buildCandidats() throws IOException {
 		try{
-			session.setCandidats(RecupInfoFichier.recupListDsFichier(input,"candidats"));
+			session.setCandidats(RecupInfoFichier.recupListDsFichier(cheminFich,"candidats"));
 		}catch(IOException e){e.printStackTrace();}
 	}
 
 	@Override
 	public void buildAccepte() throws IOException {
 		try{
-			session.setAccepte(RecupInfoFichier.recupListDsFichier(input,"accepte"));
+			session.setAccepte(RecupInfoFichier.recupListDsFichier(cheminFich,"accepte"));
 		}catch(IOException e){e.printStackTrace();}	
 	}
 
@@ -141,7 +140,7 @@ public class StageBuildFromFile implements StageBuilder {
 	public void buildAttente() throws IOException {
 		
 		try{
-			session.setAttente(RecupInfoFichier.recupListDsFichier(input,"attente"));
+			session.setAttente(RecupInfoFichier.recupListDsFichier(cheminFich,"attente"));
 		}catch(IOException e){e.printStackTrace();}	
 	}
 
@@ -149,9 +148,9 @@ public class StageBuildFromFile implements StageBuilder {
 	public void buildRefuse() throws IOException {
 		// TODO Auto-generated method stub
 		try {
-		session.setRefuse(RecupInfoFichier.recupListDsFichier(input,"refuse"));
+		session.setRefuse(RecupInfoFichier.recupListDsFichier(cheminFich,"refuse"));
 		
-			input.close();
+			
 		} catch (IOException e) {e.printStackTrace();}
 	}
 
@@ -173,7 +172,7 @@ public class StageBuildFromFile implements StageBuilder {
 	public void buildUV() throws IOException {
 		// TODO Auto-generated method stub
 		try{
-			session.setUV(RecupInfoFichier.chercheDsFichier(input,"uv"));
+			session.setUV(RecupInfoFichier.chercheDsFichier(cheminFich,"uv"));
 		}catch(IOException e){e.printStackTrace();}
 	}
 

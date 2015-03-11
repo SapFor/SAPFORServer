@@ -17,25 +17,25 @@ public class PompierBuildFromFile implements PompierBuilder{
 
 	private Pompier pompier;
 	
-	private URL fichier;
+	private URI cheminFich;
 			
 	private BufferedReader input;
 	
 	public PompierBuildFromFile(int id) throws URISyntaxException{
 		
-		fichier=getClass().getResource("/donnees/Pompiers/"+id+".pomp");
+		URL fichier=getClass().getResource("/donnees/Pompiers/"+id+".pomp");
 		this.pompier=new PompierConcret();
 		//this.fichier=fichier+id+".pomp";
-		URI cheminFich=fichier.toURI();
+		cheminFich=fichier.toURI();
 		List<String> temp;
 		
 		
-		try{
+		/*try{
 			 input = new BufferedReader(new FileReader(new File(cheminFich)));
 			 input.mark(2000);	
 			
 			}catch(Exception e){System.out.println("Aucun fichier "+fichier+" existant!");}
-		
+		*/
 		
 	}
 	
@@ -45,7 +45,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 		// TODO Auto-generated method stub
 			
 		try{	
-			 pompier.setId(Integer.parseInt(RecupInfoFichier.chercheDsFichier(input,"id")));
+			 pompier.setId(Integer.parseInt(RecupInfoFichier.chercheDsFichier(cheminFich,"id")));
 		}catch(IOException e){}	 
 			
 	}
@@ -54,7 +54,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	@Override
 	public void buildMdp() throws IOException {
 		try{	
-			 pompier.setMdp(RecupInfoFichier.chercheDsFichier(input,"mdp"));
+			 pompier.setMdp(RecupInfoFichier.chercheDsFichier(cheminFich,"mdp"));
 		}catch(IOException e){}	 
 		
 	}
@@ -63,7 +63,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	public void buildDirecteur(){
 			
 			 try {
-				pompier.setDirecteur(RecupInfoFichier.chercheDsFichier(input,"directeur"));
+				pompier.setDirecteur(RecupInfoFichier.chercheDsFichier(cheminFich,"directeur"));
 			} catch (IOException e) {e.printStackTrace();}
 			
 		
@@ -74,7 +74,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	public void buildNom() throws IOException{
 		
 			 try {
-				pompier.setNom(RecupInfoFichier.chercheDsFichier(input,"nom"));
+				pompier.setNom(RecupInfoFichier.chercheDsFichier(cheminFich,"nom"));
 			} catch (IOException e) {e.printStackTrace();}
 			
 		
@@ -85,7 +85,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 		// TODO Auto-generated method stub
 		
 		try{
-			pompier.setPrenom(RecupInfoFichier.chercheDsFichier(input,"prenom"));
+			pompier.setPrenom(RecupInfoFichier.chercheDsFichier(cheminFich,"prenom"));
 		}catch(IOException e){e.printStackTrace();}
 	}
 
@@ -94,7 +94,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 		// TODO Auto-generated method stub
 		
 		try{
-			pompier.setUV(RecupInfoFichier.recupListDsFichier(input,"uv"));
+			pompier.setUV(RecupInfoFichier.recupListDsFichier(cheminFich,"uv"));
 		}catch(IOException e){e.printStackTrace();}	
 	}
 
@@ -102,7 +102,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	public void buildAccepte() throws IOException {
 		
 		try{
-			pompier.setAccepte(RecupInfoFichier.recupListDsFichier(input,"accepte"));
+			pompier.setAccepte(RecupInfoFichier.recupListDsFichier(cheminFich,"accepte"));
 						
 		}catch(IOException e){e.printStackTrace();}
 	}
@@ -112,7 +112,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 		
 		try{
 			
-			pompier.setEnCours(RecupInfoFichier.recupListDsFichier(input,"encours"));
+			pompier.setEnCours(RecupInfoFichier.recupListDsFichier(cheminFich,"encours"));
 		}catch(IOException e){e.printStackTrace();}
 	}
 
@@ -121,7 +121,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 		// TODO Auto-generated method stub
 		try{
 			
-			pompier.setAttente(RecupInfoFichier.recupListDsFichier(input,"attente"));
+			pompier.setAttente(RecupInfoFichier.recupListDsFichier(cheminFich,"attente"));
 		}catch(IOException e){e.printStackTrace();}
 	}
 
@@ -141,7 +141,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 			
 			pompier.setGestion(RecupInfoFichier.recupListDsFichier(input,"gestion"));
 		 
-			input.close();
+
 		} catch (IOException e) {e.printStackTrace();}
 		
 	}

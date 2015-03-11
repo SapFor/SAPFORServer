@@ -15,7 +15,7 @@ import builderStage.Stage;
 
 public class EcrireFichier {
 	
-	public void ecriture(Object objet) throws URISyntaxException, IOException{
+	public void ecriture(Object objet,URI chemin) throws URISyntaxException, IOException{
 		if(objet instanceof PompierConcret){
 			PompierConcret aEcrire=(PompierConcret)objet;
 			ecrirePompier(aEcrire);
@@ -23,7 +23,7 @@ public class EcrireFichier {
 		
 		else if (objet instanceof Stage){
 			Stage aEcrire=(Stage)objet;
-			ecrireStage(aEcrire);
+			ecrireStage(aEcrire,chemin);
 		}
 		else{}
 	}
@@ -99,10 +99,9 @@ public class EcrireFichier {
 	
 	
 	
-	public static void ecrireStage(Stage stage) throws IOException{
+	public static void ecrireStage(Stage stage,URI chemin) throws IOException, URISyntaxException{
 		
 		BufferedWriter output = null;
-		URL chemin;
 		File fichier;		
 		String nomFichier;
 		
@@ -147,13 +146,16 @@ public class EcrireFichier {
 		StringBuffer refuseList=new StringBuffer();
 		for(String refuse : stage.getRefuse()){refuseList.append(refuse+"\n");}
 		
+		//String fich=nomFichier+".sess";
+		//chemin=EcrireFichier.class.getResource("/donnees/Stages/"+fich);//+nomFichier+".sess");
+		//System.out.println(chemin.toString());
 		
-		chemin=EcrireFichier.class.getResource("/donnees/Stages/");
-		
-		fichier=new File(chemin.toString()+nomFichier);
+		fichier=new File(chemin);
+		//System.out.println(fichier.toString());
+				//toString()+nomFichier);
 		
 		try{
-			output=new BufferedWriter(new FileWriter (fichier));
+			output=new BufferedWriter(new FileWriter(fichier));
 						
 			output.write(
 					"uv\n"+stage.getUV()+"\n"
@@ -180,12 +182,12 @@ public class EcrireFichier {
 					+"frefuse\n"
 					
 			);
-			//output.close();
+			output.close();
 					
 								
 		}catch(IOException e){e.printStackTrace();}
 		
-		finally{output.close();}
+		//finally{output.close();}
 	}
 	
 }

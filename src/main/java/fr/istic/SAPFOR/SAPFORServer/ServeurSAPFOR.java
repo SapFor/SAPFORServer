@@ -2,6 +2,7 @@ package fr.istic.SAPFOR.SAPFORServer;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,15 +15,11 @@ import java.util.Random;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-
-
 
 import outils.EncapsulationStage;
 import outils.EncapsulationUV;
@@ -391,7 +388,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidater/{session}/{nomStage}")
-	public synchronized String candidater(@PathParam("session") int session, @PathParam("nomStage") String nomStage) throws IOException {
+	public synchronized String candidater(@PathParam("session") int session, @PathParam("nomStage") String nomStage) throws IOException, URISyntaxException {
 		//ajoute un stage ("nomStage") a la liste des stages "en cours" de l'objet pompier 
 		//obtenu par son numero de session actuelle ("session")  
 		 		
@@ -415,11 +412,16 @@ public class ServeurSAPFOR {
 			
 			//System.out.println(stageListeCandidats.toString());
 			
+						
 			actuel.inscription(aModif);
 			
+			String nomFich=actuel.getNomStage()+".sess";
+			
+			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
+			URI chemin=chemPath.toURI();
 			//System.out.println(actuel.getListPompierCandidat().toString());
 			
-			//EcrireFichier.ecrireStage(actuel);
+			EcrireFichier.ecrireStage(actuel,chemin);
 				
 			return "OK";
 		}
@@ -431,7 +433,7 @@ public class ServeurSAPFOR {
 	@GET	
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
-	public synchronized String cloturer(@PathParam("date") String date,@PathParam("stage") String stage) throws IOException{
+	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage) throws IOException, URISyntaxException{
 		//
 		String str[]=date.split("\\.");
 		String jourS=str[0];
@@ -454,8 +456,14 @@ public class ServeurSAPFOR {
 			if(dateModif.before(aModif.getDate())){
 		
 				aModif.setFinCandidature(dateModif);
-		
-				EcrireFichier.ecrireStage(aModif);
+				
+				String nomFich=aModif.getNomStage()+".sess";
+				
+				URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich); 
+				
+				URI chemin=chemPath.toURI();
+				
+				EcrireFichier.ecrireStage(aModif,chemin);
 		
 				
 		

@@ -29,6 +29,7 @@ private StageBuilder constructSession;
 			this.constructSession.buildAccepte();
 			this.constructSession.buildAttente();
 			this.constructSession.buildRefuse();
+			
 		}catch(IOException e){}
 		
 		try {

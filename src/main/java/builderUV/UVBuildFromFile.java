@@ -15,31 +15,31 @@ import outils.RecupInfoFichier;
 public class UVBuildFromFile implements UVbuilder {
 
 	private UV uv;
-	private URL fichier;
-	private BufferedReader input;
+	private URI cheminFich;
+	
 	
 	public UVBuildFromFile(String uv) throws URISyntaxException{
 		
 		String fich=uv+".uv";
 		
-		fichier=getClass().getResource("/donnees/UVs/"+fich);//+".uv");
-		URI cheminFich=fichier.toURI();
+		URL fichier=getClass().getResource("/donnees/UVs/"+fich);//+".uv");
+		cheminFich=fichier.toURI();
 		
 		this.uv=new UVConcret();
 		
 		
-		try{
-			input = new BufferedReader(new FileReader(new File(cheminFich)));
-			 input.mark(2000);	
+		/*try{
+			cheminFich = new BufferedReader(new FileReader(new File(cheminFich)));
+			 cheminFich.mark(2000);	
 			
 			}catch(Exception e){System.out.println("Aucun fichier "+fichier+" existant!");}
-				
+			*/	
 	}
 
 	@Override
 	public void buildNom() throws IOException{
 		try{
-			uv.setNom(RecupInfoFichier.chercheDsFichier(input,"nom"));
+			uv.setNom(RecupInfoFichier.chercheDsFichier(cheminFich,"nom"));
 		}catch(IOException e) {e.printStackTrace();}
 	}
 
@@ -47,7 +47,7 @@ public class UVBuildFromFile implements UVbuilder {
 	public void buildDescr() throws IOException{
 		try{
 		
-			uv.setDescr(RecupInfoFichier.recupStringDsFichier(input,"description"));
+			uv.setDescr(RecupInfoFichier.recupStringDsFichier(cheminFich,"description"));
 		}catch(IOException e) {e.printStackTrace();}
 	}
 
@@ -55,9 +55,9 @@ public class UVBuildFromFile implements UVbuilder {
 	public void buildStages() throws IOException{
 		
 		try{
-			uv.setStages(RecupInfoFichier.recupListDsFichier(input,"sessions"));
+			uv.setStages(RecupInfoFichier.recupListDsFichier(cheminFich,"sessions"));
 			
-			input.close();
+			
 						
 		}catch(IOException e){e.printStackTrace();}
 		
