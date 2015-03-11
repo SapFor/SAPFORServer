@@ -59,6 +59,11 @@ public class ServeurSAPFOR {
 	private List<UV> listeDesUVs=new ArrayList<UV>();
 	private List<Integer> listIdPompier=new ArrayList<Integer>();
 		
+	/**
+	 * 
+	 * @throws URISyntaxException
+	 * @throws MalformedURLException
+	 */
 	
 	public ServeurSAPFOR() throws URISyntaxException, MalformedURLException{
 		//constructeur du serveur
@@ -69,10 +74,10 @@ public class ServeurSAPFOR {
 		//***************
 
 
-		//chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
+		chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
 		
 						
-		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
+		//chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
 		pathPomp=chemData+"Pompiers/";
 		pathUVs=chemData+"UVs/";
 		pathStag=chemData+"Stages/";
@@ -120,24 +125,48 @@ public class ServeurSAPFOR {
 		
 	}//fin constructeur
 	
-	
+	/**
+	 * 
+	 * @param id
+	 * @return Objet Pompier
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	private Pompier createPompier(int id)throws IOException, URISyntaxException {
 		//met le createur d'objets pompier a disposition du serveur
 		return GestionCreationObjets.creerPompier(id,pathPomp);
 	}
-		
+	
+	/**
+	 * 
+	 * @param UV
+	 * @return Objet UV
+	 * @throws URISyntaxException
+	 * @throws MalformedURLException
+	 */
 	private UV createUV(String UV) throws URISyntaxException, MalformedURLException {
 		//met le createur d'objets UV a disposition du serveur 
 		return GestionCreationObjets.creerUV(UV,pathUVs);
 	}
 	
-	
+	/**
+	 * 
+	 * @param stage
+	 * @return Objet Stage
+	 * @throws URISyntaxException
+	 * @throws MalformedURLException
+	 */
 	private Stage createStage(String stage) throws URISyntaxException, MalformedURLException {
 		//met le createur d'objets stage a disposition du serveur
 		return GestionCreationObjets.creerStage(stage,pathStag);
 	}
 	
 	
+	/**
+	 * 
+	 * @param nomStage
+	 * @return Objet Stage
+	 */
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("stage/{nomStage}")
@@ -146,6 +175,13 @@ public class ServeurSAPFOR {
 		return  this.nomStage.get(nomStage);
 		
 	}//fin getStage
+	/**
+	 * 
+	 * @param idPompier
+	 * @return Objet Pompier
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -156,6 +192,13 @@ public class ServeurSAPFOR {
 		
 	}//fin getStage
 	
+	/**
+	 * 
+	 * @param idPompier
+	 * @param mdp
+	 * @return Objet Pompier
+	 * @throws URISyntaxException
+	 */
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -219,6 +262,11 @@ public class ServeurSAPFOR {
 			
 	}//fin login
 
+	/**
+	 * 
+	 * @param session
+	 * @return Objet EncapsulationUV
+	 */
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -243,6 +291,12 @@ public class ServeurSAPFOR {
 		return UVdispoAenvoyer;
 				
 	}//fin getUVdisponible
+	
+	/**
+	 * 
+	 * @param session
+	 * @return Objet EncapsulationUV
+	 */
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
