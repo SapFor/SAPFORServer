@@ -9,16 +9,13 @@ import observerCandidats.Observateur;
 
 public interface Pompier extends Observateur {
 	
+	//*****
 	//interface de l'objet pompier
+	//*****
 	
-	
-	/**
-	 * 	setId replaces the pompier object's id number with the one given in parameter
-	 * @param id
-	 */
-	
+		
 	public void setIdSession(int idSession);
-	
+			
 	public int getIdSession();
 	
 	public void setId(int id);
@@ -33,30 +30,13 @@ public interface Pompier extends Observateur {
 	
 	public String getDirecteur();
 	
-	
-	/**
-	 * setNom replaces the pompier object's nom field with the one given in parameter
-	 * @param nom name of pompier
-	 */
-		
 	public void setNom(String nom);
 	
 	public String getNom();
 	
-	/**
-	 * setPrenom replaces the pompier object's prenom field with the one given in parameter
-	 * 
-	 * @param prenom first name of pompier
-	 */
-	
 	public void setPrenom(String prenom);
 	
 	public String getPrenom();
-	
-	/**
-	 *setUV replaces the pompier object's liste of UV by the one given in parameter 
-	 * @param UV
-	 */
 	
 	public void setUV(List<String> UV);
 	

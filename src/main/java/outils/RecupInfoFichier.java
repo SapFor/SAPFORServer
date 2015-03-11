@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -14,8 +13,19 @@ import java.util.List;
 
 public class RecupInfoFichier {
 	
+	/**
+	 * 
+	 * @param cheminFich (String) chemin menant au fichier
+	 * @param motCle (String) mot cle permettant d'acceder a un type d'info dans le fichier
+	 * @return String rend une chaine de caractere(un mot)
+	 * @throws IOException
+	 */
+	
 	public static String chercheDsFichier(String cheminFich, String motCle) throws IOException{
-		// r�cup�re la chaine de caractere en dessous du mot cl� donn� dans le fichier
+		
+		//****
+		// recupere la chaine de caractere positionnee juste en dessous du "motCle" dans le fichier
+		//****
 		
 		String res="";
 		
@@ -24,14 +34,14 @@ public class RecupInfoFichier {
 				
 			
 			
-			//input.reset();//s'assure que la recherche s'effectue depuis le d�but du buffer content le fichier
+			
 			
 			while((res=input.readLine())!=null && !res.equals(motCle) ){
-				//cherche le mot cl�
+				//cherche le "motCle"
 				
 			}
 			
-			res=input.readLine();//met la String sous le mot cle dans res
+			res=input.readLine();//assigne la chaine positionnee sous le "motCle" dans la variable res
 			
 			input.close();
 		}catch(IOException e){e.printStackTrace();}
@@ -40,7 +50,20 @@ public class RecupInfoFichier {
 		
 	} //fin chercheDsFichier
 	
+	/**
+	 * 
+	 * @param cheminFich (String) chemin menant au fichier
+	 * @param motCle (String) mot cle permettant d'acceder a un type d'info dans le fichier
+	 * @return Calendar rend une date sous la forme d'un objet Calendar
+	 * @throws IOException
+	 */
+	
 	public static Calendar chercheDateDsFichier(String cheminFich, String motCle) throws IOException{
+		
+		//****
+		//recupere une date dans le fichier, coupee en 3 parties (jour,mois,annee) dans le fichier
+		//positionnees sous le "motCle"
+		//****
 		
 		Calendar res=Calendar.getInstance(); 
 		
@@ -50,16 +73,16 @@ public class RecupInfoFichier {
 		try{
 			BufferedReader input = new BufferedReader(new FileReader(new File(cheminFich)));
 			
-			//input.reset();//s'assure que la recherche s'effectue depuis le d�but du buffer content le fichier
+			
 			
 			while((chercheur=input.readLine())!=null && !chercheur.equals(motCle) ){
-				//cherche le mot cle
+				//cherche le "motCle"
 				
 			}
 			
-			jour=input.readLine();//met la String sous le mot cle dans jour
-			mois=input.readLine();//met la String suivante dans mois
-			annee=input.readLine();//met la String suivante dans annee
+			jour=input.readLine();//assigne la 1ere chaine positionnee sous le "motCle" dans la variable jour
+			mois=input.readLine();//assigne la 2eme chaine positionnee sous le "motCle" dans la variable mois
+			annee=input.readLine();//assigne la 3eme chaine positionnee sous le "motCle" dans la variable annee
 			
 			
 			input.close();
@@ -74,8 +97,19 @@ public class RecupInfoFichier {
 		
 	}
 	
+	/**
+	 * 
+	 * @param cheminFich
+	 * @param motCle
+	 * @return
+	 * @throws IOException
+	 */
+	
 	public static List<String> recupListDsFichier(String cheminFich, String motCle)throws IOException{
-		//r�cup�re une liste de string comprise ente le mot cl� et f+"mot cl�"
+		
+		//****
+		//recupere une liste de string comprise ente le "motCle" et f+"motCle"
+		//****
 		
 		List<String> res=new ArrayList<String>();
 		
@@ -85,10 +119,10 @@ public class RecupInfoFichier {
 			
 			BufferedReader input = new BufferedReader(new FileReader(new File(cheminFich)));
 			
-			//input.reset();//s'assure que la recherche s'effectue depuis le d�but du buffer content le fichier
+			
 			
 			while((cle=input.readLine())!=null && !cle.equals(motCle)){
-				//cherche le mot cl�
+				//cherche le mot cle
 			}
 			
 			while((cle=input.readLine())!=null && !cle.equals("f"+motCle)){//v�rifie si f+"mot cl�" pas atteint
@@ -110,7 +144,15 @@ public class RecupInfoFichier {
 	}//fin recupListDsFichier
 	
 	
-public static String recupStringDsFichier(String cheminFich, String motCle) throws IOException{
+	/**
+	 * 
+	 * @param cheminFich
+	 * @param motCle
+	 * @return
+	 * @throws IOException
+	 */
+		
+	public static String recupStringDsFichier(String cheminFich, String motCle) throws IOException{
 		//recupere une chaine de caractere longue (sur plusieurs ligne) comprise entre mot cle et f+"mot cle"
 	
 		StringBuffer res=new StringBuffer();

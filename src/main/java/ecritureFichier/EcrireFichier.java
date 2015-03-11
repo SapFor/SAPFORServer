@@ -5,33 +5,31 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Calendar;
-
 import builderPompier.Pompier;
-import builderPompier.PompierConcret;
 import builderStage.Stage;
+
 
 public class EcrireFichier {
 	
-	/*public void ecriture(Object objet,URI chemin) throws URISyntaxException, IOException{
-		if(objet instanceof PompierConcret){
-			PompierConcret aEcrire=(PompierConcret)objet;
-			ecrirePompier(aEcrire);
-		}
-		
-		else if (objet instanceof Stage){
-			Stage aEcrire=(Stage)objet;
-			System.out.println("il court, il court le SilverFox!");
-			ecrireStage(aEcrire,chemin);
-		}
-		else{}
-	}*/
+	/**
+	 * 
+	 * 
+	 *@param pompier  
+	 *@param chemin
+	 *
+	*/
 	
-	public static void ecrirePompier(Pompier pompier,String chemin) throws URISyntaxException{
+	/**
+	 * methode qui va ecrire dans un fichier les donnees contenues dans un objet Pompier passe en parametre
+	 * le chemin du fichier etant passe lui aussi en parametre
+	 * 
+	 * @param pompier (Pompier) objet de type Pompier a reecrire
+	 * @param chemin (String) chemin menant au fichier (donne sous forme de chaine)
+	 * @author Thomas Davin && Frederic Lepelletier
+	 */
+	
+	public static void ecrirePompier(Pompier pompier,String chemin){
 		
 		BufferedWriter output;
 		String dir;
@@ -99,9 +97,17 @@ public class EcrireFichier {
 						
 	}
 	
+	/**
+	 * 
+	 * @param stage (Stage) objet de type Stage a reecrire
+	 * @param chemin (String) chemin menant au fichier (donne sous forme de chaine)
+	 * @throws IOException
+	 * 
+	 */
 	
 	
-	public static void ecrireStage(Stage stage,String chemin) throws IOException, URISyntaxException{
+	
+	public static void ecrireStage(Stage stage,String chemin) throws IOException{
 		
 		 
 		File fichier;		

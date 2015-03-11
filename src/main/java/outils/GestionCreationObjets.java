@@ -20,7 +20,15 @@ import builderUV.UVbuilder;
 
 
 public class GestionCreationObjets {
-
+	
+	/**
+	 * 
+	 * @param idPompier
+	 * @param pathPomp
+	 * @return Pompier
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	
 	public static Pompier creerPompier(int idPompier,String pathPomp)throws IOException, URISyntaxException{
 		

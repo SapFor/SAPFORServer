@@ -20,16 +20,14 @@ public class PompierBuildFromFile implements PompierBuilder{
 	
 	private String cheminFich;
 			
-	private BufferedReader input;
-	
-	public PompierBuildFromFile(int id,String pathPomp) throws URISyntaxException, MalformedURLException{
+		
+	public PompierBuildFromFile(int id,String pathPomp){
 		
 		String fich=id+".pomp";
 		cheminFich=pathPomp+fich;
 				
 		this.pompier=new PompierConcret();
 		
-		List<String> temp;
 		
 		
 		
@@ -56,7 +54,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	}
 	
 	@Override
-	public void buildDirecteur(){
+	public void buildDirecteur()throws IOException{
 			
 			 try {
 				pompier.setDirecteur(RecupInfoFichier.chercheDsFichier(cheminFich,"directeur"));
