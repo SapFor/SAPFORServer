@@ -206,15 +206,11 @@ public class ServeurSAPFOR {
 		
 	}//fin getStage
 	
-<<<<<<< HEAD
-	/**
-=======
-	
+
 	/**
 	 * gere la connexion d'un pompier au niveau du client rend un objet Pompier contenant un numero de session
 	 * si n°agent et mot de passe sont valides sinon rend un objet Pompier contenant le numero de erreur session 
 	 * "erreur" : 999
->>>>>>> origin/master
 	 * 
 	 * @param idPompier
 	 * @param mdp
