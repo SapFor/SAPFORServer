@@ -2,6 +2,7 @@ package fr.istic.SAPFOR.SAPFORServer;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -48,7 +49,10 @@ import ecritureFichier.EcrireFichier;
 @Consumes({MediaType.APPLICATION_JSON})
 public class ServeurSAPFOR {
 
-	
+	private String chemData;
+	private String pathPomp;
+	private String pathUVs;
+	private String pathStag;
 	private HashMap<Integer,Pompier> numConnection=new HashMap<Integer,Pompier>();//map contenant l'objet pompier lie a son numero de session
 	private HashMap<String,Stage> nomStage=new HashMap<String,Stage>();
 	private HashMap<String,UV> nomUV=new HashMap<String,UV>();
@@ -56,14 +60,22 @@ public class ServeurSAPFOR {
 	private List<Integer> listIdPompier=new ArrayList<Integer>();
 		
 	
-	public ServeurSAPFOR() throws URISyntaxException{
+	public ServeurSAPFOR() throws URISyntaxException, MalformedURLException{
 		//constructeur du serveur
 		//remplissage de deux liste (hashmaps) : 1 contenant toutes les UV disponibles l'autre toutes les sessions disponibles
 		
-		URL dossier=getClass().getResource("/donnees/UVs"); //recherche du chemin menants aux fichiers d'UVS
-		File folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UVs
+		URL location = ServeurSAPFOR.class.getProtectionDomain().getCodeSource().getLocation();//
+		System.out.println(location);
+		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";
+		//chemData=location.toString()+"../../../../../../../donnees/";
+		//System.out.println(chemData);
+		pathPomp=chemData+"Pompiers/";
+		pathUVs=chemData+"UVs/";
+		pathStag=chemData+"Stages/";	
+		//URL dossier=getClass().getResource("/donnees/UVs"); //recherche du chemin menants aux fichiers d'UVS
+		File folder = new File(pathUVs);//dossier.toURI()); //creation chemin jusqu'au répretoire UVs
 		String[] listOfUVs = folder.list();//recuperation du nom des fichiers du repertoire UV
-	
+		
 		String[] coupeExtension;
 		
 		for (int i=0; i<listOfUVs.length; i++){
@@ -73,8 +85,8 @@ public class ServeurSAPFOR {
          }
 		
 		
-		dossier=getClass().getResource("/donnees/Pompiers"); //recherche du chemin menants aux fichiers d'UVS
-		folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire UVs
+		//dossier=getClass().getResource("/donnees/Pompiers"); //recherche du chemin menants aux fichiers d'UVS
+		folder = new File(pathPomp);//dossier.toURI()); //creation chemin jusqu'au répretoire UVs
 		String[] listOfIds = folder.list();//recuperation du nom des fichiers du repertoire UV
 		
 		
@@ -85,9 +97,9 @@ public class ServeurSAPFOR {
 		
 				
 		
-						
-		dossier=getClass().getResource("/donnees/Stages");//recherche du chemin menants aux fichiers des stages
-		folder = new File(dossier.toURI()); //creation chemin jusqu'au répretoire Stage
+					
+		//dossier=getClass().getResource("/donnees/Stages");//recherche du chemin menants aux fichiers des stages
+		folder = new File(pathStag);//dossier.toURI()); //creation chemin jusqu'au répretoire Stage
 		String[] listOfStages = folder.list();//recuperation du nom des fichiers du repertoire Stage
 		
 		for (int i=0; i < listOfStages.length; i++) {
@@ -102,18 +114,18 @@ public class ServeurSAPFOR {
 	
 	private Pompier createPompier(int id)throws IOException, URISyntaxException {
 		//met le createur d'objets pompier a disposition du serveur
-		return GestionCreationObjets.creerPompier(id);
+		return GestionCreationObjets.creerPompier(id,pathPomp);
 	}
 		
-	private UV createUV(String UV) throws URISyntaxException {
+	private UV createUV(String UV) throws URISyntaxException, MalformedURLException {
 		//met le createur d'objets UV a disposition du serveur 
-		return GestionCreationObjets.creerUV(UV);
+		return GestionCreationObjets.creerUV(UV,pathUVs);
 	}
 	
 	
-	private Stage createStage(String stage) throws URISyntaxException {
+	private Stage createStage(String stage) throws URISyntaxException, MalformedURLException {
 		//met le createur d'objets stage a disposition du serveur
-		return GestionCreationObjets.creerStage(stage);
+		return GestionCreationObjets.creerStage(stage,pathStag);
 	}
 	
 	
@@ -313,7 +325,7 @@ public class ServeurSAPFOR {
 		
 		else {reponse=false;}
 			
-		System.out.println(reponse+"\n");
+		//System.out.println(reponse+"\n");
 				
 		return reponse;
 	}
@@ -370,7 +382,7 @@ public class ServeurSAPFOR {
 		
 		//String nom=aDeco.getNom();
 		//String prenom=aDeco.getPrenom();
-		EcrireFichier.ecrirePompier(aDeco);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
+		EcrireFichier.ecrirePompier(aDeco,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
 		
 		numConnection.remove(session);//suppression de l'entree lie a ce numero de session
 		//prenom+" "+nom+
@@ -404,12 +416,14 @@ public class ServeurSAPFOR {
 									
 			actuel.inscription(aModif);
 			
-			String nomFich=actuel.getNomStage()+".sess";
+			//String nomFich=actuel.getNomStage()+".sess";
 			
-			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
-			URI chemin=chemPath.toURI();
-						
-			EcrireFichier.ecrireStage(actuel,chemin);
+			//URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
+			//URI chemin=chemPath.toURI();
+			//System.out.println(actuel.getListPompierCandidat().toString());
+			
+			EcrireFichier.ecrireStage(actuel,pathStag);
+			
 				
 			return "OK";
 		}
@@ -486,7 +500,7 @@ if(actuel.getCandidats().contains(aModif.getId())){
 				
 				URI chemin=chemPath.toURI();
 				
-				EcrireFichier.ecrireStage(aModif,chemin);
+				EcrireFichier.ecrireStage(aModif,pathStag);
 		
 				
 		
@@ -501,7 +515,7 @@ if(actuel.getCandidats().contains(aModif.getId())){
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/selection")
-	public synchronized String UpdateStage(StageConcret s){ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
+	public synchronized String UpdateStage(StageConcret s) throws IOException, URISyntaxException{ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
 		
 		StageConcret StageAUpdate=(StageConcret)nomStage.get(s.getNomStage());
 		
@@ -522,7 +536,33 @@ if(actuel.getCandidats().contains(aModif.getId())){
 		StageAUpdate.notifier();
 		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
 		
-		String reponse="OK";
+		/*System.out.println(a.getNom()+" "+a.getPrenom());
+		System.out.println(a.getEnCours());
+		System.out.println(a.getAccepte());
+		System.out.println(a.getAttente());
+		System.out.println(a.getRefuse());
+		
+		System.out.println(b.getNom()+" "+b.getPrenom());
+		System.out.println(b.getEnCours());
+		System.out.println(b.getAccepte());
+		System.out.println(b.getAttente());
+		System.out.println(b.getRefuse());
+		
+		System.out.println(c.getNom()+" "+c.getPrenom());
+		System.out.println(c.getEnCours());
+		System.out.println(c.getAccepte());
+		System.out.println(c.getAttente());
+		System.out.println(c.getRefuse());*/
+		String nomFich=StageAUpdate.getNomStage()+".sess";
+		
+		URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich); 
+		
+		URI chemin=chemPath.toURI();
+				
+		EcrireFichier.ecrireStage(StageAUpdate,pathStag);
+		
+		
+		String reponse="Le stage "+StageAUpdate.getNomStage()+" a ete mis a jour";
 		
 		return reponse;}
 	

@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -17,16 +18,20 @@ public class PompierBuildFromFile implements PompierBuilder{
 
 	private Pompier pompier;
 	
-	private URI cheminFich;
+	private String cheminFich;
 			
 	private BufferedReader input;
 	
-	public PompierBuildFromFile(int id) throws URISyntaxException{
+	public PompierBuildFromFile(int id,String pathPomp) throws URISyntaxException, MalformedURLException{
 		
-		URL fichier=getClass().getResource("/donnees/Pompiers/"+id+".pomp");
+		String fich=id+".pomp";
+		cheminFich=pathPomp+fich;//System.getProperty("user.dir")+"../donnees/Pompiers/"+fich;
+		
+		//URL fichier=new URL(chemPath);//getClass().getResource("/donnees/Pompiers/"+id+".pomp");
+		
 		this.pompier=new PompierConcret();
 		//this.fichier=fichier+id+".pomp";
-		cheminFich=fichier.toURI();
+		//cheminFich=fichier.toURI();
 		List<String> temp;
 		
 		

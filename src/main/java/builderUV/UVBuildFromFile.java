@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -15,15 +16,17 @@ import outils.RecupInfoFichier;
 public class UVBuildFromFile implements UVbuilder {
 
 	private UV uv;
-	private URI cheminFich;
+	private String cheminFich;
 	
 	
-	public UVBuildFromFile(String uv) throws URISyntaxException{
+	public UVBuildFromFile(String uv,String pathUVs) throws URISyntaxException, MalformedURLException{
 		
 		String fich=uv+".uv";
+		cheminFich=pathUVs+fich;//System.getProperty("user.dir")+"/../donnees/UVs/"+fich;
+		//System.out.println(chemPath);
 		
-		URL fichier=getClass().getResource("/donnees/UVs/"+fich);//+".uv");
-		cheminFich=fichier.toURI();
+		//URL fichier=new URL(chemPath);
+		//cheminFich=fichier.toURI();
 		
 		this.uv=new UVConcret();
 		

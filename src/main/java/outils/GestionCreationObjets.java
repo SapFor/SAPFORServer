@@ -1,6 +1,7 @@
 package outils;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import builderPompier.PompierBuildFromFile;
@@ -21,11 +22,11 @@ import builderUV.UVbuilder;
 public class GestionCreationObjets {
 
 	
-	public static Pompier creerPompier(int idPompier)throws IOException, URISyntaxException{
+	public static Pompier creerPompier(int idPompier,String pathPomp)throws IOException, URISyntaxException{
 		
 		PompierBuilder agent;
 		
-		agent = new PompierBuildFromFile(idPompier);
+		agent = new PompierBuildFromFile(idPompier,pathPomp);
 				
 		PompierDirector constPompier=new PompierDirector(agent);
 		
@@ -39,9 +40,9 @@ public class GestionCreationObjets {
 		return constPompier.getPompier();
 	}
 	
-	public static UV creerUV(String uvNom) throws URISyntaxException{
+	public static UV creerUV(String uvNom,String pathUVs) throws URISyntaxException, MalformedURLException{
 		
-		UVbuilder uv=new UVBuildFromFile(uvNom);  
+		UVbuilder uv=new UVBuildFromFile(uvNom,pathUVs);  
 		
 		UVDirector constUV=new UVDirector(uv);
 		
@@ -53,9 +54,9 @@ public class GestionCreationObjets {
 		return constUV.getUV();
 	}
 	
-	public static Stage creerStage(String nomStage) throws URISyntaxException{
+	public static Stage creerStage(String nomStage,String pathStag) throws URISyntaxException, MalformedURLException{
 		
-		StageBuilder stage=new StageBuildFromFile(nomStage);  
+		StageBuilder stage=new StageBuildFromFile(nomStage,pathStag);  
 		
 		StageDirector constStage=new StageDirector(stage);
 		

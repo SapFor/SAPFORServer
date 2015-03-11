@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
-
 
 import outils.RecupInfoFichier;
 
@@ -17,14 +17,15 @@ import outils.RecupInfoFichier;
 public class StageBuildFromFile implements StageBuilder {
 		
 	private Stage session;
-	private URI cheminFich;
+	private String cheminFich;
 	//private BufferedReader input;
 	
-	public StageBuildFromFile(String label) throws URISyntaxException{
+	public StageBuildFromFile(String label,String pathStag) throws URISyntaxException, MalformedURLException{
 		
 		String fich=label+".sess";
-		URL fichier=getClass().getResource("/donnees/Stages/"+fich);
-		cheminFich=fichier.toURI();
+		cheminFich=pathStag+fich;//System.getProperty("user.dir")+"../donnees/Stages/"+fich;
+		//URL fichier=new URL(chemPath);
+		//cheminFich=fichier.toURI();
 		
 		this.session=new StageConcret();
 		

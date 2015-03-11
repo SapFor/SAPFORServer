@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -15,7 +17,7 @@ import builderStage.Stage;
 
 public class EcrireFichier {
 	
-	public void ecriture(Object objet,URI chemin) throws URISyntaxException, IOException{
+	/*public void ecriture(Object objet,URI chemin) throws URISyntaxException, IOException{
 		if(objet instanceof PompierConcret){
 			PompierConcret aEcrire=(PompierConcret)objet;
 			ecrirePompier(aEcrire);
@@ -23,16 +25,16 @@ public class EcrireFichier {
 		
 		else if (objet instanceof Stage){
 			Stage aEcrire=(Stage)objet;
+			System.out.println("il court, il court le SilverFox!");
 			ecrireStage(aEcrire,chemin);
 		}
 		else{}
-	}
+	}*/
 	
-	public static void ecrirePompier(Pompier pompier) throws URISyntaxException{
+	public static void ecrirePompier(Pompier pompier,String chemin) throws URISyntaxException{
 		
 		BufferedWriter output;
 		String dir;
-		URL chemin;
 		File fichier;
 		
 		dir=pompier.getDirecteur();
@@ -50,11 +52,11 @@ public class EcrireFichier {
 		StringBuffer gestionList=new StringBuffer();
 		for(String gestion : pompier.getGestion()){gestionList.append(gestion+"\n");}
 		
-		chemin=EcrireFichier.class.getResource("/donnees/Pompiers/"+pompier.getId()+".pomp");
+		//chemin=EcrireFichier.class.getResource("/donnees/Pompiers/"+pompier.getId()+".pomp");
 		
-		URI fich=chemin.toURI();
+		String chemFile=chemin+pompier.getId()+".pomp";
 		
-		fichier=new File(fich);
+		fichier=new File(chemFile);
 		try{
 			output=new BufferedWriter(new FileWriter (fichier));
 			
@@ -99,11 +101,12 @@ public class EcrireFichier {
 	
 	
 	
-	public static void ecrireStage(Stage stage,URI chemin) throws IOException, URISyntaxException{
+	public static void ecrireStage(Stage stage,String chemin) throws IOException, URISyntaxException{
 		
-		BufferedWriter output = null;
+		 
 		File fichier;		
 		String nomFichier;
+		//System.out.println(chemin.toString());
 		
 		int jourD=stage.getDate().get(Calendar.DAY_OF_MONTH);
 		int moisD=stage.getDate().get(Calendar.MONTH);
@@ -137,8 +140,9 @@ public class EcrireFichier {
 		
 		
 		StringBuffer candyList=new StringBuffer();
+		for(String candy : stage.getCandidats()){candyList.append(candy+"\n");System.out.println(candy);}
+		System.out.println(candyList.toString());
 		
-		for(String candy : stage.getCandidats()){candyList.append(candy+"\n");}
 		StringBuffer accepteList=new StringBuffer();
 		for(String accepte : stage.getAccepte()){accepteList.append(accepte+"\n");}
 		StringBuffer attenteList=new StringBuffer();
@@ -146,19 +150,21 @@ public class EcrireFichier {
 		StringBuffer refuseList=new StringBuffer();
 		for(String refuse : stage.getRefuse()){refuseList.append(refuse+"\n");}
 		
-		//String fich=nomFichier+".sess";
+		String chemFile=chemin+nomFichier;
 		//chemin=EcrireFichier.class.getResource("/donnees/Stages/"+fich);//+nomFichier+".sess");
 		//System.out.println(chemin.toString());
 		
-		fichier=new File(chemin);
+		fichier=new File(chemFile);
+		//System.out.println(fichier.toString());
 		//System.out.println(fichier.toString());
 				//toString()+nomFichier);
 		
 		try{
-			output=new BufferedWriter(new FileWriter(fichier));
-						
-			output.write(
-					"uv\n"+stage.getUV()+"\n"
+			PrintWriter writer = new PrintWriter(fichier);
+			//BufferedWriter output=new BufferedWriter(new FileWriter(fichier));
+									
+			writer.print("uv\n"+stage.getUV()+"\n"
+					+"modif\n"
 					+"date\n"+jourD+"\n"+moisD+"\n"+anneeD+"\n"
 					+"finCandidature\n"+jourF+"\n"+moisF+"\n"+anneeF+"\n"
 					+"lieu\n"+stage.getLieu()+"\n"
@@ -182,7 +188,7 @@ public class EcrireFichier {
 					+"frefuse\n"
 					
 			);
-			output.close();
+			writer.close();
 					
 								
 		}catch(IOException e){e.printStackTrace();}

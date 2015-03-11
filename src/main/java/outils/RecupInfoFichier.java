@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RecupInfoFichier {
 	
-	public static String chercheDsFichier(URI cheminFich, String motCle) throws IOException{
+	public static String chercheDsFichier(String cheminFich, String motCle) throws IOException{
 		// r�cup�re la chaine de caractere en dessous du mot cl� donn� dans le fichier
 		
 		String res="";
@@ -40,7 +40,7 @@ public class RecupInfoFichier {
 		
 	} //fin chercheDsFichier
 	
-	public static Calendar chercheDateDsFichier(URI cheminFich, String motCle) throws IOException{
+	public static Calendar chercheDateDsFichier(String cheminFich, String motCle) throws IOException{
 		
 		Calendar res=Calendar.getInstance(); 
 		
@@ -74,7 +74,7 @@ public class RecupInfoFichier {
 		
 	}
 	
-	public static List<String> recupListDsFichier(URI cheminFich, String motCle)throws IOException{
+	public static List<String> recupListDsFichier(String cheminFich, String motCle)throws IOException{
 		//r�cup�re une liste de string comprise ente le mot cl� et f+"mot cl�"
 		
 		List<String> res=new ArrayList<String>();
@@ -110,7 +110,7 @@ public class RecupInfoFichier {
 	}//fin recupListDsFichier
 	
 	
-public static String recupStringDsFichier(URI cheminFich, String motCle) throws IOException{
+public static String recupStringDsFichier(String cheminFich, String motCle) throws IOException{
 		//recupere une chaine de caractere longue (sur plusieurs ligne) comprise entre mot cle et f+"mot cle"
 	
 		StringBuffer res=new StringBuffer();
