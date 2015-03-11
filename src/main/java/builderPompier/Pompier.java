@@ -31,7 +31,7 @@ public interface Pompier extends Observateur {
 	
 	public void setDirecteur(String directeur);
 	
-	public boolean getDirecteur();
+	public String getDirecteur();
 	
 	
 	/**

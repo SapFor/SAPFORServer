@@ -519,11 +519,10 @@ if(actuel.getCandidats().contains(aModif.getId())){
 		StageAUpdate.setAttente(s.getAttente());
 		StageAUpdate.setRefuse(s.getRefuse());
 		
-		
 		StageAUpdate.notifier();
 		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
 		
-		String reponse="Le stage "+StageAUpdate.getNomStage()+" a ete mis a jour";
+		String reponse="OK";
 		
 		return reponse;}
 	

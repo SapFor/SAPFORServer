@@ -35,8 +35,8 @@ public class EcrireFichier {
 		URL chemin;
 		File fichier;
 		
-		if(pompier.getDirecteur()){dir="oui";}
-		else{dir="non";}
+		dir=pompier.getDirecteur();
+		
 		StringBuffer uvList=new StringBuffer();
 		for(String uv : pompier.getUV()){uvList.append(uv+"\n");}
 		StringBuffer encoursList=new StringBuffer();

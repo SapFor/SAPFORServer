@@ -22,7 +22,7 @@ public class PompierConcret implements Pompier, Observateur {
 	
 	private String mdp;
 	
-	private boolean directeur;
+	private String directeur;
 	
 	private String nom;
 	
@@ -69,15 +69,11 @@ public class PompierConcret implements Pompier, Observateur {
 	public String getMdp(){return mdp;}
 	
 	@Override
-	public void setDirecteur(String directeur) {
+	public void setDirecteur(String directeur) {this.directeur=directeur;}
 		
-		if(directeur.equals("oui")){this.directeur=true;}
-		else{this.directeur=false;}
-		
-	}
 		
 	@Override
-	public boolean getDirecteur(){return directeur;}
+	public String getDirecteur(){return this.directeur;}
 	
 
 	@Override
