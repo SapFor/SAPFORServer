@@ -81,7 +81,6 @@ public class ServeurSAPFOR {
 		//creation du chemin menant aux donnees
 		//***************
 		
-		System.out.println(System.getProperty("user.home"));
 		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";
 		pathPomp=chemData+"Pompiers/";
 		pathUVs=chemData+"UVs/";
