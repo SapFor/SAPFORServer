@@ -62,17 +62,23 @@ public class ServeurSAPFOR {
 	
 	public ServeurSAPFOR() throws URISyntaxException, MalformedURLException{
 		//constructeur du serveur
-		//remplissage de deux liste (hashmaps) : 1 contenant toutes les UV disponibles l'autre toutes les sessions disponibles
 		
-		URL location = ServeurSAPFOR.class.getProtectionDomain().getCodeSource().getLocation();//
-		System.out.println(location);
+		
+		//***************
+		//creation du chemin menant aux donnees
+		//***************
+		
+		System.out.println(System.getProperty("user.home"));
 		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";
-		//chemData=location.toString()+"../../../../../../../donnees/";
-		//System.out.println(chemData);
 		pathPomp=chemData+"Pompiers/";
 		pathUVs=chemData+"UVs/";
-		pathStag=chemData+"Stages/";	
-		//URL dossier=getClass().getResource("/donnees/UVs"); //recherche du chemin menants aux fichiers d'UVS
+		pathStag=chemData+"Stages/";
+		
+		
+		//**************
+		//remplissage de deux liste (hashmaps) : 1 contenant toutes les UV disponibles l'autre toutes les stages disponibles
+		//***************
+		
 		File folder = new File(pathUVs);//dossier.toURI()); //creation chemin jusqu'au répretoire UVs
 		String[] listOfUVs = folder.list();//recuperation du nom des fichiers du repertoire UV
 		
@@ -85,8 +91,8 @@ public class ServeurSAPFOR {
          }
 		
 		
-		//dossier=getClass().getResource("/donnees/Pompiers"); //recherche du chemin menants aux fichiers d'UVS
-		folder = new File(pathPomp);//dossier.toURI()); //creation chemin jusqu'au répretoire UVs
+		
+		folder = new File(pathPomp);//creation chemin jusqu'au répretoire pompiers
 		String[] listOfIds = folder.list();//recuperation du nom des fichiers du repertoire UV
 		
 		
@@ -98,8 +104,7 @@ public class ServeurSAPFOR {
 				
 		
 					
-		//dossier=getClass().getResource("/donnees/Stages");//recherche du chemin menants aux fichiers des stages
-		folder = new File(pathStag);//dossier.toURI()); //creation chemin jusqu'au répretoire Stage
+		folder = new File(pathStag);//creation chemin jusqu'au répretoire Stage
 		String[] listOfStages = folder.list();//recuperation du nom des fichiers du repertoire Stage
 		
 		for (int i=0; i < listOfStages.length; i++) {
@@ -303,7 +308,8 @@ public class ServeurSAPFOR {
 	
 	private boolean peutFormer(Pompier pomp, UV uv){
 		//retourne vrai si le pompier peut être dispenser la formation de l'UV
-		//Condition pour dispenser la formation : avoir l'UV FORM avec le bon niveau et avoir acquis l'UV ciblé. ex: pour dispenser l'UV FDF2 il faut avoir validé FORM2 et FDF2
+		//Condition pour dispenser la formation : avoir l'UV FORM avec le bon niveau et avoir acquis l'UV ciblé.
+		//ex: pour dispenser l'UV FDF2 il faut avoir validé FORM2 et FDF2
 		boolean reponse;
 				
 		String nomUv=uv.getNom();
@@ -325,8 +331,7 @@ public class ServeurSAPFOR {
 		
 		else {reponse=false;}
 			
-		//System.out.println(reponse+"\n");
-				
+						
 		return reponse;
 	}
 	// fin de peutFormer
@@ -416,12 +421,6 @@ public class ServeurSAPFOR {
 									
 			actuel.inscription(aModif);
 			
-			//String nomFich=actuel.getNomStage()+".sess";
-			
-			//URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
-			//URI chemin=chemPath.toURI();
-			//System.out.println(actuel.getListPompierCandidat().toString());
-			
 			EcrireFichier.ecrireStage(actuel,pathStag);
 			
 				
@@ -458,7 +457,7 @@ if(actuel.getCandidats().contains(aModif.getId())){
 			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
 			URI chemin=chemPath.toURI();
 						
-			EcrireFichier.ecrireStage(actuel,chemin);
+			EcrireFichier.ecrireStage(actuel,pathStag);
 				
 			return "OK";
 		}
@@ -536,23 +535,6 @@ if(actuel.getCandidats().contains(aModif.getId())){
 		StageAUpdate.notifier();
 		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
 		
-		/*System.out.println(a.getNom()+" "+a.getPrenom());
-		System.out.println(a.getEnCours());
-		System.out.println(a.getAccepte());
-		System.out.println(a.getAttente());
-		System.out.println(a.getRefuse());
-		
-		System.out.println(b.getNom()+" "+b.getPrenom());
-		System.out.println(b.getEnCours());
-		System.out.println(b.getAccepte());
-		System.out.println(b.getAttente());
-		System.out.println(b.getRefuse());
-		
-		System.out.println(c.getNom()+" "+c.getPrenom());
-		System.out.println(c.getEnCours());
-		System.out.println(c.getAccepte());
-		System.out.println(c.getAttente());
-		System.out.println(c.getRefuse());*/
 		String nomFich=StageAUpdate.getNomStage()+".sess";
 		
 		URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich); 
