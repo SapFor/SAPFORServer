@@ -74,10 +74,10 @@ public class ServeurSAPFOR {
 		//***************
 
 
-		chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
+		//chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
 		
 						
-		//chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
+		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
 		pathPomp=chemData+"Pompiers/";
 		pathUVs=chemData+"UVs/";
 		pathStag=chemData+"Stages/";
@@ -127,9 +127,10 @@ public class ServeurSAPFOR {
 	
 	
 	/**
+	 * methode permettant de creer un objet pompier a partir de son n° d'agent
 	 * 
-	 * @param id
-	 * @return
+	 * @param id (int) (n° d'agent du pompier)
+	 * @return Objet Pompier 
 	 * @throws IOException
 	 * @throws URISyntaxException
 	 */
@@ -139,25 +140,31 @@ public class ServeurSAPFOR {
 		return GestionCreationObjets.creerPompier(id,pathPomp);
 	}
 	
+	
 	/**
+	 * methode permettant de creer un objet UV a partir du nom de l'UV
 	 * 
-	 * @param UV
+	 * @param UV (String)
 	 * @return Objet UV
 	 * @throws URISyntaxException
 	 * @throws MalformedURLException
 	 */
+	
 	private UV createUV(String UV) throws URISyntaxException, MalformedURLException {
 		//met le createur d'objets UV a disposition du serveur 
 		return GestionCreationObjets.creerUV(UV,pathUVs);
 	}
 	
+	
 	/**
+	 * methode permettant de creer un objet stage a partir du nom du stage
 	 * 
-	 * @param stage
+	 * @param stage (String)
 	 * @return Objet Stage
 	 * @throws URISyntaxException
 	 * @throws MalformedURLException
 	 */
+	
 	private Stage createStage(String stage) throws URISyntaxException, MalformedURLException {
 		//met le createur d'objets stage a disposition du serveur
 		return GestionCreationObjets.creerStage(stage,pathStag);
@@ -165,10 +172,12 @@ public class ServeurSAPFOR {
 	
 	
 	/**
-	 * 
-	 * @param nomStage
+	 * fournit au client un objet Stage a partir de son nom 
+	 *  
+	 * @param nomStage (String)
 	 * @return Objet Stage
 	 */
+	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("stage/{nomStage}")
@@ -177,7 +186,10 @@ public class ServeurSAPFOR {
 		return  this.nomStage.get(nomStage);
 		
 	}//fin getStage
+	
+	
 	/**
+	 * fournit au client un objet pompier a partir d'un numero d'agent
 	 * 
 	 * @param idPompier
 	 * @return Objet Pompier
@@ -189,27 +201,23 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("pompier/{idPompier}")
 	public synchronized Pompier getPompier(@PathParam("idPompier") int idPompier) throws IOException, URISyntaxException{	
-		
+				
 		return createPompier(idPompier);
 		
 	}//fin getStage
 	
+	
 	/**
+	 * gere la connexion d'un pompier au niveau du client rend un objet Pompier contenant un numero de session
+	 * si n°agent et mot de passe sont valides sinon rend un objet Pompier contenant le numero de erreur session 
+	 * "erreur" : 999
 	 * 
 	 * @param idPompier
 	 * @param mdp
 	 * @return Objet Pompier
 	 * @throws URISyntaxException
 	 */
-	
-	/**
-	 * 
-	 * @param idPompier
-	 * @param mdp
-	 * @return
-	 * @throws URISyntaxException
-	 */
-		
+			
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{idPompier}/{mdp}")
@@ -217,8 +225,9 @@ public class ServeurSAPFOR {
 		
 		//****
 		// recupere le login et mdp de l'agent
-		//verifie le mdp par rapport a celui indique dans le fichier de l'agent ne idPompier
+		//verifie le mdp par rapport a celui indique dans le fichier de l'agent 
 		//si numero concordent => creation d'un numero de session aleatoire (apres verification de sa disponibilite)
+		//et renvoi un objet Pompier contenant toutes les infos ou un objet Pompier (Invalide contenant un n° de session "erreur") 
 		//****
 		
 		Pompier invalide=new PompierConcret();
@@ -227,56 +236,62 @@ public class ServeurSAPFOR {
 		
 		Pompier entrant;
 		
-		int i=0;
+		//****
+		//verifie si le pompier est deja connecte
+		//****
 		
-		while(i<listIdPompier.size() && listIdPompier.get(i)!=idPompier){
-			i++;
+		List<Integer> idExist=new ArrayList<Integer>();
+		
+		
+		Iterator<Map.Entry<Integer,Pompier>> it = numConnection.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<Integer,Pompier> pair = (Map.Entry<Integer,Pompier>)it.next();
+			idExist.add(((Pompier) pair.getValue()).getId());
 		}
 		
-		if(i<listIdPompier.size()){
-					
+		int j=0;
+		while(j<idExist.size() && idExist.get(j)!=idPompier){j++;}
+		
+		//****
+		//si le pompier n'est pas encore connecte
+		//****
+		
+		if(j>=idExist.size()){	
+			
 			try {
-				entrant = createPompier(idPompier);
-			} catch (IOException e) {return invalide;}//creation du pompier a partir des donnees stockees d'apres son identifiannt 
-			
-			List<Integer> idExist=new ArrayList<Integer>();
-			
-			Iterator it = numConnection.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry pair = (Map.Entry)it.next();
-				idExist.add(((Pompier) pair.getValue()).getId());
-			}
-			
-			int j=0;
-			while(j<idExist.size() && idExist.get(j)!=idPompier){j++;}
-			
-			if(j>=idExist.size()){
+				entrant = createPompier(idPompier);//creation du pompier a partir des donnees stockees d'apres son identifiant
+			} catch (IOException e) {return invalide;} 
 			
 			
-				if(entrant.getMdp().equals(mdp)){
-					int randomInt=0;
-					Random randomGenerator = new Random();//creation d'un generateur de nombre aleatoires
-					while(numConnection.containsKey(randomInt)){//verification si randomInt existe dans le hasmap si oui, generation d'un nouveau nombre aleatoire
-						randomInt=randomGenerator.nextInt(998);
-					}
-					numConnection.put(randomInt,entrant);//stockage de la valeur de session + du pompier associe
-			
-					entrant.setIdSession(randomInt); 
-			
-					return entrant;
+			if(entrant.getMdp().equals(mdp)){
+				int randomInt=0;
+				Random randomGenerator = new Random();//creation d'un generateur de nombre aleatoires
+				
+				while(numConnection.containsKey(randomInt)){//verification si randomInt existe dans le hasmap si oui, generation d'un nouveau nombre aleatoire
+					randomInt=randomGenerator.nextInt(998);
+				}
+				
+				numConnection.put(randomInt,entrant);//stockage de la valeur de session + du pompier associe
+				entrant.setIdSession(randomInt); 
+				return entrant;
 				}
 		
-				else{return invalide;}//objet pompier contenant seulement l'idSession : 999 = mdp faux ou login faux (idPompier n'existe pas)
+				else{return invalide;}//objet pompier contenant seulement l'idSession : 999 = mdp ou login faux (idPompier n'existe pas)
 			}
+		
+			//****
+			// si le pompier est deja connecte
+			//****
+			
 			else{return invalide;}
 			
-		}
-			
-		return invalide;
+		
 			
 	}//fin login
 
+	
 	/**
+	 * fournit une liste des UV disponibles pour le candidat identifie par son n° de session 
 	 * 
 	 * @param session
 	 * @return Objet EncapsulationUV
@@ -286,8 +301,11 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidat/{session}")
 	public synchronized EncapsulationUV getUVdisponible(@PathParam("session") int session){ // cast en UVConcret necessaire au fonctionnement de JAXB
+		//****
 		// Fourni les listes de UV accessible en candidature pour le pompier associe a la session 
-		// Filtre base uniquement sur les UV dÃ©jÃ  acquises	
+		// Filtre base uniquement sur les UV deja  acquises
+		//****
+		
 		List <UVConcret> UVDisponible=new ArrayList<UVConcret>();
 			
 		for (int i=0; i<nomUV.size(); i++){
@@ -306,7 +324,9 @@ public class ServeurSAPFOR {
 				
 	}//fin getUVdisponible
 	
+	
 	/**
+	 * fournit au client une liste d'UV, disponibles pour le candidat, encapsulees dans un objet EncapsulationUV
 	 * 
 	 * @param session
 	 * @return Objet EncapsulationUV
@@ -328,7 +348,7 @@ public class ServeurSAPFOR {
 			}
 		}
 		
-		EncapsulationUV UVsCandidatablesAenvoyer =new EncapsulationUV (UVCandidatable);
+		EncapsulationUV UVsCandidatablesAenvoyer=new EncapsulationUV (UVCandidatable);
 		return UVsCandidatablesAenvoyer;
 		
 	}
@@ -357,6 +377,13 @@ public class ServeurSAPFOR {
 	}
 	//fin de peutCandidater
 	
+	
+	/**
+	 * 
+	 * @param session
+	 * @return Objet EncapsulationUV
+	 */
+		
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("UVformateur/{session}")
@@ -375,13 +402,23 @@ public class ServeurSAPFOR {
 		
 		EncapsulationUV UVsCandidatablesAenvoyer =new EncapsulationUV (UVCandidatable);
 		return UVsCandidatablesAenvoyer;	
-	}
-	// fin de getUVdispoFormateur
+	}// fin de getUVdispoFormateur
+	
+	
+	/**
+	 * 
+	 * @param pomp
+	 * @param uv
+	 * @return
+	 */
 	
 	private boolean peutFormer(Pompier pomp, UV uv){
+		//****
 		//retourne vrai si le pompier peut être dispenser la formation de l'UV
 		//Condition pour dispenser la formation : avoir l'UV FORM avec le bon niveau et avoir acquis l'UV ciblé.
 		//ex: pour dispenser l'UV FDF2 il faut avoir validé FORM2 et FDF2
+		//****
+		
 		boolean reponse;
 				
 		String nomUv=uv.getNom();
@@ -405,21 +442,31 @@ public class ServeurSAPFOR {
 			
 						
 		return reponse;
-	}
-	// fin de peutFormer
+	}// fin de peutFormer
+	
+	
+	/**
+	 * 
+	 * @param nameUV
+	 * @return
+	 */
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("UV/{nameUV}")
-	public synchronized EncapsulationStage getStageDeUV(@PathParam("nameUV") String nameUV){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
-
+	public synchronized EncapsulationStage getStageDeUV(@PathParam("nameUV") String nameUV){ 
+		//****
+		//donne au client un objet EncapsulationStage contenant la liste des stageConcrets 
+		//contenus dans l'UV donné "nomUV"
+		//****
+		
 		List <StageConcret> StageDeUV=new ArrayList<StageConcret>();
 		
 		UV uvDemande=nomUV.get(nameUV);
 		List<String> stageDeUVdemande=uvDemande.getStages();
 		
 		for (int i=0; i<stageDeUVdemande.size(); i++){
-		StageDeUV.add((StageConcret)nomStage.get(stageDeUVdemande.get(i)));	
+		StageDeUV.add((StageConcret)nomStage.get(stageDeUVdemande.get(i)));// cast en StageConcreteConcret necessaire au fonctionnement de JAXB	
 		}
 		
 		EncapsulationStage  StageAenvoyer=new EncapsulationStage (StageDeUV);
@@ -427,10 +474,18 @@ public class ServeurSAPFOR {
 		return StageAenvoyer;
 	}//fin getStageDeUV
 	
+	
+	/**
+	 * 
+	 * @param session
+	 * @return
+	 */
+	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}")
-	public synchronized EncapsulationStage getStageAGerer(@PathParam("session") int session){ // cast en StageConcreteConcret necessaire au fonctionnement de JAXB
+	public synchronized EncapsulationStage getStageAGerer(@PathParam("session") int session){ 
+		// cast en StageConcret necessaire au fonctionnement de JAXB
 
 		List <StageConcret> StageAGerer=new ArrayList<StageConcret>();
 		
@@ -447,26 +502,40 @@ public class ServeurSAPFOR {
 	}//fin getStageAGerer
 	
 	
+	/**
+	 * 
+	 * @param session
+	 * @return String
+	 *
+	 */
+	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{session}")
-	public synchronized String deconnexion(@PathParam("session") int session) throws URISyntaxException{
+	public synchronized String deconnexion(@PathParam("session") int session){
 		//effectue la deconnexion de l'agent 
 		//met a jour le fichier d'infos du pompier
 		//detruit le numero de session et l'objet Pompier cree(apres avoir ete sauvegarde)
 		
 		Pompier aDeco=numConnection.get(session);
 		
-		//String nom=aDeco.getNom();
-		//String prenom=aDeco.getPrenom();
 		EcrireFichier.ecrirePompier(aDeco,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
 		
 		numConnection.remove(session);//suppression de l'entree lie a ce numero de session
-		//prenom+" "+nom+
+		
 		return "OK";
 		
 	}//fin deconnexion
 	
+	
+	/**
+	 * 
+	 * @param session
+	 * @param nomStage
+	 * @return String
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -502,6 +571,14 @@ public class ServeurSAPFOR {
 		else{return "KO";}
 	}//fin candidater
 				
+	/**
+	 * 
+	 * @param session
+	 * @param nomStage
+	 * @return String
+	 * @throws URISyntaxException
+	 * @throws IOException
+	 */
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -512,7 +589,7 @@ public class ServeurSAPFOR {
 		Stage actuel=this.nomStage.get(nomStage);
 		
 		
-if(actuel.getCandidats().contains(aModif.getId())){
+		if(actuel.getCandidats().contains(aModif.getId())){
 			
 			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
 			pompierListeEnCours.remove(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
@@ -537,6 +614,16 @@ if(actuel.getCandidats().contains(aModif.getId())){
 		else{return "KO";}
 		
 	}//fin de desinscrire
+	
+	
+	/**
+	 * 
+	 * @param date
+	 * @param stage
+	 * @return
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
 	
 	@GET	
 	@Produces({MediaType.APPLICATION_JSON})
@@ -580,6 +667,15 @@ if(actuel.getCandidats().contains(aModif.getId())){
 		else{return "KO";}
 	}
 	
+	
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
+	
 	@PUT
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
@@ -605,17 +701,14 @@ if(actuel.getCandidats().contains(aModif.getId())){
 		StageAUpdate.notifier();
 		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
 		
-		String nomFich=StageAUpdate.getNomStage()+".sess";
-		
-		URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich); 
-		
-		URI chemin=chemPath.toURI();
-				
 		EcrireFichier.ecrireStage(StageAUpdate,pathStag);
 		
 		
 		String reponse="Le stage "+StageAUpdate.getNomStage()+" a ete mis a jour";
 		
-		return reponse;}
+		return reponse;
+		
+	}//fin UpdateStage
 	
 }
+
