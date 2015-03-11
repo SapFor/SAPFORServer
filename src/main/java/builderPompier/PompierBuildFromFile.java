@@ -25,29 +25,20 @@ public class PompierBuildFromFile implements PompierBuilder{
 	public PompierBuildFromFile(int id,String pathPomp) throws URISyntaxException, MalformedURLException{
 		
 		String fich=id+".pomp";
-		cheminFich=pathPomp+fich;//System.getProperty("user.dir")+"../donnees/Pompiers/"+fich;
-		
-		//URL fichier=new URL(chemPath);//getClass().getResource("/donnees/Pompiers/"+id+".pomp");
-		
+		cheminFich=pathPomp+fich;
+				
 		this.pompier=new PompierConcret();
-		//this.fichier=fichier+id+".pomp";
-		//cheminFich=fichier.toURI();
+		
 		List<String> temp;
 		
 		
-		/*try{
-			 input = new BufferedReader(new FileReader(new File(cheminFich)));
-			 input.mark(2000);	
-			
-			}catch(Exception e){System.out.println("Aucun fichier "+fichier+" existant!");}
-		*/
 		
 	}
 	
 	
 	@Override
 	public void buildId() throws IOException{
-		// TODO Auto-generated method stub
+		
 			
 		try{	
 			 pompier.setId(Integer.parseInt(RecupInfoFichier.chercheDsFichier(cheminFich,"id")));
