@@ -201,15 +201,7 @@ public class ServeurSAPFOR {
 	 * @return Objet Pompier
 	 * @throws URISyntaxException
 	 */
-	
-	/**
-	 * 
-	 * @param idPompier
-	 * @param mdp
-	 * @return
-	 * @throws URISyntaxException
-	 */
-		
+			
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{idPompier}/{mdp}")
@@ -481,7 +473,7 @@ public class ServeurSAPFOR {
 		
 		
 		
-		if(actuel.getFinCandidature().after(today)){
+		if(actuel.getFinCandidature().after(today)&&!actuel.getCandidats().contains(aModif.getId())){
 			
 			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
 			pompierListeEnCours.add(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
