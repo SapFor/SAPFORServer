@@ -64,14 +64,16 @@ public class ServeurSAPFOR {
 		//constructeur du serveur
 		//remplissage de deux liste (hashmaps) : 1 contenant toutes les UV disponibles l'autre toutes les sessions disponibles
 		
-		URL location = ServeurSAPFOR.class.getProtectionDomain().getCodeSource().getLocation();//
-		System.out.println(location);
-		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";
-		//chemData=location.toString()+"../../../../../../../donnees/";
-		//System.out.println(chemData);
+		//chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/"; //mode linux
+
+		chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path a verifier 
+		
 		pathPomp=chemData+"Pompiers/";
 		pathUVs=chemData+"UVs/";
-		pathStag=chemData+"Stages/";	
+		pathStag=chemData+"Stages/";
+		System.out.println(pathPomp);
+		System.out.println(pathUVs);
+		System.out.println(pathStag);
 		//URL dossier=getClass().getResource("/donnees/UVs"); //recherche du chemin menants aux fichiers d'UVS
 		File folder = new File(pathUVs);//dossier.toURI()); //creation chemin jusqu'au répretoire UVs
 		String[] listOfUVs = folder.list();//recuperation du nom des fichiers du repertoire UV
@@ -458,7 +460,7 @@ if(actuel.getCandidats().contains(aModif.getId())){
 			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
 			URI chemin=chemPath.toURI();
 						
-			EcrireFichier.ecrireStage(actuel,chemin);
+			EcrireFichier.ecrireStage(actuel,pathStag);
 				
 			return "OK";
 		}
