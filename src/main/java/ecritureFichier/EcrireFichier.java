@@ -49,7 +49,7 @@ public class EcrireFichier {
 		StringBuffer gestionList=new StringBuffer();
 		for(String gestion : pompier.getGestion()){gestionList.append(gestion+"\n");}
 		
-		//chemin=EcrireFichier.class.getResource("/donnees/Pompiers/"+pompier.getId()+".pomp");
+		
 		
 		String chemFile=chemin+pompier.getId()+".pomp";
 		
@@ -97,6 +97,8 @@ public class EcrireFichier {
 	}
 	
 	/**
+	 * methode qui va ecrire dans un fichier les donnees contenues dans un objet Stage passe en parametre
+	 * le chemin du fichier etant passe lui aussi en parametre
 	 * 
 	 * @param stage (Stage) objet de type Stage a reecrire
 	 * @param chemin (String) chemin menant au fichier (donne sous forme de chaine)
@@ -175,7 +177,7 @@ public class EcrireFichier {
 								
 		}catch(IOException e){e.printStackTrace();}
 		
-		//finally{output.close();}
+		
 	}
 	
 }
