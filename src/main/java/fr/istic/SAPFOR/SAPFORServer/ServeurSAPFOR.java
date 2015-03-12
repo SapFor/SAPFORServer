@@ -3,7 +3,9 @@ package fr.istic.SAPFOR.SAPFORServer;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -72,10 +74,10 @@ public class ServeurSAPFOR {
 		//***************
 
 
-		//chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
+		chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
 		
 						
-		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
+		//chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
 		pathPomp=chemData+"Pompiers/";
 		pathUVs=chemData+"UVs/";
 		pathStag=chemData+"Stages/";
@@ -320,6 +322,11 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("UVcandidat/{session}")
 	public synchronized EncapsulationUV getUVdispoCandidat(@PathParam("session") int session){
+		// ***
+		// Creer un objet EncapsulationUV contenant une liste d'objet UV.
+		// Les objets UVs stockés dans la liste encapsulée sont toutes les UVs non acquises par le pompier (sans filtre)
+		// ***
+		
 		
 		List <UVConcret> UVCandidatable=new ArrayList<UVConcret>();
 			
@@ -376,6 +383,10 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("UVformateur/{session}")
 	public synchronized EncapsulationUV getUVdispoFormateur(@PathParam("session") int session){
+		// ***
+		// Creer un objet EncapsulationUV contenant une liste d'objet UV.
+		// Les objets UVs stockés dans la liste encapsulée sont toutes les UVs disponible etant que candidat formateur
+		// ***
 		
 		List <UVConcret> UVCandidatable=new ArrayList<UVConcret>();
 		
@@ -583,7 +594,10 @@ public class ServeurSAPFOR {
 			
 			actuel.desincription(aModif);
 			
+			String nomFich=actuel.getNomStage()+".sess";
 			
+			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
+			URI chemin=chemPath.toURI();
 						
 			EcrireFichier.ecrireStage(actuel,pathStag);
 				
@@ -630,7 +644,13 @@ public class ServeurSAPFOR {
 			if(dateModif.before(aModif.getDate())){
 		
 				aModif.setFinCandidature(dateModif);
-			
+				
+				String nomFich=aModif.getNomStage()+".sess";
+				
+				URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich); 
+				
+				URI chemin=chemPath.toURI();
+				
 				EcrireFichier.ecrireStage(aModif,pathStag);
 			
 				return "OK";
@@ -682,6 +702,38 @@ public class ServeurSAPFOR {
 		return reponse;
 		
 	}//fin UpdateStage
+	
+	@PUT
+	@Consumes({MediaType.APPLICATION_JSON})
+	@Produces({MediaType.APPLICATION_JSON})
+	@Path("directeur/sauvegarde")
+	public synchronized String SauvegardeStage(StageConcret s) throws IOException, URISyntaxException{ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
+		
+		StageConcret StageSauvegarde=(StageConcret)nomStage.get(s.getNomStage());
+		
+		if (s.getCandidats()==null) {s.setCandidats(new ArrayList<String>());}
+		
+		if (s.getAccepte()==null) {s.setAccepte(new ArrayList<String>());}
+		
+		if (s.getAttente()==null) {s.setAttente(new ArrayList<String>());}
+		
+		if (s.getRefuse()==null) {s.setRefuse(new ArrayList<String>());}
+		
+		
+		StageSauvegarde.setCandidats(s.getCandidats());
+		StageSauvegarde.setAccepte(s.getAccepte());
+		StageSauvegarde.setAttente(s.getAttente());
+		StageSauvegarde.setRefuse(s.getRefuse());
+		
+		nomStage.put(StageSauvegarde.getNomStage(), StageSauvegarde);
+		
+		EcrireFichier.ecrireStage(StageSauvegarde,pathStag);
+		
+		String reponse="Le stage "+StageSauvegarde.getNomStage()+" a été sauvegardé";
+		
+		return reponse;
+		
+	}//fin SauvegardeStage
 	
 }
 
