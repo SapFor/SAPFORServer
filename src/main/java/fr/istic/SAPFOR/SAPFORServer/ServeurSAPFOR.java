@@ -476,9 +476,11 @@ public class ServeurSAPFOR {
 	
 	
 	/**
+	 * envoi une liste de StageConcret par le biais du numero de session de l'agent connecte
+	 * envoi la liste des stages geres par ce pompier
 	 * 
-	 * @param session
-	 * @return
+	 * @param session (int) numero de session active de l'agent
+	 * @return objet EncapsulationStage
 	 */
 	
 	@GET
@@ -603,11 +605,6 @@ public class ServeurSAPFOR {
 			
 			actuel.desincription(aModif);
 			
-			String nomFich=actuel.getNomStage()+".sess";
-			
-			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
-			URI chemin=chemPath.toURI();
-						
 			EcrireFichier.ecrireStage(actuel,pathStag);
 				
 			return "OK";
@@ -654,13 +651,7 @@ public class ServeurSAPFOR {
 			if(dateModif.before(aModif.getDate())){
 		
 				aModif.setFinCandidature(dateModif);
-				
-				String nomFich=aModif.getNomStage()+".sess";
-				
-				URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich); 
-				
-				URI chemin=chemPath.toURI();
-				
+												
 				EcrireFichier.ecrireStage(aModif,pathStag);
 			
 				return "OK";
@@ -684,7 +675,8 @@ public class ServeurSAPFOR {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/selection")
-	public synchronized String UpdateStage(StageConcret s) throws IOException, URISyntaxException{ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
+	public synchronized String UpdateStage(StageConcret s) throws IOException{ 
+		// fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
 		
 		StageConcret StageAUpdate=(StageConcret)nomStage.get(s.getNomStage());
 		
@@ -703,7 +695,7 @@ public class ServeurSAPFOR {
 		StageAUpdate.setRefuse(s.getRefuse());
 		
 		StageAUpdate.notifier();
-		nomStage.put(StageAUpdate.getNomStage(), StageAUpdate);
+		nomStage.put(StageAUpdate.getNomStage(),StageAUpdate);
 		
 		EcrireFichier.ecrireStage(StageAUpdate,pathStag);
 		
@@ -718,7 +710,7 @@ public class ServeurSAPFOR {
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/sauvegarde")
-	public synchronized String SauvegardeStage(StageConcret s) throws IOException, URISyntaxException{ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
+	public synchronized String SauvegardeStage(StageConcret s) throws IOException{ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
 		
 		StageConcret StageSauvegarde=(StageConcret)nomStage.get(s.getNomStage());
 		
