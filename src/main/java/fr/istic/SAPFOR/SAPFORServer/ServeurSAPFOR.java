@@ -477,7 +477,11 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{session}")
 	public synchronized EncapsulationStage getStageAGerer(@PathParam("session") int session){ 
-		// cast en StageConcret necessaire au fonctionnement de JAXB
+		//****
+		//donne au client un objet EncapsulationStage contenant la liste des stageConcrets 
+		//les stages de la liste sont les stages gérés en tant que directeur
+		//cast en StageConcret necessaire au fonctionnement de JAXB
+		//****
 
 		List <StageConcret> StageAGerer=new ArrayList<StageConcret>();
 		
@@ -505,9 +509,11 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("{session}")
 	public synchronized String deconnexion(@PathParam("session") int session){
+		//***
 		//effectue la deconnexion de l'agent 
 		//met a jour le fichier d'infos du pompier
 		//detruit le numero de session et l'objet Pompier cree(apres avoir ete sauvegarde)
+		//***
 		
 		Pompier aDeco=numConnection.get(session);
 		
@@ -533,15 +539,15 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("candidater/{session}/{nomStage}")
 	public synchronized String candidater(@PathParam("session") int session, @PathParam("nomStage") String nomStage) throws IOException, URISyntaxException {
+		//****
 		//ajoute un stage ("nomStage") a la liste des stages "en cours" de l'objet pompier 
 		//obtenu par son numero de session actuelle ("session")  
-		 		
+		//***
+		
 		Pompier aModif=numConnection.get(session);
 		Stage actuel=this.nomStage.get(nomStage);
 		Calendar today=Calendar.getInstance();
-		
-		
-		
+				
 		if(actuel.getFinCandidature().after(today)&&!actuel.getCandidats().contains(aModif.getId())){
 			
 			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
@@ -578,6 +584,12 @@ public class ServeurSAPFOR {
 	@Path("desincription/{session}/{nomStage}")
 	public synchronized String desincrire(@PathParam("session") int session, @PathParam("nomStage") String nomStage) throws URISyntaxException, IOException{
 		
+		//***
+		//retire de la liste getEnCours le stage ciblé
+		//retire le pompier de la liste des candidats du stage
+		//met a jour les fichiers de donnees
+		//***
+		
 		Pompier aModif=numConnection.get(session);
 		Stage actuel=this.nomStage.get(nomStage);
 		
@@ -594,11 +606,7 @@ public class ServeurSAPFOR {
 			
 			actuel.desincription(aModif);
 			
-			String nomFich=actuel.getNomStage()+".sess";
-			
-			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
-			URI chemin=chemPath.toURI();
-						
+									
 			EcrireFichier.ecrireStage(actuel,pathStag);
 				
 			return "OK";
@@ -622,7 +630,9 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
 	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage) throws IOException, URISyntaxException{
-		
+		//***
+		// Cloture (rend inaccessible en candidature) la stage indiqué dans le path
+		//***
 		String str[]=date.split("\\.");
 		String jourS=str[0];
 		String moisS=str[1];
@@ -645,11 +655,7 @@ public class ServeurSAPFOR {
 		
 				aModif.setFinCandidature(dateModif);
 				
-				String nomFich=aModif.getNomStage()+".sess";
 				
-				URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich); 
-				
-				URI chemin=chemPath.toURI();
 				
 				EcrireFichier.ecrireStage(aModif,pathStag);
 			
@@ -674,6 +680,8 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/selection")
 	public synchronized String UpdateStage(StageConcret s) throws IOException, URISyntaxException{ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
+		//***
+		
 		
 		StageConcret StageAUpdate=(StageConcret)nomStage.get(s.getNomStage());
 		
