@@ -162,7 +162,9 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("stage/{nomStage}")
 	public synchronized Stage getStage(@PathParam("nomStage") String nomStage){	
-		
+		// ***
+		// fourni l'objet Stage associé au label "nomStage"
+		// ***
 		return  this.nomStage.get(nomStage);
 		
 	}//fin getStage
@@ -181,7 +183,9 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("pompier/{idPompier}")
 	public synchronized Pompier getPompier(@PathParam("idPompier") int idPompier) throws IOException, URISyntaxException{	
-				
+		// ***
+		// fourni l'objet Pompier associé à l'idPompier fourni
+		// ***
 		return createPompier(idPompier);
 		
 	}//fin getStage
