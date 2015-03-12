@@ -659,7 +659,7 @@ public class ServeurSAPFOR {
 				
 		dateModif.set(annee,mois-1,jour);
 		
-		if(dateModif.after(Calendar.getInstance().getTime())){
+		//if(dateModif.after(Calendar.getInstance().getTime())){
 		
 			Stage aModif=nomStage.get(stage);
 		
@@ -672,8 +672,8 @@ public class ServeurSAPFOR {
 				return "OK";
 			}
 			else{return "KO";}
-		}
-		else{return "KO";}
+		//}
+		//else{return "KO";}
 	}
 	
 	
