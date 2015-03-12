@@ -71,7 +71,7 @@ public class StageBuildFromFile implements StageBuilder {
 	
 	@Override
 	public void buildDate() throws IOException {
-		// TODO Auto-generated method stub
+		
 		
 		Calendar jourJ;
 		
@@ -97,7 +97,7 @@ public class StageBuildFromFile implements StageBuilder {
 	
 	@Override
 	public void buildLieu() throws IOException {
-		// TODO Auto-generated method stub
+		
 		try{
 			session.setLieu(RecupInfoFichier.chercheDsFichier(cheminFich,"lieu"));
 		}catch(IOException e){e.printStackTrace();}

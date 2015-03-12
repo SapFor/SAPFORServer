@@ -72,12 +72,20 @@ public class ServeurSAPFOR {
 		//***************
 		//creation du chemin menant aux donnees
 		//***************
-
-
-		chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
+			
+		//***************************************************************************************
+		//*chemin general menant au dossier contenant les dossiers "Pompiers", "Stages" et "UVs"* 
+		//*A MODIFIER AVANT DE DEMARRER LE SERVEUR***********************************************
+		//***************************************************************************************************	
+		
+		//chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
 		
 						
-		//chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
+		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
+		
+		//***************************************************************************************************
+		
+		
 		pathPomp=chemData+"Pompiers/";
 		pathUVs=chemData+"UVs/";
 		pathStag=chemData+"Stages/";
@@ -565,6 +573,7 @@ public class ServeurSAPFOR {
 	
 	
 	/**
+	 * retire la candidature d'un pompier perer par son numero de session 
 	 * 
 	 * @param session
 	 * @param nomStage
@@ -576,7 +585,7 @@ public class ServeurSAPFOR {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("desincription/{session}/{nomStage}")
-	public synchronized String desincrire(@PathParam("session") int session, @PathParam("nomStage") String nomStage) throws URISyntaxException, IOException{
+	public synchronized String desinscrire(@PathParam("session") int session, @PathParam("nomStage") String nomStage) throws URISyntaxException, IOException{
 		
 		Pompier aModif=numConnection.get(session);
 		Stage actuel=this.nomStage.get(nomStage);
@@ -610,10 +619,11 @@ public class ServeurSAPFOR {
 	
 	
 	/**
+	 * change la date de fin de candidature d'un stage grace au nom de ce stage et la date de cloture desiree  
 	 * 
-	 * @param date
-	 * @param stage
-	 * @return
+	 * @param date (String) envoye sous la forme "JJ.MM.AAAA"
+	 * @param stage (String) nom du stage tel qu'il est defini dans l'objet Stage
+	 * @return (String)
 	 * @throws IOException
 	 * @throws URISyntaxException
 	 */
@@ -662,9 +672,10 @@ public class ServeurSAPFOR {
 	
 	
 	/**
+	 * mise a jour de l'objet Stage apres modification par un responsable de stage (version finale) 
 	 * 
-	 * @param s
-	 * @return
+	 * @param s (StageConcret) objet de type StageConcret
+	 * @return (String)
 	 * @throws IOException
 	 * @throws URISyntaxException
 	 */
