@@ -7,12 +7,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 //by Thomas Davin
+
 @XmlRootElement
 public class UVConcret implements UV {
 	
-	private String nom;
-	private String descr;
-	private List<String> stage;
+	private String nom;//nom de l'UV
+	
+	private String descr;//description de l'UV
+	
+	private List<String> stage;//liste des stages disponibles pour l'UV
+	
 	
 	@Override
 	public void setNom(String nom) {

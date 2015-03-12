@@ -1,13 +1,9 @@
 package builderStage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Calendar;
 
 import outils.RecupInfoFichier;
@@ -18,29 +14,21 @@ public class StageBuildFromFile implements StageBuilder {
 		
 	private Stage session;
 	private String cheminFich;
-	//private BufferedReader input;
+	
 	
 	public StageBuildFromFile(String label,String pathStag) throws URISyntaxException, MalformedURLException{
 		
 		String fich=label+".sess";
-		cheminFich=pathStag+fich;//System.getProperty("user.dir")+"../donnees/Stages/"+fich;
-		//URL fichier=new URL(chemPath);
-		//cheminFich=fichier.toURI();
+		cheminFich=pathStag+fich;
 		
 		this.session=new StageConcret();
 		
-		
-		/*try{
-			input = new BufferedReader(new FileReader(new File(cheminFich)));
-			input.mark(2000);	
-			
-			}catch(IOException e){System.out.println("Aucun fichier "+fichier+" existant!");}
-	*/	
+				
 	}
 	
 	@Override
 	public void buildNomStage() throws IOException {
-		// TODO Auto-generated method stub
+		
 		
 		Calendar jourJ;
 		

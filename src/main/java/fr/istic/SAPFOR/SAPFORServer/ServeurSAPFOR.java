@@ -3,9 +3,7 @@ package fr.istic.SAPFOR.SAPFORServer;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -581,10 +579,7 @@ public class ServeurSAPFOR {
 			
 			actuel.desincription(aModif);
 			
-			String nomFich=actuel.getNomStage()+".sess";
 			
-			URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich);
-			URI chemin=chemPath.toURI();
 						
 			EcrireFichier.ecrireStage(actuel,pathStag);
 				
@@ -631,13 +626,7 @@ public class ServeurSAPFOR {
 			if(dateModif.before(aModif.getDate())){
 		
 				aModif.setFinCandidature(dateModif);
-				
-				String nomFich=aModif.getNomStage()+".sess";
-				
-				URL chemPath=getClass().getResource("/donnees/Stages/"+nomFich); 
-				
-				URI chemin=chemPath.toURI();
-				
+			
 				EcrireFichier.ecrireStage(aModif,pathStag);
 			
 				return "OK";

@@ -14,6 +14,7 @@ import java.util.List;
 public class RecupInfoFichier {
 	
 	/**
+	 * cherche le "motCle" dans un fichier et lit la chaine placee a la suite
 	 * 
 	 * @param cheminFich (String) chemin menant au fichier
 	 * @param motCle (String) mot cle permettant d'acceder a un type d'info dans le fichier
@@ -49,6 +50,7 @@ public class RecupInfoFichier {
 		return res;
 		
 	} //fin chercheDsFichier
+	
 	
 	/**
 	 * 
@@ -96,6 +98,7 @@ public class RecupInfoFichier {
 		return res;
 		
 	}
+	
 	
 	/**
 	 * 

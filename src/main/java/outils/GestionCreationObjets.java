@@ -6,7 +6,6 @@ import java.net.URISyntaxException;
 
 import builderPompier.PompierBuildFromFile;
 import builderPompier.PompierBuilder;
-import builderPompier.PompierConcret;
 import builderPompier.PompierDirector;
 import builderPompier.Pompier;
 import builderStage.Stage;
@@ -22,10 +21,11 @@ import builderUV.UVbuilder;
 public class GestionCreationObjets {
 	
 	/**
+	 * renvoi un objet Pompier a partir de son numero d'agent et du chemin ou est situe le fichier
 	 * 
-	 * @param idPompier
-	 * @param pathPomp
-	 * @return Pompier
+	 * @param idPompier (in) n° d'agent
+	 * @param pathPomp (String) chemin menant au repertoire contenant le fichier
+	 * @return objet Pompier rend un objet de type Pompier 
 	 * @throws IOException
 	 * @throws URISyntaxException
 	 */
@@ -40,13 +40,20 @@ public class GestionCreationObjets {
 		
 		try {
 			constPompier.makePompier();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (IOException e) {e.printStackTrace();}
 				
 		return constPompier.getPompier();
 	}
+	
+	/**
+	 * renvoi un objet UV a partir de son nom et du chemin ou est situe le fichier
+	 * 
+	 * @param uvNom (String) nom de l'UV (son acronyme)
+	 * @param pathUVs (String) chemin menant au repertoire contenant le fichier
+	 * @return objet UV rend un objet de type UV
+	 * @throws URISyntaxException
+	 * @throws MalformedURLException
+	 */
 	
 	public static UV creerUV(String uvNom,String pathUVs) throws URISyntaxException, MalformedURLException{
 		

@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import builderStage.Stage;
 import observerCandidats.Observateur;
-import observerCandidats.Sujet;
+
 
 
 //by Thomas Davin
@@ -14,31 +14,31 @@ import observerCandidats.Sujet;
 public class PompierConcret implements Pompier, Observateur {
 	
 	//implémentation de la structure Pompier
-	//permet la création d'un objet pompier  � partir d'un fichier avec le m�me numero d'agent
+	//permet la création d'un objet pompier  a partir d'un fichier avec le meme numero d'agent
 	
-	private int idSession;
+	private int idSession;//n° de la session ouverte papr le client
 	
-	private int id;
+	private int id;//n° d'agent du pompier
 	
-	private String mdp;
+	private String mdp;// mot de passe du pompier
 	
-	private String directeur;
+	private String directeur;//indication si le pompier est directeur/responsable de stage ou non
 	
-	private String nom;
+	private String nom;//nom du pompier
 	
-	private String prenom;
+	private String prenom;//prenom du pompier
 	
-	private List<String> UV;
+	private List<String> UV;//liste des UVs obtenues par le pompier
 	
-	private List<String> accepte;
+	private List<String> accepte;//liste des stages pour lesquels le pompier a ete accepte
 	
-	private List<String> attente;
+	private List<String> attente;//liste des statges dans lesquels le pompier est en file d'attente
 	
-	private List<String> enCours;
+	private List<String> enCours;//liste des stages dans lesquels le pompier a candidater (en attente de decision du responsable de stage)
 	
-	private List<String> refuse;
+	private List<String> refuse;//liste des stages pour lesquels le pompier a ete refuse
 	
-	private List<String> gestion;
+	private List<String> gestion;//liste des stages geres par le pompier si celui-ci est responsable de stage
 	
 	@Override
 	public void setIdSession(int idSession){

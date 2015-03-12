@@ -112,31 +112,13 @@ public class EcrireFichier {
 		 
 		File fichier;		
 		String nomFichier;
-		//System.out.println(chemin.toString());
+		
 		
 		int jourD=stage.getDate().get(Calendar.DAY_OF_MONTH);
 		int moisD=stage.getDate().get(Calendar.MONTH);
 		int anneeD=stage.getDate().get(Calendar.YEAR);
 		
-		String moisS="";
-		int anneeS=anneeD%100;
 				
-		switch(moisD){
-		case 0: moisS="janv";break;
-		case 1: moisS="fev";break;
-		case 2: moisS="mars";break;
-		case 3: moisS="avr";break;
-		case 4: moisS="mai";break;
-		case 5: moisS="juin";break;
-		case 6: moisS="juil";break;
-		case 7: moisS="aout";break;
-		case 8: moisS="sept";break;
-		case 9: moisS="oct";break;
-		case 10: moisS="nov";break;
-		case 11: moisS="dec";break;
-		default: moisS="Pbm";break;
-		}
-		
 		nomFichier=stage.getNomStage()+".sess";
 				
 		String jourF=String.valueOf(stage.getFinCandidature().get(Calendar.DAY_OF_MONTH));
@@ -157,17 +139,12 @@ public class EcrireFichier {
 		for(String refuse : stage.getRefuse()){refuseList.append(refuse+"\n");}
 		
 		String chemFile=chemin+nomFichier;
-		//chemin=EcrireFichier.class.getResource("/donnees/Stages/"+fich);//+nomFichier+".sess");
-		//System.out.println(chemin.toString());
-		
+				
 		fichier=new File(chemFile);
-		//System.out.println(fichier.toString());
-		//System.out.println(fichier.toString());
-				//toString()+nomFichier);
 		
 		try{
 			PrintWriter writer = new PrintWriter(fichier);
-			//BufferedWriter output=new BufferedWriter(new FileWriter(fichier));
+		
 									
 			writer.print("uv\n"+stage.getUV()+"\n"
 					+"modif\n"

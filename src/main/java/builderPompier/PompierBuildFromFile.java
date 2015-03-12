@@ -1,15 +1,6 @@
 package builderPompier;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
+import java.io.IOException;
 import outils.RecupInfoFichier;
 
 //by Thomas Davin
@@ -27,12 +18,13 @@ public class PompierBuildFromFile implements PompierBuilder{
 		cheminFich=pathPomp+fich;
 				
 		this.pompier=new PompierConcret();
-	}
+		
+	}//fin constructeur
 	
 	
 	@Override
 	public void buildId() throws IOException{
-		
+		//remplit le numero d'agent dans l'objet Pompier avec celui present dans le fichier correspondant
 			
 		try{	
 			 pompier.setId(Integer.parseInt(RecupInfoFichier.chercheDsFichier(cheminFich,"id")));
@@ -43,6 +35,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	
 	@Override
 	public void buildMdp() throws IOException {
+		//remplit le mot de passe dans l'objet Pompier avec celui present dans le fichier correspondant
 		try{	
 			 pompier.setMdp(RecupInfoFichier.chercheDsFichier(cheminFich,"mdp"));
 		}catch(IOException e){}	 
@@ -51,7 +44,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	
 	@Override
 	public void buildDirecteur()throws IOException{
-			
+		//remplit l'etat directeur dans l'objet Pompier avec celui present dans le fichier correspondant
 			 try {
 				pompier.setDirecteur(RecupInfoFichier.chercheDsFichier(cheminFich,"directeur"));
 			} catch (IOException e) {e.printStackTrace();}
@@ -62,7 +55,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	
 	@Override
 	public void buildNom() throws IOException{
-		
+		//remplit le nom dans l'objet Pompier avec celui present dans le fichier correspondant
 			 try {
 				pompier.setNom(RecupInfoFichier.chercheDsFichier(cheminFich,"nom"));
 			} catch (IOException e) {e.printStackTrace();}
@@ -72,7 +65,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 
 	@Override
 	public void buildPrenom() throws IOException {
-		// TODO Auto-generated method stub
+		//remplit le prenom dans l'objet Pompier avec celui present dans le fichier correspondant
 		
 		try{
 			pompier.setPrenom(RecupInfoFichier.chercheDsFichier(cheminFich,"prenom"));
@@ -81,7 +74,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 
 	@Override
 	public void buildUV() throws IOException{
-		// TODO Auto-generated method stub
+		//remplit la liste des UVs obtenues dans l'objet Pompier avec celui present dans le fichier correspondant
 		
 		try{
 			pompier.setUV(RecupInfoFichier.recupListDsFichier(cheminFich,"uv"));
@@ -90,7 +83,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 
 	@Override
 	public void buildAccepte() throws IOException {
-		
+		//remplit la liste des stages acceptes dans l'objet Pompier avec celui present dans le fichier correspondant
 		try{
 			pompier.setAccepte(RecupInfoFichier.recupListDsFichier(cheminFich,"accepte"));
 						
@@ -99,7 +92,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 
 	@Override
 	public void buildEnCours() throws IOException {
-		
+		//remplit la liste des stages postules dans l'objet Pompier avec celui present dans le fichier correspondant
 		try{
 			
 			pompier.setEnCours(RecupInfoFichier.recupListDsFichier(cheminFich,"encours"));
@@ -108,7 +101,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 
 	@Override
 	public void buildAttente() throws IOException {
-		// TODO Auto-generated method stub
+		//remplit la liste des stages en liste d'attente dans l'objet Pompier avec celui present dans le fichier correspondant
 		try{
 			
 			pompier.setAttente(RecupInfoFichier.recupListDsFichier(cheminFich,"attente"));
@@ -117,7 +110,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 
 	@Override
 	public void buildRefuse() throws IOException {
-	
+		//remplit la liste des stages refuses dans l'objet Pompier avec celui present dans le fichier correspondant
 		try{
 			
 			pompier.setRefuse(RecupInfoFichier.recupListDsFichier(cheminFich,"refuse"));
@@ -127,6 +120,7 @@ public class PompierBuildFromFile implements PompierBuilder{
 	
 	@Override
 	public void buildGestion() throws IOException {
+		//remplit la liste des stages geres dans l'objet Pompier avec celui present dans le fichier correspondant
 		try {
 			
 			pompier.setGestion(RecupInfoFichier.recupListDsFichier(cheminFich,"gestion"));

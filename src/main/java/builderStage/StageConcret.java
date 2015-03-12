@@ -19,31 +19,28 @@ import observerCandidats.Sujet;
 public class StageConcret implements Stage, Sujet {
 	
 	
-	private String uv;
-	//private int directeur;
-	private String nomStage;
-	private Calendar date;
-	private Calendar finCandidature;
-	private String lieu;
-	private String infos;
-	private List<String> candidats;
-	private List<String> accepte;
-	private List<String> attente;
-	private List<String> refuse;
-	private ArrayList<Observateur> ListPompierCandidat;
+	private String uv;//nom de l'uv auquel se rapporte le stage
 	
+	private String nomStage;//nom du stage
 	
-	/*@Override
-	public void setDirecteur(int idDirecteur) {
-		// TODO Auto-generated method stub
-		this.directeur=idDirecteur;
-	}
-
-	@Override
-	public int getDirecteur() {
-		// TODO Auto-generated method stub
-		return directeur;
-	}*/
+	private Calendar date;//date de debut du stage
+	
+	private Calendar finCandidature;//date de la fin des candidatures pour le stage
+	
+	private String lieu;//lieu du stage
+	
+	private String infos;//informations relatives au stage
+	
+	private List<String> candidats;//liste des postulants pour le stage
+	
+	private List<String> accepte;//liste des candidats acceptes pour le stage
+	
+	private List<String> attente;//liste des candidats en file d'attente pour le stage
+	
+	private List<String> refuse;//liste des candidats refuses pour le stage
+	
+	private ArrayList<Observateur> ListPompierCandidat;//liste des pompiers destines a leur mise a jour via un observateur
+	
 	
 	@Override
 	public void setNomStage(String nom){

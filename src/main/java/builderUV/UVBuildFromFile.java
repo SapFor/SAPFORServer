@@ -1,13 +1,8 @@
 package builderUV;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
+
 
 import outils.RecupInfoFichier;
 
@@ -19,24 +14,15 @@ public class UVBuildFromFile implements UVbuilder {
 	private String cheminFich;
 	
 	
-	public UVBuildFromFile(String uv,String pathUVs) throws URISyntaxException, MalformedURLException{
+	public UVBuildFromFile(String uv,String pathUVs) throws URISyntaxException{
 		
 		String fich=uv+".uv";
-		cheminFich=pathUVs+fich;//System.getProperty("user.dir")+"/../donnees/UVs/"+fich;
-		//System.out.println(chemPath);
-		
-		//URL fichier=new URL(chemPath);
-		//cheminFich=fichier.toURI();
+		cheminFich=pathUVs+fich;
 		
 		this.uv=new UVConcret();
 		
 		
-		/*try{
-			cheminFich = new BufferedReader(new FileReader(new File(cheminFich)));
-			 cheminFich.mark(2000);	
 			
-			}catch(Exception e){System.out.println("Aucun fichier "+fichier+" existant!");}
-			*/	
 	}
 
 	@Override
