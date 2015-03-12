@@ -10,23 +10,22 @@ import builderPompier.Pompier;
 import builderStage.Stage;
 
 
+/**
+ * 
+ * @author Thomas Davin && Frederic Lepelletier
+ *
+ */
+
 public class EcrireFichier {
 	
-	/**
-	 * 
-	 * 
-	 *@param pompier  
-	 *@param chemin
-	 *
-	*/
-	
+		
 	/**
 	 * methode qui va ecrire dans un fichier les donnees contenues dans un objet Pompier passe en parametre
 	 * le chemin du fichier etant passe lui aussi en parametre
 	 * 
 	 * @param pompier (Pompier) objet de type Pompier a reecrire
 	 * @param chemin (String) chemin menant au fichier (donne sous forme de chaine)
-	 * @author Thomas Davin && Frederic Lepelletier
+	 * @author 
 	 */
 	
 	public static void ecrirePompier(Pompier pompier,String chemin){
@@ -115,14 +114,14 @@ public class EcrireFichier {
 		
 		
 		int jourD=stage.getDate().get(Calendar.DAY_OF_MONTH);
-		int moisD=stage.getDate().get(Calendar.MONTH);
+		int moisD=stage.getDate().get(Calendar.MONTH)+1;
 		int anneeD=stage.getDate().get(Calendar.YEAR);
 		
 				
 		nomFichier=stage.getNomStage()+".sess";
 				
 		String jourF=String.valueOf(stage.getFinCandidature().get(Calendar.DAY_OF_MONTH));
-		String moisF=String.valueOf(stage.getFinCandidature().get(Calendar.MONTH));;
+		String moisF=String.valueOf(stage.getFinCandidature().get(Calendar.MONTH)+1);;
 		String anneeF=String.valueOf(stage.getFinCandidature().get(Calendar.YEAR));;
 		
 		

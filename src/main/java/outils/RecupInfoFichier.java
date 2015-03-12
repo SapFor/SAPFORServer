@@ -33,10 +33,6 @@ public class RecupInfoFichier {
 		try{
 			BufferedReader input = new BufferedReader(new FileReader(new File(cheminFich)));
 				
-			
-			
-			
-			
 			while((res=input.readLine())!=null && !res.equals(motCle) ){
 				//cherche le "motCle"
 				
@@ -53,6 +49,8 @@ public class RecupInfoFichier {
 	
 	
 	/**
+	 * recherche le "motCle" dans le fichier situe dans le repertoire indique par son chemin et renvoit la date 
+	 * qui y est presente
 	 * 
 	 * @param cheminFich (String) chemin menant au fichier
 	 * @param motCle (String) mot cle permettant d'acceder a un type d'info dans le fichier
@@ -92,8 +90,7 @@ public class RecupInfoFichier {
 		}catch(IOException e){e.printStackTrace();}
 		
 		res.set(Integer.parseInt(annee),Integer.parseInt(mois)-1,Integer.parseInt(jour));
-		
-		
+				
 		
 		return res;
 		
@@ -101,9 +98,10 @@ public class RecupInfoFichier {
 	
 	
 	/**
+	 * recupere une liste de chaine presente entre deux bornes la premiere etant defini par "motCle"
 	 * 
-	 * @param cheminFich
-	 * @param motCle
+	 * @param cheminFich (String) chemin menant au dossier ou est contenu le fichier 
+	 * @param motCle (String) mot cle permettant de reperer la liste qui nous interesse
 	 * @return
 	 * @throws IOException
 	 */
@@ -166,7 +164,7 @@ public class RecupInfoFichier {
 			
 			BufferedReader input = new BufferedReader(new FileReader(new File(cheminFich)));
 			
-			//input.reset();//s'assure que la recherche s'effectue depuis le debut du buffer contenant le fichier
+			
 			
 			while((cle=input.readLine())!=null && !cle.equals(motCle)){
 				//cherche mot cle
