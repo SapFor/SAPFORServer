@@ -692,8 +692,10 @@ public class ServeurSAPFOR {
 	@Path("directeur/selection")
 
 	public synchronized String UpdateStage(StageConcret s) throws IOException{ 
-		// fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
-
+		//***
+		//Met a jour le stage validé par le directeur
+		//Met à jour dans les pompiers candidats leurs listes respectives (EnCours, EnAttente, Accepte, Refuse) en fonction du choix du directeur
+		//***
 		
 		StageConcret StageAUpdate=(StageConcret)nomStage.get(s.getNomStage());
 		
@@ -728,6 +730,10 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/sauvegarde")
 	public synchronized String SauvegardeStage(StageConcret s) throws IOException{ // fonctionne malgré probleme d'affichage de certaine liste (pointeur null) lors des controles.
+				
+		//***
+		//Sauvegarde le traitement du stage par le directeur avant validation definitive
+		//***
 		
 		StageConcret StageSauvegarde=(StageConcret)nomStage.get(s.getNomStage());
 		
