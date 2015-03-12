@@ -126,47 +126,29 @@ public class ServeurSAPFOR {
 	}//fin constructeur
 	
 	
-	/**
-	 * methode permettant de creer un objet pompier a partir de son n° d'agent
-	 * 
-	 * @param id (int) (n° d'agent du pompier)
-	 * @return Objet Pompier 
-	 * @throws IOException
-	 * @throws URISyntaxException
-	 */
+
 	
 	private Pompier createPompier(int id)throws IOException, URISyntaxException {
+		//****
 		//met le createur d'objets pompier a disposition du serveur
+		//****
 		return GestionCreationObjets.creerPompier(id,pathPomp);
 	}
 	
 	
-	/**
-	 * methode permettant de creer un objet UV a partir du nom de l'UV
-	 * 
-	 * @param UV (String)
-	 * @return Objet UV
-	 * @throws URISyntaxException
-	 * @throws MalformedURLException
-	 */
-	
 	private UV createUV(String UV) throws URISyntaxException, MalformedURLException {
-		//met le createur d'objets UV a disposition du serveur 
+		//****
+		//met le createur d'objets UV a disposition du serveur
+		//****
 		return GestionCreationObjets.creerUV(UV,pathUVs);
 	}
 	
 	
-	/**
-	 * methode permettant de creer un objet stage a partir du nom du stage
-	 * 
-	 * @param stage (String)
-	 * @return Objet Stage
-	 * @throws URISyntaxException
-	 * @throws MalformedURLException
-	 */
-	
+		
 	private Stage createStage(String stage) throws URISyntaxException, MalformedURLException {
+		//****
 		//met le createur d'objets stage a disposition du serveur
+		//****
 		return GestionCreationObjets.creerStage(stage,pathStag);
 	}
 	
@@ -353,9 +335,13 @@ public class ServeurSAPFOR {
 		
 	}
 	
+	
+	
 	private boolean peutCandidater(Pompier pomp, UV uv){ 
+		//****
 		//retourne vrai si le pompier peut être candidat à l'UV
 		// Condition pour candidater :ne pas l'avoir valider et avoir acquis les niveaux inferieurs. ex: pour FDF2 il faut avoir validé FDF1
+		//***
 		boolean reponse;
 		
 		String nomUv=uv.getNom();
@@ -404,13 +390,6 @@ public class ServeurSAPFOR {
 		return UVsCandidatablesAenvoyer;	
 	}// fin de getUVdispoFormateur
 	
-	
-	/**
-	 * 
-	 * @param pomp
-	 * @param uv
-	 * @return
-	 */
 	
 	private boolean peutFormer(Pompier pomp, UV uv){
 		//****
@@ -570,7 +549,8 @@ public class ServeurSAPFOR {
 		
 		else{return "KO";}
 	}//fin candidater
-				
+	
+	
 	/**
 	 * 
 	 * @param session
@@ -629,7 +609,7 @@ public class ServeurSAPFOR {
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path("directeur/{stage}/{date}")//date entrée sous la forme JJ.MM.AAAA
 	public String cloturer(@PathParam("date") String date,@PathParam("stage") String stage) throws IOException, URISyntaxException{
-		//
+		
 		String str[]=date.split("\\.");
 		String jourS=str[0];
 		String moisS=str[1];
