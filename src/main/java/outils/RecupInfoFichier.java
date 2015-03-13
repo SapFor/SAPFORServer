@@ -89,7 +89,7 @@ public class RecupInfoFichier {
 			
 		}catch(IOException e){e.printStackTrace();}
 		
-		res.set(Integer.parseInt(annee),Integer.parseInt(mois)-1,Integer.parseInt(jour));
+		res.set(Integer.parseInt(annee),Integer.parseInt(mois)-1,Integer.parseInt(jour),0,0,0);
 				
 		
 		return res;
