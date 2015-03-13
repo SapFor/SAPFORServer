@@ -78,10 +78,10 @@ public class ServeurSAPFOR {
 		//*A MODIFIER AVANT DE DEMARRER LE SERVEUR***********************************************
 		//***************************************************************************************************	
 		
-		//chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
+		chemData=System.getProperty("user.dir")+"/../DonneeServer/DonneesServer/"; //Path windows (a modifier)
 		
 						
-		chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
+		//chemData=System.getProperty("user.home")+"/Projet-CAOS/donnees/";//mode linux (a modifier)
 		
 		//***************************************************************************************************
 		
@@ -619,6 +619,7 @@ public class ServeurSAPFOR {
 			
 
 			EcrireFichier.ecrireStage(actuel,pathStag);
+			EcrireFichier.ecrirePompier(aModif,pathPomp);
 				
 			return "OK";
 		}
