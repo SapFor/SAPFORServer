@@ -558,7 +558,7 @@ public class ServeurSAPFOR {
 		Stage actuel=this.nomStage.get(nomStage);
 		Calendar today=Calendar.getInstance();
 				
-		if(actuel.getFinCandidature().after(today)&&!actuel.getCandidats().contains(aModif.getId())){
+		if(actuel.getFinCandidature().after(today)&&!actuel.getCandidats().contains(Integer.toString(aModif.getId()))){
 			
 			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
 			pompierListeEnCours.add(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
@@ -595,31 +595,24 @@ public class ServeurSAPFOR {
 	@Path("desincription/{session}/{nomStage}")
 	public synchronized String desinscrire(@PathParam("session") int session, @PathParam("nomStage") String nomStage) throws URISyntaxException, IOException{
 		
-		//***
-		//retire de la liste getEnCours le stage ciblé
-		//retire le pompier de la liste des candidats du stage
-		//met a jour les fichiers de donnees
-		//***
-		
 		Pompier aModif=numConnection.get(session);
 		Stage actuel=this.nomStage.get(nomStage);
 		
-		
-		if(actuel.getCandidats().contains(aModif.getId())){
+		if(actuel.getCandidats().contains(Integer.toString(aModif.getId()))){
 			
 			List<String> pompierListeEnCours=aModif.getEnCours(); // extraction liste de String : stages "en cours" de l'objet pompier 
+			System.out.println(pompierListeEnCours.contains(nomStage));
 			pompierListeEnCours.remove(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
 			aModif.setEnCours(pompierListeEnCours);//remet liste des stages (a jour) dans l'objet pompier 
 			
 			List<String> stageListeCandidats=actuel.getCandidats(); //met a jour liste des candidats au stage
+			System.out.println(stageListeCandidats.contains(Integer.toString(aModif.getId())));
 			stageListeCandidats.remove(Integer.toString(aModif.getId()));
 			actuel.setCandidats(stageListeCandidats);
 			
 			actuel.desincription(aModif);
 			
-
 			EcrireFichier.ecrireStage(actuel,pathStag);
-			EcrireFichier.ecrirePompier(aModif,pathPomp);
 				
 			return "OK";
 		}
