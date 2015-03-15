@@ -527,7 +527,7 @@ public class ServeurSAPFOR {
 		
 		Pompier aDeco=numConnection.get(session);
 		
-		EcrireFichier.ecrirePompier(aDeco,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
+		//EcrireFichier.ecrirePompier(aDeco,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
 		
 		numConnection.remove(session);//suppression de l'entree lie a ce numero de session
 		
@@ -571,6 +571,7 @@ public class ServeurSAPFOR {
 			actuel.inscription(aModif);
 			
 			EcrireFichier.ecrireStage(actuel,pathStag);
+			EcrireFichier.ecrirePompier(aModif,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
 			
 				
 			return "OK";
@@ -613,6 +614,8 @@ public class ServeurSAPFOR {
 			actuel.desincription(aModif);
 			
 			EcrireFichier.ecrireStage(actuel,pathStag);
+			EcrireFichier.ecrirePompier(aModif,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
+			
 				
 			return "OK";
 		}
@@ -711,6 +714,10 @@ public class ServeurSAPFOR {
 		nomStage.put(StageAUpdate.getNomStage(),StageAUpdate);
 		
 		EcrireFichier.ecrireStage(StageAUpdate,pathStag);
+		
+		for (int i=0; i<StageAUpdate.getListPompierCandidat().size(); i++){
+			EcrireFichier.ecrirePompier((Pompier)StageAUpdate.getListPompierCandidat().get(i), pathPomp);
+		}
 		
 		
 		String reponse="Le stage "+StageAUpdate.getNomStage()+" a ete mis a jour";
