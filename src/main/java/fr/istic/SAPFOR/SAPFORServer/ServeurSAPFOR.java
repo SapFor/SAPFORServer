@@ -525,7 +525,7 @@ public class ServeurSAPFOR {
 		//detruit le numero de session et l'objet Pompier cree(apres avoir ete sauvegarde)
 		//***
 		
-		Pompier aDeco=numConnection.get(session);
+		//Pompier aDeco=numConnection.get(session);
 		
 		//EcrireFichier.ecrirePompier(aDeco,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
 		
@@ -610,6 +610,69 @@ public class ServeurSAPFOR {
 			System.out.println(stageListeCandidats.contains(Integer.toString(aModif.getId())));
 			stageListeCandidats.remove(Integer.toString(aModif.getId()));
 			actuel.setCandidats(stageListeCandidats);
+			
+			actuel.desincription(aModif);
+			
+			EcrireFichier.ecrireStage(actuel,pathStag);
+			EcrireFichier.ecrirePompier(aModif,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
+			
+				
+			return "OK";
+		}
+		
+		if(actuel.getAccepte().contains(Integer.toString(aModif.getId()))){
+				
+				List<String> pompierListeAccepte=aModif.getAccepte(); // extraction liste de String : stages "en cours" de l'objet pompier 
+				System.out.println(pompierListeAccepte.contains(nomStage));
+				pompierListeAccepte.remove(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
+				aModif.setAccepte(pompierListeAccepte);//remet liste des stages (a jour) dans l'objet pompier 
+				
+				List<String> stageListeAccepte=actuel.getAccepte(); //met a jour liste des candidats au stage
+				System.out.println(stageListeAccepte.contains(Integer.toString(aModif.getId())));
+				stageListeAccepte.remove(Integer.toString(aModif.getId()));
+				actuel.setCandidats(stageListeAccepte);
+				
+				actuel.desincription(aModif);
+				
+				EcrireFichier.ecrireStage(actuel,pathStag);
+				EcrireFichier.ecrirePompier(aModif,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
+				
+					
+				return "OK";
+		}
+		
+		if(actuel.getAttente().contains(Integer.toString(aModif.getId()))){
+			
+			List<String> pompierListeAttente=aModif.getAttente(); // extraction liste de String : stages "en cours" de l'objet pompier 
+			System.out.println(pompierListeAttente.contains(nomStage));
+			pompierListeAttente.remove(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
+			aModif.setAccepte(pompierListeAttente);//remet liste des stages (a jour) dans l'objet pompier 
+			
+			List<String> stageListeAttente=actuel.getAttente(); //met a jour liste des candidats au stage
+			System.out.println(stageListeAttente.contains(Integer.toString(aModif.getId())));
+			stageListeAttente.remove(Integer.toString(aModif.getId()));
+			actuel.setCandidats(stageListeAttente);
+			
+			actuel.desincription(aModif);
+			
+			EcrireFichier.ecrireStage(actuel,pathStag);
+			EcrireFichier.ecrirePompier(aModif,pathPomp);//ecriture/ecrasement du fichier avec les infos contenues dans l'objet pompier 
+			
+				
+			return "OK";
+		}
+	
+		if(actuel.getRefuse().contains(Integer.toString(aModif.getId()))){
+			
+			List<String> pompierListeRefuse=aModif.getRefuse(); // extraction liste de String : stages "en cours" de l'objet pompier 
+			System.out.println(pompierListeRefuse.contains(nomStage));
+			pompierListeRefuse.remove(nomStage); // ajout à cette liste de l'identifiant (String) du stage (ex:"INC1smalo25juin15")
+			aModif.setAccepte(pompierListeRefuse);//remet liste des stages (a jour) dans l'objet pompier 
+			
+			List<String> stageListeRefuse=actuel.getAccepte(); //met a jour liste des candidats au stage
+			System.out.println(stageListeRefuse.contains(Integer.toString(aModif.getId())));
+			stageListeRefuse.remove(Integer.toString(aModif.getId()));
+			actuel.setCandidats(stageListeRefuse);
 			
 			actuel.desincription(aModif);
 			
