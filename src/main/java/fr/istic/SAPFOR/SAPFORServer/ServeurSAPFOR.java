@@ -227,6 +227,8 @@ public class ServeurSAPFOR {
 		Pompier invalide=new PompierConcret();
 		//création classe Pompier vide contenant juste l'idSession indiquant une erreur de connection
 		invalide.setIdSession(999);
+		Pompier existe=new PompierConcret();
+		existe.setIdSession(1000);
 		
 		Pompier entrant;
 		
@@ -257,7 +259,7 @@ public class ServeurSAPFOR {
 			} catch (IOException e) {return invalide;} 
 			
 			
-			if(entrant.getMdp().equals(mdp)){
+			if(entrant.getMdp().equals(mdp)){//verification du mot de passe
 				int randomInt=0;
 				Random randomGenerator = new Random();//creation d'un generateur de nombre aleatoires
 				
@@ -277,7 +279,7 @@ public class ServeurSAPFOR {
 			// si le pompier est deja connecte
 			//****
 			
-			else{return invalide;}
+			else{return existe;}
 			
 		
 			
